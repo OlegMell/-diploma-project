@@ -1,7 +1,132 @@
+@import "../../../../../styles/colors";
+
 .form-account {
   width: 350px;
 }
 
 .mat-form-field {
   width: 100%;
+}
+
+.logo-text {
+  margin: 15px 0 0 15px;
+  position: absolute;
+  transition: .2s ease-in-out;
+  background-color: white;
+  width: 1000px;
+  height: 400px;
+  left: -380px;
+  top: -100px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 65px;
+  transform: rotate(-45deg);
+
+  &:hover {
+    background-color: rgba($primary, .7);
+    backdrop-filter: blur(20px);
+  }
+
+  .text {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    transition: .2s all ease-in-out;
+    overflow: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  &:hover .text {
+    transform: rotate(45deg);
+    color: $white;
+  }
+}
+
+
+.dot-falling {
+  position: relative;
+  margin-left: 20px;
+  margin-bottom: -10px;
+  left: -9999px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: $white;
+  color: $white;
+  box-shadow: 9999px 0 0 0 $white;
+  animation: dotFalling 1s infinite linear;
+  animation-delay: .1s;
+}
+
+.dot-falling::before, .dot-falling::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+
+.dot-falling::before {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: $white;
+  color: $white;
+  animation: dotFallingBefore 1s infinite linear;
+  animation-delay: 0s;
+}
+
+.dot-falling::after {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: $white;
+  color: $white;
+  animation: dotFallingAfter 1s infinite linear;
+  animation-delay: .2s;
+}
+
+@keyframes dotFalling {
+  0% {
+    box-shadow: 9999px -15px 0 0 rgba(152, 128, 255, 0);
+  }
+  25%,
+  50%,
+  75% {
+    box-shadow: 9999px 0 0 0 $white;
+  }
+  100% {
+    box-shadow: 9999px 15px 0 0 rgba(152, 128, 255, 0);
+  }
+}
+
+@keyframes dotFallingBefore {
+  0% {
+    box-shadow: 9984px -15px 0 0 rgba(152, 128, 255, 0);
+  }
+  25%,
+  50%,
+  75% {
+    box-shadow: 9984px 0 0 0 $white;
+  }
+  100% {
+    box-shadow: 9984px 15px 0 0 rgba(152, 128, 255, 0);
+  }
+}
+
+@keyframes dotFallingAfter {
+  0% {
+    box-shadow: 10014px -15px 0 0 rgba(152, 128, 255, 0);
+  }
+  25%,
+  50%,
+  75% {
+    box-shadow: 10014px 0 0 0 $white;
+  }
+  100% {
+    box-shadow: 10014px 15px 0 0 rgba(152, 128, 255, 0);
+  }
 }

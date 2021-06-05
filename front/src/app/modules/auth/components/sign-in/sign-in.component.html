@@ -1,14 +1,21 @@
 <div class="center">
+  <h2 class="logo-text"> <div class="text"> Twiple <div class="dot-falling"></div></div>  </h2>
   <div class="form-wrapper">
-    <h1 class="form-header">Вход</h1>
+    <h1 class="form-header"> Вход </h1>
     <form class="form-account" [formGroup]="signInForm">
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Логин</mat-label>
         <input type="text" matInput formControlName="login">
+        <mat-icon matSuffix>
+          account_circle
+        </mat-icon>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Пароль</mat-label>
         <input type="password" matInput formControlName="password">
+        <mat-icon matSuffix>
+          lock
+        </mat-icon>
       </mat-form-field>
       <button [disabled]="!signInForm.valid" mat-raised-button color="primary">Войти</button>
     </form>
