@@ -1,7 +1,15 @@
 @import "../../../../../styles/colors";
 
+.form-wrapper {
+  @media (max-width: 1000px) {
+    margin-top: 200px;
+  }
+}
+
 .form-account {
   width: 350px;
+
+
 }
 
 .mat-form-field {
@@ -25,8 +33,6 @@
   font-size: 65px;
   transform: rotate(-45deg);
 
-
-
   &:hover {
     background-color: rgba($primary, .7);
     backdrop-filter: blur(20px);
@@ -47,7 +53,7 @@
     color: $white;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 1000px) {
     transform: rotate(0deg);
     width: 100%;
     left: 0;

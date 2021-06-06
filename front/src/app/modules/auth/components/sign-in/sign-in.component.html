@@ -4,8 +4,14 @@
     <h1 class="form-header"> Вход </h1>
     <form class="form-account" [formGroup]="signInForm">
       <mat-form-field appearance="outline">
-        <mat-label>Логин</mat-label>
+        <mat-label> Имя пользователя или email </mat-label>
         <input type="text" matInput formControlName="login">
+        <mat-error *ngIf="signInForm.get('login').hasError('minlength')">
+          Слишком коротко)
+        </mat-error>
+        <mat-error *ngIf="signInForm.get('login').hasError('required')">
+          Забыли написать)
+        </mat-error>
         <mat-icon matSuffix>
           account_circle
         </mat-icon>
@@ -13,11 +19,19 @@
       <mat-form-field appearance="outline">
         <mat-label>Пароль</mat-label>
         <input type="password" matInput formControlName="password">
+        <mat-error *ngIf="signInForm.get('password').hasError('minlength')">
+          Придумайте пароль подлиннее)
+        </mat-error>
+        <mat-error *ngIf="signInForm.get('login').hasError('required')">
+          Забыли написать)
+        </mat-error>
         <mat-icon matSuffix>
           lock
         </mat-icon>
       </mat-form-field>
       <button [disabled]="!signInForm.valid" mat-raised-button color="primary">Войти</button>
     </form>
+    <a [routerLink]="['/auth/signUp']" class="link">Создать аккаунт!</a>
   </div>
 </div>
+

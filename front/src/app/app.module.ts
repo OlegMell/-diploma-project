@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './modules/auth/auth.module';
 import { AppSharedModule } from './app.shared.module';
+import { StoreModule } from "@ngrx/store";
+import { reducers } from "./store";
 
 @NgModule({
   declarations: [
@@ -16,7 +18,7 @@ import { AppSharedModule } from './app.shared.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     AppSharedModule,
-
+    StoreModule.forRoot(reducers),
     AuthModule,
   ],
   providers: [],

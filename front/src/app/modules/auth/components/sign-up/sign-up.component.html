@@ -1,0 +1,78 @@
+<div class="center">
+
+  <h2 class="logo-text">
+    <div class="text"> Twiple
+      <div class="dot-falling"></div>
+    </div>
+  </h2>
+
+  <div class="form-wrapper">
+
+    <h1 class="form-header"> Создайте свой аккаунт </h1>
+
+    <form class="form-account" [formGroup]="signUpForm">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Имя пользователя</mat-label>
+        <input type="text" matInput formControlName="username">
+        <mat-error *ngIf="signUpForm.get('username').hasError('minlength')">
+          Придумайте имя пользователя подлиннее)
+        </mat-error>
+        <mat-error *ngIf="signUpForm.get('username').hasError('required')">
+          Забыли написать)
+        </mat-error>
+        <mat-icon matSuffix>
+          account_circle
+        </mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="login">
+        <mat-error *ngIf="signUpForm.get('login').hasError('email')">
+          Похоже, ваш email совсем не email, проверьте)
+        </mat-error>
+        <mat-error *ngIf="signUpForm.get('login').hasError('required')">
+          Забыли написать)
+        </mat-error>
+        <mat-icon matSuffix>
+          markunread
+        </mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Пароль</mat-label>
+        <input type="password" matInput formControlName="password">
+        <mat-error *ngIf="signUpForm.get('password').hasError('minlength')">
+          Придумайте пароль подлиннее)
+        </mat-error>
+        <mat-error *ngIf="signUpForm.get('password').hasError('required')">
+          Забыли написать)
+        </mat-error>
+        <mat-icon matSuffix>
+          lock
+        </mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label> Повторите пароль</mat-label>
+        <input [errorStateMatcher]="passwordsMatcher" type="password" matInput formControlName="repPassword">
+        <mat-error *ngIf="signUpForm.hasError('passwordsNotEqual')">
+          Похоже, пароли не совпадают, проверьте)
+        </mat-error>
+        <mat-error *ngIf="signUpForm.get('repPassword').hasError('required')">
+          Забыли написать)
+        </mat-error>
+        <mat-icon matSuffix>
+          lock
+        </mat-icon>
+      </mat-form-field>
+
+      <button [disabled]="!signUpForm.valid" mat-raised-button color="primary">Готово!</button>
+
+    </form>
+
+    <a [routerLink]="'/auth/signIn'" class="link">Уже есть аккаунт? Войдите</a>
+
+  </div>
+</div>

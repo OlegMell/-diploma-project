@@ -11,6 +11,12 @@ body {
 .center {
   display: flex;
   height: 100vh;
+
+  //@media (max-width: 600px) {
+  //  width: 100%;
+  //  padding: 0;
+  //  margin: 0;
+  //}
 }
 
 .form-wrapper, .form-account {
@@ -28,4 +34,10 @@ body {
   font-family: 'Quicksand', sans-serif !important;
   font-weight: 900 !important;
   font-size: 65px !important;
+}
+
+.link {
+  text-decoration: none;
+  align-self: flex-end;
+  margin: 20px 10px;
 }
