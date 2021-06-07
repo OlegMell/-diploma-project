@@ -12,6 +12,7 @@ export class AuthService extends ServerService {
   }
 
   public signIn(credentials: Credentials): Observable<Auth> {
+    console.log(credentials);
     return this.http.get<Auth>(this.build('auth', 'signIn'), {
       params: this.buildReqParams(credentials)
     });

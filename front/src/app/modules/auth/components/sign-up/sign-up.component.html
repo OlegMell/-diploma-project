@@ -1,16 +1,20 @@
 <div class="center">
 
   <h2 class="logo-text">
-    <div class="text"> Twiple
-      <div class="dot-falling"></div>
-    </div>
+    <div class="text"> aloud
+      <div id="bars">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div></div>
   </h2>
 
   <div class="form-wrapper">
 
     <h1 class="form-header"> Создайте свой аккаунт </h1>
 
-    <form class="form-account" [formGroup]="signUpForm">
+    <form class="form-account" [formGroup]="signUpForm" (submit)="signUp()">
 
       <mat-form-field appearance="outline">
         <mat-label>Имя пользователя</mat-label>

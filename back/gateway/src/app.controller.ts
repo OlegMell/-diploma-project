@@ -1,12 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller()
+@Controller('api')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor() {}
 
-  @Get()
-  getIndex(): string {
+  @Get('/auth/signIn')
+  getSignIn(): string {
     return 'INDEX';
   }
 }

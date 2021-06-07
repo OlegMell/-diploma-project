@@ -2,11 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { AuthFacadeService } from '../../../../shared/facades/auth-facade.service';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  styleUrls: [ './sign-up.component.scss' ]
 })
 export class SignUpComponent implements OnInit, OnDestroy {
 
@@ -16,7 +17,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
   /** Форма входа */
   signUpForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private authFacade: AuthFacadeService) {
   }
 
   ngOnInit(): void {
@@ -28,12 +30,19 @@ export class SignUpComponent implements OnInit, OnDestroy {
    */
   createSignUpForm(): void {
     this.signUpForm = this.fb.group({
-      login: this.fb.control('', [Validators.required, Validators.email]),
-      password: this.fb.control('', [Validators.required,
-        Validators.minLength(4)]),
-      repPassword: this.fb.control('', [Validators.required, Validators.minLength(4)]),
-      username: this.fb.control('', [Validators.required, Validators.minLength(4)])
-    }, {validators: repeatPasswordValidator});
+      login: this.fb.control('', [ Validators.required, Validators.email ]),
+      password: this.fb.control('', [ Validators.required,
+        Validators.minLength(4) ]),
+      repPassword: this.fb.control('', [ Validators.required, Validators.minLength(4) ]),
+      username: this.fb.control('', [ Validators.required, Validators.minLength(4) ])
+    }, { validators: repeatPasswordValidator });
+  }
+
+  signUp(): void {
+    this.authFacade
+      .signUp(this.signUpForm.get('username')?.value,
+        this.signUpForm.get('email')?.value,
+        this.signUpForm.get('password')?.value);
   }
 
   ngOnDestroy(): void {

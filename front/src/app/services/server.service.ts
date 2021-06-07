@@ -17,7 +17,7 @@ export class ServerService {
     // @ts-ignore
     const child = value ? REQUESTS[entry].child[value] : '';
     // @ts-ignore
-    return environment.apiEndPoint + REQUEST[entry].root + child;
+    return environment.apiEndPoint + REQUESTS[entry].root + child;
   }
 
   protected buildReqParams(data: any): HttpParams {

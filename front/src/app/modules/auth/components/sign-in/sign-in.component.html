@@ -1,8 +1,13 @@
 <div class="center">
-  <h2 class="logo-text"> <div class="text"> Twiple <div class="dot-falling"></div></div>  </h2>
+  <h2 class="logo-text"> <div class="text"> aloud <div id="bars">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div> </div>  </h2>
   <div class="form-wrapper">
     <h1 class="form-header"> Вход </h1>
-    <form class="form-account" [formGroup]="signInForm">
+    <form class="form-account" [formGroup]="signInForm" (submit)="signIn()">
       <mat-form-field appearance="outline">
         <mat-label> Имя пользователя или email </mat-label>
         <input type="text" matInput formControlName="login">
