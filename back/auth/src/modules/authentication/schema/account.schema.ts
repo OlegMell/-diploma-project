@@ -1,20 +1,20 @@
 import * as mongoose from 'mongoose';
 
 export const Account = new mongoose.Schema({
-    login:{ type: String, required:true, unique:true},
-    password:{ type: String, requried:true},
-    followers:[{
+    login: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    followers: [ {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Account'
-    }],
-    subscription:[{
+    } ],
+    subscription: [ {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Account'
-    }],
-    personalInfo:[{
+    } ],
+    personalInfo: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'PersonalInfo'
-    }],
-    isPrivate:{ type: Boolean},
-    date:{ type: Date}
+    },
+    isPrivate: { type: Boolean },
+    date: { type: Date }
 });
