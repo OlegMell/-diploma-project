@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { AuthFacadeService } from '../../../../shared/facades/auth-facade.service';
+import { ThemeService } from "../../../../services/theme.service";
 
 @Component({
   selector: 'app-sign-in',
@@ -17,7 +18,8 @@ export class SignInComponent implements OnInit, OnDestroy {
   signInForm!: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private authFacade: AuthFacadeService) {
+              private authFacade: AuthFacadeService,
+              public theme: ThemeService) {
   }
 
   ngOnInit(): void {
@@ -40,6 +42,8 @@ export class SignInComponent implements OnInit, OnDestroy {
       .signIn(this.signInForm.get('login')?.value,
         this.signInForm.get('password')?.value);
   }
+
+
 
   ngOnDestroy(): void {
     this.uns$.next();

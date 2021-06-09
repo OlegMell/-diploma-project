@@ -11,5 +11,5 @@ export interface CreateAccount {
 }
 
 export interface Auth {
-  profile: string;
+  token: string;
 }

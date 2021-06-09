@@ -1,22 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&display=swap');
+@import "./styles/themes";
 
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-
 .center {
   display: flex;
   height: 100vh;
-
-  //@media (max-width: 600px) {
-  //  width: 100%;
-  //  padding: 0;
-  //  margin: 0;
-  //}
 }
 
 .form-wrapper, .form-account {
@@ -34,6 +28,7 @@ body {
   font-family: 'Quicksand', sans-serif !important;
   font-weight: 900 !important;
   font-size: 65px !important;
+  color: inherit;
 }
 
 .link {
@@ -41,3 +36,5 @@ body {
   align-self: flex-end;
   margin: 20px 10px;
 }
+
+

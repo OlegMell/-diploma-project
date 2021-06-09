@@ -1,0 +1,81 @@
+@import "colors";
+
+.light-theme {
+  background-color: white;
+  color: $black;
+  transition: all .2s ease-in-out;
+
+  .mat-form-field-label {
+    color: black;
+  }
+
+  .logo-text {
+    margin: 15px 0 0 15px;
+    position: absolute;
+    transition: .2s ease-in-out;
+    width: 1000px;
+    height: 400px;
+    left: -380px;
+    top: -100px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 65px;
+    transform: rotate(-45deg);
+    color: inherit;
+
+    &:hover {
+      background-color: rgba($primary, .7);
+      backdrop-filter: blur(20px);
+    }
+  }
+}
+
+.dark-theme {
+  background-color: $black;
+  color: $darkModeWhite;
+  transition: all .2s ease-in-out;
+
+  .form-wrapper {
+    background-color: rgba($white, .1);
+    padding: 20px 0;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  }
+
+  .link {
+    color: $darkModeWhite;
+  }
+
+  .logo-text {
+    margin: 15px 0 0 15px;
+    position: absolute;
+    transition: .2s ease-in-out;
+    width: 1000px;
+    height: 400px;
+    left: -380px;
+    top: -100px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 65px;
+    transform: rotate(-45deg);
+    color: inherit;
+
+    &:hover {
+      background-color: rgba($primary, .25);
+      backdrop-filter: blur(20px);
+    }
+  }
+
+  .mat-form-field-label {
+    color: $darkModeWhite;
+  }
+}
+
+

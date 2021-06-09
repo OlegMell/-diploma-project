@@ -13,26 +13,26 @@ export class SharedEffects {
   }
 
   login$ = createEffect(() => this.actions$.pipe(
-    ofType(SharedActions.login),
+    ofType(SharedActions.AuthAction.login),
     mergeMap((action) => this.authService.signIn(action)
       .pipe(
         map(res => {
           console.log(res);
-          return SharedActions.loginSuccess({ token: 'token' });
+          return new SharedActions.LoginSuccess({ token: 'token' });
         }),
-        catchError(() => of(SharedActions.loginError))
+        catchError(() => of(new SharedActions.LoginError()))
       ))
   ));
 
   signUp$ = createEffect(() => this.actions$.pipe(
-    ofType(SharedActions.signUp),
+    ofType(SharedActions.AuthAction.signUp),
     mergeMap((action) => this.authService.signUp(action)
       .pipe(
         map(res => {
           console.log(res);
-          return SharedActions.signUpSuccess({ token: 'token' });
+          return new SharedActions.SignUpSuccess({ token: 'token' });
         }),
-        catchError(() => of(SharedActions.signUpError))
+        catchError(() => of(new SharedActions.SignUpError()))
       ))
   ));
 }

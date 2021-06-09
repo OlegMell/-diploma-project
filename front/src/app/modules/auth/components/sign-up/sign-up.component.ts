@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { AuthFacadeService } from '../../../../shared/facades/auth-facade.service';
+import { ThemeService } from "../../../../services/theme.service";
 
 @Component({
   selector: 'app-sign-up',
@@ -18,7 +19,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
   signUpForm!: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private authFacade: AuthFacadeService) {
+              private authFacade: AuthFacadeService,
+              public theme: ThemeService) {
   }
 
   ngOnInit(): void {

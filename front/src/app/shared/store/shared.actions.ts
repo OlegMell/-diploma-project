@@ -1,29 +1,58 @@
-import { createAction, props } from '@ngrx/store';
+import { Action } from '@ngrx/store';
+import { Auth, CreateAccount, Credentials } from '../models/common.models';
 
-export const login = createAction(
-  '[Login Page] Login',
-  props<{ login: string; password: string }>()
-);
+export enum AuthAction {
+  login = '[Login Page] Login',
+  loginSuccess = '[Login Page] Login Success',
+  loginError = '[Login Page] Login Error',
 
-export const loginSuccess = createAction(
-  '[Login Page] Login Success',
-      props<{token: string}>()
-);
+  signUp = '[Sign Up Page] Sign Up',
+  signUpSuccess = '[Sign Up Page] Sign Up Success',
+  signUpError = '[Sign Up Page] Sign Up Error',
+}
 
-export const loginError = createAction(
-  '[Login Page] Login Error'
-);
 
-export const signUp = createAction(
-  '[SignUp Page] Sign Up',
-  props<{login: string, password: string, username: string}>()
-);
+export class Login implements Action {
+  readonly type = AuthAction.login;
+  constructor(public payload: Credentials) {
+  }
+}
 
-export const signUpSuccess = createAction(
-  '[SignUp Page] SignUp Success',
-  props<{token: string}>()
-);
+export class LoginSuccess implements Action {
+  readonly type = AuthAction.loginSuccess;
+  constructor(public payload: Auth) {
+  }
+}
 
-export const signUpError = createAction(
-  '[SignUp Page] SignUp Error'
-);
+export class LoginError implements Action {
+  readonly type = AuthAction.loginError;
+  constructor() {
+  }
+}
+
+export class SignUp implements Action {
+  readonly type = AuthAction.signUp;
+  constructor(public payload: CreateAccount) {
+  }
+}
+
+export class SignUpSuccess implements Action {
+  readonly type = AuthAction.signUpSuccess;
+  constructor(public payload: Auth) {
+  }
+}
+
+export class SignUpError implements Action {
+  readonly type = AuthAction.signUpError;
+  constructor() {
+  }
+}
+
+
+export type AuthActionUnion =
+  Login |
+  LoginSuccess |
+  LoginError |
+  SignUp |
+  SignUpSuccess |
+  SignUpError;

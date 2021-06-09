@@ -9,10 +9,11 @@ export class AuthFacadeService {
   }
 
   signIn(login: string, password: string): void {
-    this.store.dispatch(SharedActions.login({ login, password }));
+    this.store.dispatch(new SharedActions.Login({ login, password }));
+
   }
 
   signUp(username: string, login: string, password: string): void {
-    this.store.dispatch(SharedActions.signUp({login, password, username}));
+    this.store.dispatch(new SharedActions.SignUp({ login, password, username }));
   }
 }

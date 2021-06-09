@@ -5,6 +5,11 @@
     <div class="bar"></div>
     <div class="bar"></div>
   </div> </div>  </h2>
+
+  <button (click)="theme.toggleTheme()" mat-icon-button class="theme-toggle">
+    <mat-icon>lightbulb</mat-icon>
+  </button>
+
   <div class="form-wrapper">
     <h1 class="form-header"> Вход </h1>
     <form class="form-account" [formGroup]="signInForm" (submit)="signIn()">
@@ -36,7 +41,7 @@
       </mat-form-field>
       <button [disabled]="!signInForm.valid" mat-raised-button color="primary">Войти</button>
     </form>
-    <a [routerLink]="['/auth/signUp']" class="link">Создать аккаунт!</a>
+    <a [routerLink]="['/auth/signUp']" class="link">Создать аккаунт</a>
   </div>
 </div>
 
