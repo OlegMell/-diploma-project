@@ -3,18 +3,19 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Auth, CreateAccount, Credentials } from '../shared/models/common.models';
 import { ServerService } from './server.service';
+import { Md5 } from 'ts-md5';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService extends ServerService {
 
-  constructor(private http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
     super();
   }
 
-  public signIn(credentials: Credentials): Observable<Auth> {
-    console.log(credentials);
+  // @ts-ignore
+  public signIn({ login, password }): Observable<Auth> {
     return this.http.get<Auth>(this.build('auth', 'signIn'), {
-      params: this.buildReqParams(credentials)
+      params: this.buildReqParams({ login, password: Md5.hashStr(password) })
     });
   }
 

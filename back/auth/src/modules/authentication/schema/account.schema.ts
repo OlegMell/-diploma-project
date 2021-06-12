@@ -3,6 +3,7 @@ import * as mongoose from 'mongoose';
 export const Account = new mongoose.Schema({
     login: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    username: { type: String, required: true },
     followers: [ {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Account'

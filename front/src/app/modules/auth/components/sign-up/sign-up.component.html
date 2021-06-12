@@ -36,11 +36,11 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
-        <input type="email" matInput formControlName="login">
-        <mat-error *ngIf="signUpForm.get('login').hasError('email')">
+        <input type="email" matInput formControlName="email">
+        <mat-error *ngIf="signUpForm.get('email').hasError('email')">
           Похоже, ваш email совсем не email, проверьте)
         </mat-error>
-        <mat-error *ngIf="signUpForm.get('login').hasError('required')">
+        <mat-error *ngIf="signUpForm.get('email').hasError('required')">
           Забыли написать)
         </mat-error>
         <mat-icon matSuffix>

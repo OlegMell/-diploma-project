@@ -1,5 +1,8 @@
 import { HttpService, Injectable } from "@nestjs/common";
 import { map } from "rxjs/operators";
+import { Observable } from "rxjs";
+import { CreateAccount } from "../models/create-account.model";
+import { JwtToken } from "../models/jwt-token.model";
 
 @Injectable()
 export class AuthService {
@@ -8,15 +11,14 @@ export class AuthService {
     constructor(private readonly httpService: HttpService) {
     }
 
-    signIn(login, password) {
-        return this.httpService.get(`${ this.API_AUTH_URL }/signIn`, {
-            params: `login=${ login }&password=${ password }`
-        }).pipe(map(res => res.data))
+    signIn({ login, password }): Observable<JwtToken> {
+        return this.httpService.get(`${ this.API_AUTH_URL }/signIn?login=${login}&password=${password}`)
+            .pipe(map(res => res.data));
     }
 
-    signUp(account) {
+    signUp(account: CreateAccount): Observable<JwtToken> {
         return this.httpService.post(`${ this.API_AUTH_URL }/signIn`, account)
-            .pipe(map(res => res.data))
+            .pipe(map(res => res.data));
     }
 
 }

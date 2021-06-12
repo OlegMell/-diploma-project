@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { AuthService } from "./services/auth.service";
 import { Observable } from "rxjs";
+import { Credentials } from "./models/credentials.model";
+import { CreateAccount } from "./models/create-account.model";
 
 @Controller('api')
 export class AuthController {
@@ -8,12 +10,12 @@ export class AuthController {
     }
 
     @Get('/auth/signIn')
-    signIn(@Param() login, @Param() password): Observable<any> {
-        return this.authService.signIn(login, password);
+    signIn(@Query() credentials: Credentials): Observable<any> {
+        return this.authService.signIn(credentials);
     }
 
     @Post('/auth/signUp')
-    sgnUp(@Body() account): Observable<any> {
+    signUp(@Body() account: CreateAccount): Observable<any> {
         return this.authService.signUp(account);
     }
 }

@@ -29,6 +29,8 @@ export class ServerService {
       }
     });
 
+    console.log(httpParams);
+
     return httpParams;
   }
 

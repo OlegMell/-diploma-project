@@ -6,12 +6,12 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './modules/auth/auth.module';
 import { AppSharedModule } from './app.shared.module';
-import { StoreModule } from "@ngrx/store";
-import { reducers } from "./store";
-import { EffectsModule } from "@ngrx/effects";
-import { SharedEffects } from "./shared/store/shared.effects";
-import { AuthService } from "./services/auth.service";
-import { HttpClientModule } from "@angular/common/http";
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './store';
+import { EffectsModule } from '@ngrx/effects';
+import { SharedEffects } from './shared/store/shared.effects';
+import { AuthService } from './services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [

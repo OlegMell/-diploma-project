@@ -32,7 +32,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
    */
   createSignUpForm(): void {
     this.signUpForm = this.fb.group({
-      login: this.fb.control('', [ Validators.required, Validators.email ]),
+      email: this.fb.control('', [ Validators.required, Validators.email ]),
       password: this.fb.control('', [ Validators.required,
         Validators.minLength(4) ]),
       repPassword: this.fb.control('', [ Validators.required, Validators.minLength(4) ]),
