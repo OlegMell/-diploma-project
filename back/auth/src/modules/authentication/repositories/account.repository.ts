@@ -14,12 +14,14 @@ export class AccountRepository {
 
     public async findUser(login, password): Promise<JwtToken> {
         const user = await this.account.findOne({ login, password });
+        if (!user) return null;
 
         return this._jwtSign(user);
     }
 
     public async addUser(username, password, login): Promise<JwtToken> {
         const user = await this.account.create({ username, login, password });
+        if (!user) return null;
 
         return this._jwtSign(user);
     }

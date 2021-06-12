@@ -15,7 +15,8 @@ export class AuthService extends ServerService {
   // @ts-ignore
   public signIn({ login, password }): Observable<Auth> {
     return this.http.get<Auth>(this.build('auth', 'signIn'), {
-      params: this.buildReqParams({ login, password: Md5.hashStr(password) })
+      // params: this.buildReqParams({ login, password: Md5.hashStr(password) })
+      params: this.buildReqParams({ login, password })
     });
   }
 

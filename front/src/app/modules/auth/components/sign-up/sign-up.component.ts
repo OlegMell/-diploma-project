@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { AuthFacadeService } from '../../../../shared/facades/auth-facade.service';
-import { ThemeService } from "../../../../services/theme.service";
+import { ThemeService } from '../../../../services/theme.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -40,6 +40,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
     }, { validators: repeatPasswordValidator });
   }
 
+  /**
+   * Листенер сабмита формы регистрации
+   */
   signUp(): void {
     this.authFacade
       .signUp(this.signUpForm.get('username')?.value,

@@ -1,8 +1,9 @@
 import { ActionReducerMap } from '@ngrx/store';
 import * as shared from '../shared/store/shared.reducer';
+import { AuthState } from '../shared/store/shared.reducer';
 
 export interface AppState {
-  auth: shared.State;
+  auth: shared.AuthState;
 }
 
 export const reducers: ActionReducerMap<AppState, any> = {

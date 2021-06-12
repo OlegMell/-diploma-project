@@ -12,6 +12,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { SharedEffects } from './shared/store/shared.effects';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ProfileModule } from './modules/profile/profile.module';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -26,8 +28,9 @@ import { HttpClientModule } from '@angular/common/http';
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([SharedEffects]),
     AuthModule,
+    ProfileModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, AuthGuard],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {

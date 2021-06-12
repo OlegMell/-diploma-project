@@ -2,18 +2,18 @@ import { Auth } from '../models/common.models';
 import { AuthAction } from './shared.actions';
 import { AuthActionUnion } from './shared.actions';
 
-export interface State {
+export interface AuthState {
   auth: Auth | null;
   pending: boolean;
 }
 
-export const initialState: State = {
+export const initialState: AuthState = {
   auth: null,
   pending: false,
 };
 
 
-export function reducer(state: State = initialState, action: AuthActionUnion): State {
+export function reducer(state: AuthState = initialState, action: AuthActionUnion): AuthState {
   switch (action.type) {
     case AuthAction.login:
       return { ...state, pending: true };

@@ -1,16 +1,21 @@
-import {NgModule} from '@angular/core';
-import {AppMaterialModule} from './app-material.module';
+import { NgModule } from '@angular/core';
+import { AppMaterialModule } from './app-material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PreloaderComponent } from './shared/components/preloader/preloader.component';
+import { CommonModule } from "@angular/common";
 
 @NgModule({
-  declarations: [],
+  declarations: [ PreloaderComponent ],
   imports: [
     AppMaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ],
   exports: [
     AppMaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PreloaderComponent
   ]
 })
-export class AppSharedModule { }
+export class AppSharedModule {
+}
