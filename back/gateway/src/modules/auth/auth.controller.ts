@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req, Headers } from '@nestjs/common';
 import { AuthService } from "./services/auth.service";
 import { Observable } from "rxjs";
 import { Credentials } from "./models/credentials.model";
@@ -12,6 +12,11 @@ export class AuthController {
     @Get('/auth/signIn')
     signIn(@Query() credentials: Credentials): Observable<any> {
         return this.authService.signIn(credentials);
+    }
+
+    @Get('/auth/getProfile')
+    getProfile(@Headers('Authorization') a: string): Observable<any> {
+        return this.authService.getProfile(a);
     }
 
     @Post('/auth/signUp')

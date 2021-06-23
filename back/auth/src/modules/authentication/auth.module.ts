@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { HttpModule, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Account } from "./schema/account.schema";
 import { AuthService } from "./services/auth.service";
@@ -8,20 +8,23 @@ import { jwtConstants } from "./jwt/jwt.contants";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 import { JwtStrategy } from "./jwt/jwt.strategy";
+import { DropboxService } from "./services/dropbox.service";
+import { PersonalInfo } from "./schema/personal-info.schema";
 
 @Module({
     imports: [
         MongooseModule.forFeature([ {
             name: 'AccountModel', schema: Account
-        } ]),
+        }, { name: 'PersonalInfoModel', schema: PersonalInfo } ]),
         PassportModule,
         JwtModule.register({
             secret: jwtConstants.secret,
-            signOptions: { expiresIn: '60s' },
+            signOptions: { expiresIn: '86400s' },
         }),
+        HttpModule
     ],
     controllers: [ AuthController ],
-    providers: [ AuthService, AccountRepository, JwtStrategy ],
+    providers: [ AuthService, AccountRepository, JwtStrategy, DropboxService ],
     exports: [ JwtModule ]
 })
 export class AuthModule {

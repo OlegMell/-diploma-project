@@ -1,0 +1,47 @@
+@import "../../../../styles/colors";
+
+.menu {
+  transition: .1s all ease-in-out;
+
+  &:hover {
+    width: auto;
+    padding: 20px;
+    border-radius: 30px;
+  }
+
+  &:hover .menu-item {
+    display: inline;
+  }
+
+  &-item {
+    font-size: 18px;
+    margin: 0 8px;
+    transition: .1s all ease-in-out;
+    font-weight: 500;
+
+    &:hover {
+      cursor: pointer;
+      border-radius: 30px;
+      padding: 8px;
+    }
+
+    &:nth-child(2) {
+      display: none;
+    }
+
+    &:nth-child(3) {
+      display: none;
+    }
+
+    &_link {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+}
+
+.self-end {
+  position: absolute;
+  top: 30px;
+  right: 20px;
+}

@@ -31,7 +31,7 @@ export class SignInComponent implements OnInit, OnDestroy {
    */
   createSignInForm(): void {
     this.signInForm = this.fb.group({
-      login: this.fb.control('', [ Validators.required, Validators.email ]),
+      login: this.fb.control('', [ Validators.required ]),
       password: this.fb.control('', [ Validators.required, Validators.minLength(4) ])
     });
   }

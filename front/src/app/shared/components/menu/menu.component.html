@@ -1,0 +1,17 @@
+<div class="menu" [ngClass]="currTitle === 'Профиль' ? 'self-end' : ''">
+  <span class="menu-item">
+    <a title class="menu-item_link"> {{currTitle}} </a>
+  </span>
+
+  <span class="menu-item" *ngIf="currTitle !== 'Лента'">
+    <a title class="menu-item_link" [routerLink]="['/main']"> Лента </a>
+  </span>
+
+  <span class="menu-item" *ngIf="currTitle !== 'Профиль'">
+    <a title class="menu-item_link" [routerLink]="['/profile']"> Профиль </a>
+  </span>
+
+  <span class="menu-item" *ngIf="currTitle !== 'Настройки'">
+    <a title class="menu-item_link"> Настройки </a>
+  </span>
+</div>

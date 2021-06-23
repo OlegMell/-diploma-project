@@ -1,6 +1,5 @@
 import { ActionReducerMap } from '@ngrx/store';
 import * as shared from '../shared/store/shared.reducer';
-import { AuthState } from '../shared/store/shared.reducer';
 
 export interface AppState {
   auth: shared.AuthState;

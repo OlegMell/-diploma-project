@@ -1,9 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { MONGO_URL } from 'src/config/index';
-import { AuthService } from "./modules/authentication/services/auth.service";
-import { AccountRepository } from "./modules/authentication/repositories/account.repository";
+import { MONGO_URL } from './config';
 import { AuthModule } from "./modules/authentication/auth.module";
 
 @Module({
@@ -14,7 +12,7 @@ import { AuthModule } from "./modules/authentication/auth.module";
             useFindAndModify: false,
             useCreateIndex: true
         }),
-        AuthModule
+        AuthModule,
     ],
     controllers: [ AppController ],
     providers: [ ],

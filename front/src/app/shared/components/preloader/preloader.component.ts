@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AppFacade } from '../../facades/app.facade';
+import { AppFacadeService } from '../../facades/app-facade.service';
 
 @Component({
   selector: 'app-preloader',
@@ -7,6 +7,6 @@ import { AppFacade } from '../../facades/app.facade';
   styleUrls: [ './preloader.component.scss' ]
 })
 export class PreloaderComponent {
-  constructor(public appFacade: AppFacade) {
+  constructor(public appFacade: AppFacadeService) {
   }
 }

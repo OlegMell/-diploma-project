@@ -1,0 +1,23 @@
+.logo {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  width: 150px;
+  justify-content: space-between;
+
+  @media (max-width: 650px) {
+    justify-content: center;
+  }
+
+  &-small-text {
+    font-size: 35px;
+    font-weight: 500;
+  }
+}
+
+
+#bars {
+  @media (max-width: 650px) {
+    display: none !important;
+  }
+}

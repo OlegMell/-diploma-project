@@ -1,0 +1,12 @@
+<header [ngClass]="title === 'Профиль' ? 'self' : ''">
+
+  <!-- Логотип -->
+  <app-logo></app-logo>
+
+  <!-- Меню -->
+  <app-menu [currTitle]="title"></app-menu>
+
+  <!-- Профиль -->
+  <app-profile-avatar [centerPosition]="title === 'Профиль'"></app-profile-avatar>
+
+</header>

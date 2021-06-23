@@ -12,12 +12,21 @@ export class AuthService {
     }
 
     signIn({ login, password }): Observable<JwtToken> {
-        return this.httpService.get(`${ this.API_AUTH_URL }/signIn?login=${login}&password=${password}`)
+        return this.httpService.get(`${ this.API_AUTH_URL }/signIn?login=${ login }&password=${ password }`)
             .pipe(map(res => res.data));
     }
 
     signUp(account: CreateAccount): Observable<JwtToken> {
         return this.httpService.post(`${ this.API_AUTH_URL }/signIn`, account)
+            .pipe(map(res => res.data));
+    }
+
+    getProfile(token: string): any {
+        return this.httpService.get(`${ this.API_AUTH_URL }/getProfile`, {
+            headers: {
+                'Authorization': token
+            }
+        })
             .pipe(map(res => res.data));
     }
 

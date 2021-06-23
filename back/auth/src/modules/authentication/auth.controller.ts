@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UseGuards, Headers } from '@nestjs/common';
 import { AuthService } from "./services/auth.service";
 import { JwtAuthGuard } from "./jwt/jwt-auth.guard";
+import { AddUserDto, LoginUserDto } from "./dtos/user.dto";
+import { PersonalInfo } from "./schema/personal-info.schema";
 
 @Controller('api')
 export class AuthController {
@@ -8,19 +10,18 @@ export class AuthController {
     }
 
     @Get('/auth/signIn')
-    signIn(@Query() credentials): any {
+    signIn(@Query() credentials: LoginUserDto): any {
         return this.authService.findUser(credentials);
     }
 
     @Post('/auth/signIn')
-    signUp(@Body() account): any {
+    signUp(@Body() account: AddUserDto): any {
         return this.authService.createUser(account);
     }
 
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Get('/auth/getProfile')
-    getProfile(@Query() req): any {
-        console.log(req);
-        return 'OK';
+    getProfile(@Headers('authorization') a: string): Promise<typeof PersonalInfo> {
+        return this.authService.getProfile(a);
     }
 }

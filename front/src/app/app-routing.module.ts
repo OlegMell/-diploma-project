@@ -8,9 +8,14 @@ const routes: Routes = [
       .then(m => m.AuthModule)
   },
   {
-    path: 'app',
+    path: 'profile',
     canActivate: [AuthGuard],
     loadChildren: async () => await import('./modules/profile/profile.module').then(m => m.ProfileModule)
+  },
+  {
+    path: 'main',
+    canActivate: [AuthGuard],
+    loadChildren: async () => await import('./modules/main/main.module').then(m => m.MainModule)
   },
   { path: '**', redirectTo: 'auth' }
 ];

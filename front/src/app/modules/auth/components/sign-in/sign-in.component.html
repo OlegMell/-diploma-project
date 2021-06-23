@@ -12,20 +12,24 @@
 
   <div class="form-wrapper">
     <h1 class="form-header"> Вход </h1>
+
     <form class="form-account" [formGroup]="signInForm" (submit)="signIn()">
+
       <mat-form-field appearance="outline">
         <mat-label> Имя пользователя или email </mat-label>
+
         <input type="text" matInput formControlName="login">
-        <mat-error *ngIf="signInForm.get('login').hasError('minlength')">
-          Слишком коротко)
-        </mat-error>
+
         <mat-error *ngIf="signInForm.get('login').hasError('required')">
           Забыли написать)
         </mat-error>
+
         <mat-icon matSuffix>
           account_circle
         </mat-icon>
+
       </mat-form-field>
+
       <mat-form-field appearance="outline">
         <mat-label>Пароль</mat-label>
         <input type="password" matInput formControlName="password">

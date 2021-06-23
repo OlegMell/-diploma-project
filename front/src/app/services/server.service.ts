@@ -8,6 +8,7 @@ const REQUESTS = {
       signIn: '/signIn',
       signUp: '/signUp',
       isAuth: '/isAuth',
+      getProfile: '/getProfile'
     }
   }
 };
@@ -29,13 +30,17 @@ export class ServerService {
       }
     });
 
-    console.log(httpParams);
-
     return httpParams;
   }
 
   protected defaultHeaders(): any {
-    return { 'Content-Type': 'application/json' };
+    return {
+      'Content-Type': 'application/json',
+    };
+  }
+
+  protected setAuthorize(headers: object, token: string | undefined): any {
+    return { ...headers, Authorization: `Bearer ${token}` };
   }
 
   protected defaultOptions(): any {

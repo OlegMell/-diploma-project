@@ -1,17 +1,33 @@
 import { Injectable } from "@nestjs/common";
 import { AccountRepository } from "../repositories/account.repository";
+import { JwtToken } from "../dtos/jwt-token.interface";
+import { AddUserDto, LoginUserDto } from "../dtos/user.dto";
 
-
+/**
+ * Сервис авторизации
+ */
 @Injectable()
 export class AuthService {
     constructor(private readonly accountRepository: AccountRepository) {
     }
 
-    findUser({ login, password }): any {
-        return this.accountRepository.findUser(login, password);
+    /**
+     * Поиск пользователя
+     * @param loginUser входящий пользователь
+     */
+    findUser(loginUser: LoginUserDto): Promise<JwtToken> {
+        return this.accountRepository.findUser(loginUser);
     }
 
-    createUser({ username, password, login }): any {
-        return this.accountRepository.addUser(username, password, login);
+    /**
+     * Создание пользователя
+     * @param addUser новый пользователь
+     */
+    createUser(addUser: AddUserDto): Promise<JwtToken> {
+        return this.accountRepository.addUser(addUser);
+    }
+
+    getProfile(token: string): Promise<any> {
+        return this.accountRepository.getUserData(token);
     }
 }

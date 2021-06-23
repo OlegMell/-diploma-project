@@ -14,6 +14,7 @@ import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileModule } from './modules/profile/profile.module';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { MainModule } from "./modules/main/main.module";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AuthGuard } from './shared/guards/auth.guard';
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([SharedEffects]),
     AuthModule,
-    ProfileModule
+    ProfileModule,
+    MainModule
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [ AppComponent ]

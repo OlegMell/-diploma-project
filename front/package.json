@@ -23,6 +23,7 @@
     "@angular/router": "~11.2.11",
     "@ngrx/effects": "^11.1.1",
     "@ngrx/store": "^11.1.1",
+    "jwt-decode": "^3.1.2",
     "rxjs": "~6.6.0",
     "ts-md5": "^1.2.8",
     "tslib": "^2.0.0",

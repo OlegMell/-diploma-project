@@ -31,6 +31,39 @@
       backdrop-filter: blur(20px);
     }
   }
+
+  header {
+    background-color: whitesmoke;
+
+    .profile {
+      &:hover:not(.active-color) {
+        background-color: rgba($lightPrimary, .5);
+      }
+    }
+
+    .dropdown {
+      background-color: $lightPrimary;
+
+      &-option {
+        &:hover {
+          background-color: rgba(whitesmoke, .7);
+        }
+      }
+
+    }
+  }
+
+  .menu {
+    &:hover {
+      background-color: rgba($lightPrimary, .5);
+    }
+
+    &-item {
+      &:hover {
+        background-color: rgba(whitesmoke, .7);
+      }
+    }
+  }
 }
 
 .dark-theme {
@@ -43,7 +76,7 @@
     padding: 20px 0;
     box-sizing: border-box;
     border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   }
 
   .link {
@@ -68,13 +101,51 @@
     color: inherit;
 
     &:hover {
-      background-color: rgba($primary, .25);
+      background-color: $darkModePrimary;
       backdrop-filter: blur(20px);
     }
   }
 
   .mat-form-field-label {
     color: $darkModeWhite;
+  }
+
+  header {
+    background-color: $darkBlack;
+
+    .profile {
+
+      &:hover:not(.active-color) {
+        background-color: $darkModePrimary;
+      }
+    }
+
+    .dropdown {
+      background-color: $darkModePrimary;
+
+      &-option {
+        &:hover {
+          background-color: rgba(whitesmoke, .3);
+        }
+      }
+    }
+
+  }
+
+  .menu {
+    &:hover {
+      background-color: $darkModePrimary;
+    }
+
+    &-item {
+      &:hover {
+        background-color: rgba(whitesmoke, .3);
+      }
+    }
+  }
+
+  .active-color {
+    background-color: $darkModePrimary;
   }
 }
 

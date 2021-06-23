@@ -1,0 +1,36 @@
+@import "../../../../styles/colors";
+@import "../../../../styles/animations";
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 90px;
+  position: relative;
+  width: 100%;
+
+  @media (max-width: 650px) {
+    flex-direction: column;
+  }
+
+  .title {
+    font-weight: 500;
+    font-size: 25px;
+  }
+}
+
+.active-color {
+  background-color: $lightPrimary;
+}
+
+.active {
+  height: 300px !important;
+}
+
+.hidden {
+  height: 60px !important;
+}
+
+.self {
+  justify-content: space-between;
+}

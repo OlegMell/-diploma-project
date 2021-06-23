@@ -1,4 +1,3 @@
-
 export interface Credentials {
   login: string;
   password: string;
@@ -11,5 +10,26 @@ export interface CreateAccount {
 }
 
 export interface Auth {
-  token: string;
+  token?: string;
+}
+
+export enum Themes {
+  LIGHT = 'light',
+  DARK = 'dark'
+}
+
+export interface Profile {
+  img: string;
+  username: string;
+}
+
+export interface PersonalData {
+  firstname?: string;
+  lastname?: string;
+  email?: string;
+  photo?: string;
+  phone?: string;
+  bio?: string;
+  site?: string;
+  username?: string;
 }
