@@ -24,10 +24,9 @@ export interface Profile {
 }
 
 export interface PersonalData {
-  firstname?: string;
-  lastname?: string;
+  name?: string;
   email?: string;
-  photo?: string;
+  photo?: string | File;
   phone?: string;
   bio?: string;
   site?: string;

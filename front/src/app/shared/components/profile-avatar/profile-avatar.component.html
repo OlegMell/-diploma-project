@@ -1,19 +1,34 @@
-<div class="relative-container" [ngClass]="centerPosition ? 'center-position' : ''">
+<div class="relative-container"
+     [ngClass]="centerPosition ? 'center-position' : ''"
+     [class.sidebar-mode]="scrolled">
   <div class="menu-box" [ngClass]="isProfileClicked ? 'active' : 'hidden'">
-    <div class="profile" [class.active-color]="isProfileClicked" (click)="isProfileClicked = !isProfileClicked">
+
+    <div class="profile"
+         [class.active-color]="isProfileClicked"
+         (click)="isProfileClicked = !isProfileClicked">
+
       <div class="avatar">
+
         <img class="avatar-img"
              src="{{ authFacade.photo$ | async }}"
              alt="profile avatar">
+
       </div>
+
       <span class="username">@{{authFacade.firstname$ | async}}</span>
     </div>
 
     <div class="overlay">
+
       <div class="dropdown">
+
+        <div class="dropdown-option" (click)="editProfile()">Редактировать</div>
+
         <div (click)="toggleTheme()"
-             class="dropdown-option">{{ themeService.getCurrentTheme === 'light' ? 'Темная' : 'Светлая' }} тема
+             class="dropdown-option">
+          {{ themeService.getCurrentTheme === 'light' ? 'Темная' : 'Светлая' }} тема
         </div>
+
         <div (click)="logout()" class="dropdown-option">Выход</div>
       </div>
     </div>

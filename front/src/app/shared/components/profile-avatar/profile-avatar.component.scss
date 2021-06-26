@@ -95,7 +95,7 @@
 }
 
 .active {
-  height: 300px !important;
+  height: 400px !important;
 }
 
 .hidden {
@@ -106,6 +106,7 @@
   position: absolute;
   top: 85px;
   margin: auto;
+
   left: 0;
   right: 0;
 
@@ -131,4 +132,13 @@
   .hidden {
     height: 175px !important;
   }
+}
+
+
+.sidebar-mode {
+  position: fixed;
+  right: 200px;
+  top: 15px;
+  -webkit-animation: slide-in-right 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: slide-in-right 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }

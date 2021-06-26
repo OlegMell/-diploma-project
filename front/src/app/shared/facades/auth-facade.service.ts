@@ -3,7 +3,8 @@ import { Store } from '@ngrx/store';
 import * as SharedActions from '../store/shared.actions';
 import { selectAuth, selectImage, selectProfileName } from '../selectors/auth.selectors';
 import { AppState } from '../../store';
-import { Logout } from '../store/shared.actions';
+import { Logout, UpdatePersonalData } from '../store/shared.actions';
+import { PersonalData } from "../models/common.models";
 
 
 @Injectable({ providedIn: 'root' })
@@ -26,5 +27,9 @@ export class AuthFacadeService {
 
   logout(): void {
     this.store.dispatch(new Logout());
+  }
+
+  updateProfileData(data: FormData): void {
+    this.store.dispatch(new UpdatePersonalData(data));
   }
 }

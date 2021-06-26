@@ -1,6 +1,8 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { AuthFacadeService } from '../../facades/auth-facade.service';
 import { ThemeService } from '../../../services/theme.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EditProfileDialogComponent } from '../edit-profile-dialog/edit-profile-dialog.component';
 
 @Component({
   selector: 'app-profile-avatar',
@@ -11,9 +13,11 @@ export class ProfileAvatarComponent implements OnInit, OnDestroy {
 
   isProfileClicked = false; // флаг было ли нажатие на компонент
   @Input() centerPosition = false; // флаг позиции компонента
+  scrolled = false; // флаг скролла страницы
 
   constructor(public readonly authFacade: AuthFacadeService,
-              readonly themeService: ThemeService) {
+              public readonly themeService: ThemeService,
+              private readonly dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -33,6 +37,22 @@ export class ProfileAvatarComponent implements OnInit, OnDestroy {
     this.themeService.toggleTheme();
   }
 
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    this.scrolled = window.pageYOffset > 48;
+  }
+
+  /**
+   * Листенер нажатия на кнопку редактиования профиля
+   */
+  editProfile(): void {
+    this.dialog.open(EditProfileDialogComponent, {
+      width: '600px',
+      height: '650px',
+    });
+  }
+
   ngOnDestroy(): void {
   }
+
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-menu',
@@ -8,12 +8,18 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 export class MenuComponent implements OnInit, OnDestroy {
 
   @Input() currTitle: string | undefined;
+  scrolled = false;
 
   constructor() {
 
   }
 
   ngOnInit(): void {
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    this.scrolled = window.pageYOffset > 48;
   }
 
   ngOnDestroy(): void {

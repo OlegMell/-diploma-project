@@ -1,0 +1,89 @@
+<header class="d-header">
+  <h2> Редактор профиля </h2>
+
+  <mat-dialog-actions>
+    <button mat-dialog-close mat-button>
+      <mat-icon> close </mat-icon>
+    </button>
+  </mat-dialog-actions>
+</header>
+
+<mat-dialog-content class="dialog">
+  <div class="d-container">
+
+    <form class="edit-form" [formGroup]="form">
+
+      <div class="img-wrapper">
+        <label for="img">
+
+          <img *ngIf="!imgPreview"
+            src="https://content.dropboxapi.com/apitl/1/AzEY39TB4f0aRgXFxmcFshYGLv4BT5bTFVshBTRUaVc6eOJPQKLYOx-8qZiTf72BDj
+        atWGcb1yID6baiqCrwUfKQdo-qRNL9rUrUz5X2qyMoaS2PqPhwDcnKolI-U5Yz4YwuvuL38wgbkuDjYb1GDw7Ui7qGdoP59uxqKAYV-Yu6gDD05
+        gJgd_e6A-ZmHV0LAhoz3cen5SeKOf0856uYei8WJ-V4G86EylfnpTGTmiDC4oWbxnV3WzKECoXI9wsyTSsjlQoP1--W_jmxxsJ1RTwuG4FuMVv
+        XaY_Lz_ubYGKxV9lc51B6d1LN6ir1uBAtnBzkPDkVqH0vfDbYXhWERa04"
+            alt="profile avatar">
+
+          <img *ngIf="imgPreview"
+            src="{{imgPreview}}"
+            alt="profile avatar">
+
+        </label>
+        <input (change)="selectImage($event)" id="img" type="file" class="file-inp" formControlName="img">
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label> Имя</mat-label>
+
+        <input type="text" matInput formControlName="name">
+
+        <!--      <mat-error *ngIf="signInForm.get('login').hasError('required')">-->
+        <!--        Забыли написать)-->
+        <!--      </mat-error>-->
+
+        <mat-icon matSuffix>
+          person
+        </mat-icon>
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label> Никнейм</mat-label>
+
+        <input type="text" matInput formControlName="username">
+
+        <!--      <mat-error *ngIf="signInForm.get('login').hasError('required')">-->
+        <!--        Забыли написать)-->
+        <!--      </mat-error>-->
+
+        <mat-icon matSuffix>
+          account_circle
+        </mat-icon>
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label> Вебсайт</mat-label>
+
+        <input type="text" matInput formControlName="site">
+
+        <!--      <mat-error *ngIf="signInForm.get('login').hasError('required')">-->
+        <!--        Забыли написать)-->
+        <!--      </mat-error>-->
+
+        <mat-icon matSuffix>
+          public
+        </mat-icon>
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label> О себе</mat-label>
+
+        <textarea matInput formControlName="bio"></textarea>
+      </mat-form-field>
+
+      <button (click)="save()" mat-raised-button color="primary">Сохранить</button>
+
+    </form>
+  </div>
+</mat-dialog-content>

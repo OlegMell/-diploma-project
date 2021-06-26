@@ -11,6 +11,8 @@ body {
 .center {
   display: flex;
   height: 100vh;
+  scroll-behavior: smooth;
+
 }
 
 .form-wrapper, .form-account {
@@ -38,3 +40,8 @@ body {
 }
 
 
+
+.mat-dialog-container {
+  position: relative !important;
+  overflow: hidden !important;
+}

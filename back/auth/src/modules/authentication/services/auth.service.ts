@@ -27,7 +27,15 @@ export class AuthService {
         return this.accountRepository.addUser(addUser);
     }
 
+    /**
+     * Получить данные пользователя
+     * @param token токен авторизированного пользователя
+     */
     getProfile(token: string): Promise<any> {
         return this.accountRepository.getUserData(token);
+    }
+
+    updateProfile(data: any, token: string): Promise<any> {
+        return this.accountRepository.updateProfileData(data, token);
     }
 }

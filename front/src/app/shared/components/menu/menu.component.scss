@@ -1,4 +1,5 @@
 @import "../../../../styles/colors";
+@import "../../../../styles/animations";
 
 .menu {
   transition: .1s all ease-in-out;
@@ -13,11 +14,17 @@
     display: inline;
   }
 
+  &:hover .menu-item .expand-ico {
+    display: none;
+  }
+
   &-item {
     font-size: 18px;
     margin: 0 8px;
     transition: .1s all ease-in-out;
     font-weight: 500;
+    display: flex;
+    align-items: center;
 
     &:hover {
       cursor: pointer;
@@ -45,3 +52,27 @@
   top: 30px;
   right: 20px;
 }
+
+
+.sidebar-mode {
+  position: fixed;
+  left: 200px;
+  top: 25px;
+  display: flex;
+  border-radius: 30px;
+  height: 150px;
+  width: 200px !important;
+  flex-direction: column !important;
+  animation: slide-in-left 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  -webkit-animation: slide-in-left 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+
+  .menu-item {
+    font-size: 20px;
+    margin: 15px;
+    text-align: left;
+  }
+}
+
+
+
+

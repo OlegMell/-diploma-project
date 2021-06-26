@@ -1,7 +1,13 @@
 @import "../../../styles/colors";
 
 .center-container {
-  width: 60%;
+  width: 75%;
   margin: 0 auto;
-  border: 1px solid $lightPrimary;
+  border: .5px solid rgba($lightPrimary, .5);
+
+  .content {
+    width: 50%;
+    margin: 0 auto;
+    border: .5px solid rgba(white, .5);
+  }
 }

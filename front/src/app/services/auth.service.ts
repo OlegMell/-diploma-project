@@ -5,6 +5,9 @@ import { Auth, CreateAccount, Credentials, PersonalData, Profile } from '../shar
 import { ServerService } from './server.service';
 import { Md5 } from 'ts-md5';
 import jwt_decode from 'jwt-decode';
+import { AuthState } from '../shared/store/shared.reducer';
+import { Store } from '@ngrx/store';
+import { selectAuth } from '../shared/selectors/auth.selectors';
 
 export interface TokenResult {
   readonly id: string;
@@ -28,8 +31,6 @@ export class AuthService extends ServerService {
   }
 
   public signUp(account: CreateAccount): Observable<Auth> {
-    console.log(account);
-    console.log(Md5.hashStr(account.password));
     const acc = { ...account, password: Md5.hashStr(account.password) };
     return this.http.post<Auth>(this.build('auth', 'signUp'), acc);
   }
@@ -43,6 +44,13 @@ export class AuthService extends ServerService {
   public checkUser(auth: Auth): Observable<Auth> {
     return this.http.get<Auth>(this.build('auth', 'isAuth'), {
       params: this.buildReqParams(auth)
+    });
+  }
+
+  public updatePersonaInfo(data: PersonalData, token: string): Observable<any> {
+    console.log(data);
+    return this.http.post(this.build('auth', 'updateProfile'), data, {
+      headers: this.setAuthorize({}, token)
     });
   }
 

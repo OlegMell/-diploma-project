@@ -1,12 +1,16 @@
-import { Body, Controller, Get, Post, Query, UseGuards, Headers } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UseGuards, Headers, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { AuthService } from "./services/auth.service";
 import { JwtAuthGuard } from "./jwt/jwt-auth.guard";
 import { AddUserDto, LoginUserDto } from "./dtos/user.dto";
-import { PersonalInfo } from "./schema/personal-info.schema";
+import { Observable } from "rxjs";
+import { PersonalInfo } from "./interfaces/account.interface";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { DropboxService } from "./services/dropbox.service";
 
 @Controller('api')
 export class AuthController {
-    constructor(private readonly authService: AuthService) {
+    constructor(private readonly authService: AuthService,
+                private readonly dropboxService: DropboxService) {
     }
 
     @Get('/auth/signIn')
@@ -19,9 +23,17 @@ export class AuthController {
         return this.authService.createUser(account);
     }
 
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Get('/auth/getProfile')
-    getProfile(@Headers('authorization') a: string): Promise<typeof PersonalInfo> {
+    getProfile(@Headers('authorization') a: string): Promise<PersonalInfo> {
         return this.authService.getProfile(a);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(FileInterceptor('photo'))
+    @Post('/auth/updateProfile')
+    updateProfile(@UploadedFile() f: Express.Multer.File, @Body() data: any, @Headers('authorization') a: string): Observable<any> {
+        return this.dropboxService.uploadFile(data.photo);
+        // return this.authService.updateProfile(data, a);
     }
 }

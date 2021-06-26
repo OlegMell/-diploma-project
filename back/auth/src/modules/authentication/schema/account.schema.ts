@@ -16,6 +16,7 @@ export const Account = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'PersonalInfo'
     },
+
     isPrivate: { type: Boolean },
     date: { type: Date }
 });

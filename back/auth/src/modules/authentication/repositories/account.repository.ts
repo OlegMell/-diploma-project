@@ -5,9 +5,8 @@ import { JwtService } from "@nestjs/jwt";
 import { JwtToken } from "../dtos/jwt-token.interface";
 import { DropboxService } from "../services/dropbox.service";
 import { map } from "rxjs/operators";
-import { PersonalInfo } from "../schema/personal-info.schema";
 import { AddUserDto, LoginUserDto } from "../dtos/user.dto";
-import { Account } from "../interfaces/account.interface";
+import { Account, PersonalInfo } from "../interfaces/account.interface";
 
 /**
  * Репозиторий для работы с аккаунтами пользователей
@@ -15,7 +14,7 @@ import { Account } from "../interfaces/account.interface";
 @Injectable()
 export class AccountRepository {
     constructor(@InjectModel('AccountModel') private account: Model<Account>,
-                @InjectModel('PersonalInfoModel') private personalInfo: Model<typeof PersonalInfo>,
+                @InjectModel('PersonalInfoModel') private personalInfo: Model<PersonalInfo>,
                 private readonly jwtService: JwtService,
                 private readonly http: HttpService,
                 private readonly dropboxService: DropboxService) {
@@ -50,6 +49,10 @@ export class AccountRepository {
         return this._jwtSign(user);
     }
 
+    /**
+     * Получение данных о пользователе по токену
+     * @param token токен аторизированного пользователя
+     */
     public async getUserData(token: string): Promise<Account> {
         const userId = this.jwtService.decode(token.slice(token.indexOf(' ') + 1)).sub;
 
@@ -71,6 +74,28 @@ export class AccountRepository {
         return u;
     }
 
+    public updateProfileData(data: any, token: string): any {
+        const userId = this.jwtService.decode(token.slice(token.indexOf(' ') + 1)).sub;
+        const p = data.photo;
+
+        console.log('PHOTO', p);
+
+        // return this.personalInfo.updateOne({
+        //     _id: userId
+        // }, {
+        //     set$: {
+        //         firstname: data.name,
+        //         bio: data.bio,
+        //         site: data.site,
+        //         photo: p,
+        //     }
+        // });
+    }
+
+    /**
+     * Подпись токена
+     * @param payload данные токена
+     */
     private async _jwtSign(payload): Promise<JwtToken> {
         return {
             token: await this.jwtService.signAsync({ username: payload.get('login'), sub: payload._id })

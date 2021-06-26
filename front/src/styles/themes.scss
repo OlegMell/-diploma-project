@@ -147,6 +147,11 @@
   .active-color {
     background-color: $darkModePrimary;
   }
+
+  .mat-dialog-container {
+    background-color: #202124;
+    color: inherit;
+  }
 }
 
 

@@ -8,12 +8,14 @@ const REQUESTS = {
       signIn: '/signIn',
       signUp: '/signUp',
       isAuth: '/isAuth',
-      getProfile: '/getProfile'
+      getProfile: '/getProfile',
+      updateProfile: '/updateProfile'
     }
   }
 };
 
 export class ServerService {
+
   protected build(entry: any, value: any): string {
     // @ts-ignore
     const child = value ? REQUESTS[entry].child[value] : '';
@@ -36,6 +38,14 @@ export class ServerService {
   protected defaultHeaders(): any {
     return {
       'Content-Type': 'application/json',
+    };
+  }
+
+  protected multiPartHeader(): any {
+    return {
+      // Accept: 'application/json',
+      // 'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'multipart/form-data',
     };
   }
 

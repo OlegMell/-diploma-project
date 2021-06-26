@@ -9,7 +9,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthState } from './shared.reducer';
 import { selectAuth } from '../selectors/auth.selectors';
 import { SnackbarService } from '../services/toastr.service';
-import { SetPersonalData } from './shared.actions';
+import {
+  AuthAction,
+  SetPersonalData,
+  UpdatePersonalData,
+  UpdatePersonalDataError,
+  UpdatePersonalDataSuccess
+} from './shared.actions';
 import { PersonalData } from '../models/common.models';
 
 
@@ -71,12 +77,9 @@ export class SharedEffects {
       return auth.token;
     }),
     mergeMap((token: string) => this.authService.getUserProfile(token).pipe(
-      map((r: any) => {
-        return new SetPersonalData({ ...r.personalInfo, ...r });
-      })
+      map((r: any) => new SetPersonalData({ ...r.personalInfo, ...r }))
     )),
   ));
-
 
   $setPersonalData = createEffect(() => this.actions$.pipe(
     ofType(SharedActions.AuthAction.setPersonalData),
@@ -96,4 +99,17 @@ export class SharedEffects {
       await this.router.navigate([ 'login' ]);
     })
   ), { dispatch: false });
+
+  updatePersonalInfo$ = createEffect(() => this.actions$.pipe(
+    ofType(SharedActions.AuthAction.updatePersonalData),
+    withLatestFrom(this.store$.select(selectAuth)),
+    // @ts-ignore
+    mergeMap(([action, auth]) => this.authService.updatePersonaInfo(action.payload, auth.token).pipe(
+      map(res => {
+        console.log(res);
+        return new UpdatePersonalDataSuccess({});
+      }),
+      catchError(() => of(new UpdatePersonalDataError({})))
+    )),
+  ));
 }

@@ -27,14 +27,14 @@ export class AuthGuard implements CanActivate {
       withLatestFrom(of(localStorage.getItem('access_token'))),
       map(([ auth, localToken ]) => {
         if (!auth && !localToken) {
-          this.router.navigate([ 'login' ]);
+          this.router.navigate([ 'auth' ]);
           return false;
         } else if (auth && !this.authService.isTokenExpired(auth.token)) {
           return true;
         } else if (localToken &&
           this.authService.isTokenExpired(localToken)) {
-          this.snackbar.open('Время вашего токена истекло, зайдите в аккаунт заново!');
-          // this.router.navigate(['login']);
+          this.snackbar.open('Время вашей сессии истекло, зайдите в аккаунт заново');
+          this.router.navigate(['auth']);
           return false;
         } else {
           if (localToken) {

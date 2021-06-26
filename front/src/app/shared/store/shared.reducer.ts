@@ -60,6 +60,15 @@ export function reducer(state: AuthState = initialState, action: SharedActionUni
     case AuthAction.setPersonalData:
       return { ...state, personalData: action.payload };
 
+    case AuthAction.updatePersonalData:
+      return { ...state, pending: true };
+
+    case AuthAction.updatePersonalDataSuccess:
+      return { ...state, pending: false };
+
+    case AuthAction.updatePersonalDataError:
+      return { ...state, pending: false };
+
     default:
       return { ...state };
   }

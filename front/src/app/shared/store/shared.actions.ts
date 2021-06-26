@@ -13,6 +13,9 @@ export enum AuthAction {
   logout = '[APP] Logout',
 
   setPersonalData = '[Login Page] Set Personal Data',
+  updatePersonalData = '[Login Page] Update Personal Data',
+  updatePersonalDataSuccess = '[Login Page] Update Personal Data Success',
+  updatePersonalDataError = '[Login Page] Update Personal Data Error',
 
   signUp = '[Sign Up Page] Sign Up',
   signUpSuccess = '[Sign Up Page] Sign Up Success',
@@ -82,6 +85,27 @@ export class SetPersonalData implements Action {
   }
 }
 
+export class UpdatePersonalData implements Action {
+  readonly type = AuthAction.updatePersonalData;
+
+  constructor(public payload: any) {
+  }
+}
+
+export class UpdatePersonalDataSuccess implements Action {
+  readonly type = AuthAction.updatePersonalDataSuccess;
+
+  constructor(public payload: any) {
+  }
+}
+
+export class UpdatePersonalDataError implements Action {
+  readonly type = AuthAction.updatePersonalDataError;
+
+  constructor(public payload: any) {
+  }
+}
+
 
 export type SharedActionUnion = Login
   | LoginSuccess
@@ -91,4 +115,7 @@ export type SharedActionUnion = Login
   | SignUpError
   | SetTheme
   | SetPersonalData
+  | UpdatePersonalData
+  | UpdatePersonalDataSuccess
+  | UpdatePersonalDataError
   | Logout;

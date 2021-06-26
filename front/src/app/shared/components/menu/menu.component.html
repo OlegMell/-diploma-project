@@ -1,6 +1,7 @@
-<div class="menu" [ngClass]="currTitle === 'Профиль' ? 'self-end' : ''">
+<div class="menu" [ngClass]="currTitle === 'Профиль' ? 'self-end' : ''" [class.sidebar-mode]="scrolled">
   <span class="menu-item">
     <a title class="menu-item_link"> {{currTitle}} </a>
+    <mat-icon class="expand-ico">chevron_right</mat-icon>
   </span>
 
   <span class="menu-item" *ngIf="currTitle !== 'Лента'">

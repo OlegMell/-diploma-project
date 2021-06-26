@@ -9,6 +9,8 @@ import { MenuComponent } from './shared/components/menu/menu.component';
 import { ProfileAvatarComponent } from './shared/components/profile-avatar/profile-avatar.component';
 import { RouterModule } from '@angular/router';
 import { LogoComponent } from './shared/components/logo/logo.component';
+import { SearchbarComponent } from './shared/components/searchbar/searchbar.component';
+import { EditProfileDialogComponent } from "./shared/components/edit-profile-dialog/edit-profile-dialog.component";
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { LogoComponent } from './shared/components/logo/logo.component';
     HeaderComponent,
     MenuComponent,
     ProfileAvatarComponent,
-    LogoComponent
+    LogoComponent,
+    SearchbarComponent,
+    EditProfileDialogComponent
   ],
   imports: [
     AppMaterialModule,
@@ -29,6 +33,9 @@ import { LogoComponent } from './shared/components/logo/logo.component';
     ReactiveFormsModule,
     PreloaderComponent,
     HeaderComponent
+  ],
+  entryComponents: [
+    EditProfileDialogComponent
   ],
   providers: [
     SnackbarService

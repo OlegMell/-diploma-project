@@ -14,7 +14,8 @@ import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileModule } from './modules/profile/profile.module';
 import { AuthGuard } from './shared/guards/auth.guard';
-import { MainModule } from "./modules/main/main.module";
+import { MainModule } from './modules/main/main.module';
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MainModule } from "./modules/main/main.module";
     EffectsModule.forRoot([SharedEffects]),
     AuthModule,
     ProfileModule,
-    MainModule
+    MainModule,
+    ReactiveFormsModule
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [ AppComponent ]

@@ -13,14 +13,15 @@ import { PersonalInfo } from "./schema/personal-info.schema";
 
 @Module({
     imports: [
-        MongooseModule.forFeature([ {
-            name: 'AccountModel', schema: Account
-        }, { name: 'PersonalInfoModel', schema: PersonalInfo } ]),
-        PassportModule,
+        MongooseModule.forFeature([
+            { name: 'AccountModel', schema: Account },
+            { name: 'PersonalInfoModel', schema: PersonalInfo }
+        ]),
         JwtModule.register({
             secret: jwtConstants.secret,
             signOptions: { expiresIn: '86400s' },
         }),
+        PassportModule,
         HttpModule
     ],
     controllers: [ AuthController ],
