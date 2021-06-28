@@ -23,8 +23,8 @@ export class DropboxService {
      * @param path путь к файлу на dropbox
      */
     public getLink(path: string): Observable<string> {
-        console.log('DDDD', path);
         const url = `${ this.DROPBOX_API_URL }get_temporary_link`;
+
         return this.http.post(url, { path: `${ path }` }, {
             headers: this.requestService.setDefaultHeaders()
         }).pipe(
@@ -34,6 +34,10 @@ export class DropboxService {
 
     }
 
+    /**
+     * Загрузка файла на Dropbox
+     * @param file файл для загрузки
+     */
     public upload(file: Express.Multer.File): Observable<any> {
         const url = `${ this.UPLOAD_DROPBOX_API_URL }upload`;
         const arr = file.originalname.split('.');

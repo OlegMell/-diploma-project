@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../shared/store/shared.reducer';
 import { SetTheme } from '../shared/store/shared.actions';
+import { APP_THEME } from '../shared/constants/app.constants';
 
 /**
  * Сервис для работы с темой приложения
@@ -35,14 +36,19 @@ export class ThemeService {
    * Переключение темы приложения
    */
   toggleTheme(): void {
+    if (localStorage.getItem(APP_THEME)) {
+      localStorage.removeItem(APP_THEME);
+    }
 
     if (this.currentTheme === 'dark') {
       document.body.classList.add('light-theme');
       document.body.classList.remove('dark-theme');
+      localStorage.setItem(APP_THEME, 'light');
       this.store$.dispatch(new SetTheme(Themes.LIGHT));
     } else {
       document.body.classList.add('dark-theme');
       document.body.classList.remove('light-theme');
+      localStorage.setItem(APP_THEME, 'dark');
       this.store$.dispatch(new SetTheme(Themes.DARK));
     }
 

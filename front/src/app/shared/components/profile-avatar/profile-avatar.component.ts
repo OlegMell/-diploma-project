@@ -3,6 +3,8 @@ import { AuthFacadeService } from '../../facades/auth-facade.service';
 import { ThemeService } from '../../../services/theme.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditProfileDialogComponent } from '../edit-profile-dialog/edit-profile-dialog.component';
+import { Subject } from 'rxjs';
+import { filter, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile-avatar',
@@ -11,9 +13,14 @@ import { EditProfileDialogComponent } from '../edit-profile-dialog/edit-profile-
 })
 export class ProfileAvatarComponent implements OnInit, OnDestroy {
 
-  isProfileClicked = false; // флаг было ли нажатие на компонент
+  private uns$: Subject<void> = new Subject<void>(); // unsubscribe all
+
   @Input() centerPosition = false; // флаг позиции компонента
+
+  isProfileClicked = false; // флаг было ли нажатие на компонент
+  isPhotoLoaded = false; // флаг загрузки фоto
   scrolled = false; // флаг скролла страницы
+  photo!: string; // photo
 
   constructor(public readonly authFacade: AuthFacadeService,
               public readonly themeService: ThemeService,
@@ -21,6 +28,13 @@ export class ProfileAvatarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.isPhotoLoaded = false;
+    this.authFacade.photo$
+      .pipe(
+        takeUntil(this.uns$),
+        filter(value => value),
+        tap(() => this.isPhotoLoaded = true))
+      .subscribe(photo => this.photo = photo);
   }
 
   /**
@@ -53,6 +67,8 @@ export class ProfileAvatarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.uns$.next();
+    this.uns$.complete();
   }
 
 }

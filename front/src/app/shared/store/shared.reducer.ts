@@ -1,5 +1,7 @@
 import { Auth, PersonalData, Themes } from '../models/common.models';
 import { AppActions, AuthAction, SharedActionUnion } from './shared.actions';
+import { ThemeHelper } from '../helpers/theme.helper';
+import { APP_THEME } from '../constants/app.constants';
 
 /**
  * Часть состояния - авторизация
@@ -13,9 +15,15 @@ export interface AuthState {
 }
 
 
+
 let t = Themes.LIGHT;
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
   t = Themes.DARK;
+}
+
+const theme = localStorage.getItem(APP_THEME);
+if (theme) {
+  t = ThemeHelper.fromString(theme);
 }
 
 /**

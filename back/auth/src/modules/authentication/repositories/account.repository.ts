@@ -43,8 +43,20 @@ export class AccountRepository {
      * @param addUser модель нового пользователя
      */
     public async addUser(addUser: AddUserDto): Promise<JwtToken> {
-        const user = await this.account.create({ ...addUser, personalInfo: null });
+        const user: Account = await this.account.create({ ...addUser, personalInfo: null });
         if (!user) return null;
+
+        const p: PersonalInfo = await this.personalInfo.create({
+            firstName: '',
+            lastName: '',
+            bio: '',
+            site: '',
+            phone: '',
+            email: ''
+        });
+
+        await this.account.findByIdAndUpdate(user._id, { $set: { personalInfo: p._id } }).exec();
+
 
         return this._jwtSign(user);
     }

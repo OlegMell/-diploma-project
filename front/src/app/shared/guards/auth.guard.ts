@@ -8,6 +8,8 @@ import { map, withLatestFrom } from 'rxjs/operators';
 import { AuthState } from '../store/shared.reducer';
 import { SnackbarService } from '../services/toastr.service';
 import { LoginSuccess } from '../store/shared.actions';
+import { TOKEN_EXPIRED } from '../constants/snack-messages.constants';
+import { ACCESS_TOKEN } from '../constants/app.constants';
 
 
 @Injectable()
@@ -24,7 +26,7 @@ export class AuthGuard implements CanActivate {
     | UrlTree {
 
     return this.store$.select(selectAuth).pipe(
-      withLatestFrom(of(localStorage.getItem('access_token'))),
+      withLatestFrom(of(localStorage.getItem(ACCESS_TOKEN))),
       map(([ auth, localToken ]) => {
         if (!auth && !localToken) {
           this.router.navigate([ 'auth' ]);
@@ -33,8 +35,8 @@ export class AuthGuard implements CanActivate {
           return true;
         } else if (localToken &&
           this.authService.isTokenExpired(localToken)) {
-          this.snackbar.open('Время вашей сессии истекло, зайдите в аккаунт заново');
-          this.router.navigate(['auth']);
+          this.snackbar.open(TOKEN_EXPIRED);
+          this.router.navigate([ 'auth' ]);
           return false;
         } else {
           if (localToken) {

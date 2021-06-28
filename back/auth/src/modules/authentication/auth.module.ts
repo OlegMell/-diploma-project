@@ -27,7 +27,7 @@ import { PersonalInfoRepository } from "./repositories/personal-info.repository"
         HttpModule
     ],
     controllers: [ AuthController ],
-    providers: [ AuthService, AccountRepository, PersonalInfoRepository ,JwtStrategy, DropboxService ],
+    providers: [ AuthService, AccountRepository, PersonalInfoRepository, JwtStrategy, DropboxService ],
     exports: [ JwtModule ]
 })
 export class AuthModule {

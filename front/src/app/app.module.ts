@@ -16,6 +16,7 @@ import { ProfileModule } from './modules/profile/profile.module';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { MainModule } from './modules/main/main.module';
 import { ReactiveFormsModule } from "@angular/forms";
+import { SettingsModule } from "./modules/settings/settings.module";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ReactiveFormsModule } from "@angular/forms";
     AuthModule,
     ProfileModule,
     MainModule,
+    SettingsModule,
     ReactiveFormsModule
   ],
   providers: [AuthService, AuthGuard],

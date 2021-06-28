@@ -1,4 +1,5 @@
 export interface Account extends Document {
+    _id: string
     login: string;
     username: string;
     followers: any;
@@ -8,11 +9,12 @@ export interface Account extends Document {
 }
 
 export interface PersonalInfo extends Document {
-    firstname?: string;
-    lastname?: string;
-    email?: string;
-    phone?: string;
-    photo?: string;
-    site?: string;
-    bio?: string;
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    photo: string;
+    site: string;
+    bio: string;
 }

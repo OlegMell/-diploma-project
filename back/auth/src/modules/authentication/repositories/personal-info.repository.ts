@@ -1,6 +1,6 @@
 import { HttpService, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import { EnforceDocument, Model } from "mongoose";
 import { Account, PersonalInfo } from "../interfaces/account.interface";
 import { DropboxService } from "../services/dropbox.service";
 import { catchError, map, mergeMap } from "rxjs/operators";
@@ -17,6 +17,12 @@ export class PersonalInfoRepository {
                 private readonly jwtService: JwtService,
                 private readonly accountRepos: AccountRepository) {
     }
+
+    // public async createPersonalInfo(): Promise<PersonalInfo> {
+    //     // @ts-ignore
+    //     const persInfo: PersonalInfo = await this.personalInfo.create();
+    //     return persInfo;
+    // }
 
     public async updateProfileData(data: UpdatePersonalInfoDto, token: string): Promise<any> {
         const userId = this.jwtService.decode(token.slice(token.indexOf(' ') + 1)).sub;

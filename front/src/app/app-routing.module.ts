@@ -17,6 +17,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: async () => await import('./modules/main/main.module').then(m => m.MainModule)
   },
+  {
+    path: 'settings',
+    canActivate: [AuthGuard],
+    loadChildren: async () => await import('./modules/settings/settings.module').then(m => m.SettingsModule)
+  },
   { path: '**', redirectTo: 'auth' }
 ];
 

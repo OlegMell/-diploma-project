@@ -14,6 +14,8 @@ import {
   UpdatePersonalDataError,
   UpdatePersonalDataSuccess
 } from './shared.actions';
+import { ACCOUNT_NOT_FOUND, SUCCESS_SAVED } from '../constants/snack-messages.constants';
+import { ACCESS_TOKEN } from "../constants/app.constants";
 
 
 @Injectable()
@@ -36,7 +38,7 @@ export class SharedEffects {
       .pipe(
         map(res => {
           if (!res) {
-            this.snackBarService.open('Аккаунт не найден, проверьте логин и пароль!');
+            this.snackBarService.open(ACCOUNT_NOT_FOUND);
             return new SharedActions.LoginError();
           } else {
             return new SharedActions.LoginSuccess({ token: res.token });
@@ -69,11 +71,11 @@ export class SharedEffects {
     withLatestFrom(this.store$.select(selectAuth)),
     map(([ _, auth ]) => {
 
-      if (localStorage.getItem('access_token')) {
-        localStorage.removeItem('access_token');
+      if (localStorage.getItem(ACCESS_TOKEN)) {
+        localStorage.removeItem(ACCESS_TOKEN);
       }
 
-      localStorage.setItem('access_token', auth.token);
+      localStorage.setItem(ACCESS_TOKEN, auth.token);
 
       return auth.token;
     }),
@@ -102,7 +104,7 @@ export class SharedEffects {
   logout$ = createEffect(() => this.actions$.pipe(
     ofType(SharedActions.AuthAction.logout),
     map(async () => {
-      localStorage.removeItem('access_token');
+      localStorage.removeItem(ACCESS_TOKEN);
       await this.router.navigate([ 'login' ]);
     })
   ), { dispatch: false });
@@ -118,7 +120,7 @@ export class SharedEffects {
       .pipe(
         map(res => {
           console.log(res);
-          this.snackBarService.open('Сохранено!');
+          this.snackBarService.open(SUCCESS_SAVED);
           return new UpdatePersonalDataSuccess({});
         })
       ),
