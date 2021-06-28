@@ -1,14 +1,17 @@
 import { Injectable } from "@nestjs/common";
 import { AccountRepository } from "../repositories/account.repository";
 import { JwtToken } from "../dtos/jwt-token.interface";
-import { AddUserDto, LoginUserDto } from "../dtos/user.dto";
+import { AddUserDto, LoginUserDto, UpdatePersonalInfoDto } from "../dtos/user.dto";
+import { Observable } from "rxjs";
+import { PersonalInfoRepository } from "../repositories/personal-info.repository";
 
 /**
  * Сервис авторизации
  */
 @Injectable()
 export class AuthService {
-    constructor(private readonly accountRepository: AccountRepository) {
+    constructor(private readonly accountRepository: AccountRepository,
+                private readonly personalInfoRepos: PersonalInfoRepository) {
     }
 
     /**
@@ -35,7 +38,7 @@ export class AuthService {
         return this.accountRepository.getUserData(token);
     }
 
-    updateProfile(data: any, token: string): Promise<any> {
-        return this.accountRepository.updateProfileData(data, token);
+    async updateProfile(data: UpdatePersonalInfoDto, token: string): Promise<Observable<any>> {
+        return await this.personalInfoRepos.updateProfileData(data, token);
     }
 }

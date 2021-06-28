@@ -17,10 +17,7 @@
         <label for="img">
 
           <img *ngIf="!imgPreview"
-            src="https://content.dropboxapi.com/apitl/1/AzEY39TB4f0aRgXFxmcFshYGLv4BT5bTFVshBTRUaVc6eOJPQKLYOx-8qZiTf72BDj
-        atWGcb1yID6baiqCrwUfKQdo-qRNL9rUrUz5X2qyMoaS2PqPhwDcnKolI-U5Yz4YwuvuL38wgbkuDjYb1GDw7Ui7qGdoP59uxqKAYV-Yu6gDD05
-        gJgd_e6A-ZmHV0LAhoz3cen5SeKOf0856uYei8WJ-V4G86EylfnpTGTmiDC4oWbxnV3WzKECoXI9wsyTSsjlQoP1--W_jmxxsJ1RTwuG4FuMVv
-        XaY_Lz_ubYGKxV9lc51B6d1LN6ir1uBAtnBzkPDkVqH0vfDbYXhWERa04"
+            src="{{authFacade.photo$ | async}}"
             alt="profile avatar">
 
           <img *ngIf="imgPreview"

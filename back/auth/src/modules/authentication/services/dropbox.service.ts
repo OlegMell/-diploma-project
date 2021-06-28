@@ -1,5 +1,6 @@
 import { HttpService, Injectable } from "@nestjs/common";
 import { Observable } from "rxjs";
+import { map, tap } from "rxjs/operators";
 
 /**
  * Сервис для работы с Dropbox микросервисом
@@ -25,7 +26,12 @@ export class DropboxService {
      * @param file загружаемый файл
      */
     uploadFile(file: Express.Multer.File): Observable<any> {
-        return this.http.post(`${ this.DROPBOX_API_URL }upload`, { file });
+        return this.http.post(`${ this.DROPBOX_API_URL }upload`, { file }).pipe(
+            map(r => r.data),
+            tap(d => {
+                console.log(d);
+            })
+        )
     }
 
 }

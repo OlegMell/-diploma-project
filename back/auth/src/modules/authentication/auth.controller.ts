@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Query, UseGuards, Headers, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { AuthService } from "./services/auth.service";
 import { JwtAuthGuard } from "./jwt/jwt-auth.guard";
-import { AddUserDto, LoginUserDto } from "./dtos/user.dto";
+import { AddUserDto, LoginUserDto, UpdatePersonalInfoDto } from "./dtos/user.dto";
 import { Observable } from "rxjs";
 import { PersonalInfo } from "./interfaces/account.interface";
 import { FileInterceptor } from "@nestjs/platform-express";
@@ -30,10 +30,8 @@ export class AuthController {
     }
 
     @UseGuards(JwtAuthGuard)
-    @UseInterceptors(FileInterceptor('photo'))
     @Post('/auth/updateProfile')
-    updateProfile(@UploadedFile() f: Express.Multer.File, @Body() data: any, @Headers('authorization') a: string): Observable<any> {
-        return this.dropboxService.uploadFile(data.photo);
-        // return this.authService.updateProfile(data, a);
+    async updateProfile(@Body() data: UpdatePersonalInfoDto, @Headers('authorization') authToken: string): Promise<Observable<any>> {
+        return await this.authService.updateProfile(data, authToken);
     }
 }

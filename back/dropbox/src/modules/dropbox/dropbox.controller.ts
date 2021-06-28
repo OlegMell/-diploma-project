@@ -15,7 +15,7 @@ export class DropboxController {
     }
 
     @Post('/upload')
-    public async uploadFile(@Body() body): Promise<Observable<any>> {
-        return await this.dropbox.upload(body.file);
+    public uploadFile(@Body() body): Observable<any> {
+        return this.dropbox.upload(body.file);
     }
 }

@@ -56,40 +56,37 @@ export class AccountRepository {
     public async getUserData(token: string): Promise<Account> {
         const userId = this.jwtService.decode(token.slice(token.indexOf(' ') + 1)).sub;
 
-        // await this.account.updateOne({
-        //     _id: userId
-        // }, { $set: { 'personalInfo': "60d0e957724002ed433b6d37" } });
+        const user: Account = await this.getAccountWithPersonalInfo(userId);
 
-        const u: Account = await this.account.findById(userId).populate({
+        user.personalInfo.photo = await this.dropboxService
+            .getTemporaryLink(user.personalInfo.photo)
+            .pipe(
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                map(res => res.data)
+            ).toPromise();
+
+        return user;
+    }
+
+    /**
+     * Получение пользователя по id с персональными данными
+     * @param userId id пользователя в базе данных
+     */
+    public async getAccountWithPersonalInfo(userId: string): Promise<Account> {
+        return this.account.findById(userId).populate({
             path: 'personalInfo',
             model: 'PersonalInfoModel'
         });
-
-        u.personalInfo.photo = await this.dropboxService.getTemporaryLink(u.personalInfo.photo).pipe(
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            map(res => res.data)
-        ).toPromise();
-
-        return u;
     }
 
-    public updateProfileData(data: any, token: string): any {
-        const userId = this.jwtService.decode(token.slice(token.indexOf(' ') + 1)).sub;
-        const p = data.photo;
-
-        console.log('PHOTO', p);
-
-        // return this.personalInfo.updateOne({
-        //     _id: userId
-        // }, {
-        //     set$: {
-        //         firstname: data.name,
-        //         bio: data.bio,
-        //         site: data.site,
-        //         photo: p,
-        //     }
-        // });
+    /**
+     * Обновление никнейма пользователя по id
+     * @param id айди пользователя
+     * @param username новый никнейм
+     */
+    public async updateUsername(id: string, username: string): Promise<void> {
+        await this.account.findByIdAndUpdate(id, { $set: { username: username } });
     }
 
     /**

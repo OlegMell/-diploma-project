@@ -16,15 +16,13 @@ export interface AddUserDto {
 }
 
 /**
- * Модель персональных данных
+ * Модель обновления персональных данных
  */
 
-export interface PersonalInfoDto {
-    firstname?: string;
-    lastname?: string;
-    email?: string;
-    photo?: string;
-    phone?: string;
+export interface UpdatePersonalInfoDto {
+    name?: string;
+    photo?: Express.Multer.File;
     bio?: string;
     site?: string;
+    username?: string;
 }

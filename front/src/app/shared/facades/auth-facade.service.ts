@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as SharedActions from '../store/shared.actions';
-import { selectAuth, selectImage, selectProfileName } from '../selectors/auth.selectors';
+import {
+  selectAuth,
+  selectBio,
+  selectFirstname,
+  selectImage,
+  selectProfileName,
+  selectSIte
+} from '../selectors/auth.selectors';
 import { AppState } from '../../store';
 import { Logout, UpdatePersonalData } from '../store/shared.actions';
 import { PersonalData } from "../models/common.models";
@@ -12,7 +19,10 @@ export class AuthFacadeService {
 
   token$ = this.store.select(selectAuth);
   photo$ = this.store.select(selectImage);
-  firstname$ = this.store.select(selectProfileName);
+  username$ = this.store.select(selectProfileName);
+  firstname$ = this.store.select(selectFirstname);
+  bio$ = this.store.select(selectBio);
+  site$ = this.store.select(selectSIte);
 
   constructor(private store: Store<AppState>) {
   }

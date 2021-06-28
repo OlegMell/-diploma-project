@@ -14,11 +14,12 @@ export class RequestService {
         };
     }
 
-    setUploadHeaders(): any {
-        console.log('ere');
+    setUploadHeaders(fileName: string): any {
+        const path = `/profile-images/${fileName}`;
+
         return {
             'Content-Type': 'application/octet-stream',
-            'Dropbox-API-Arg': '{"path": "/Matrices.jpg", "mode": "add", "autorename": true,"mute": false,"strict_conflict": false}',
+            'Dropbox-API-Arg': `{"path": "${path}", "mode": "add", "autorename": true,"mute": false,"strict_conflict": false}`,
             'Authorization': `Bearer ${ this.DROPBOX_API_TOKEN }`
         };
     }

@@ -10,12 +10,14 @@ import { PassportModule } from "@nestjs/passport";
 import { JwtStrategy } from "./jwt/jwt.strategy";
 import { DropboxService } from "./services/dropbox.service";
 import { PersonalInfo } from "./schema/personal-info.schema";
+import { PersonalInfoRepository } from "./repositories/personal-info.repository";
 
 @Module({
     imports: [
         MongooseModule.forFeature([
             { name: 'AccountModel', schema: Account },
-            { name: 'PersonalInfoModel', schema: PersonalInfo }
+            { name: 'PersonalInfoModel', schema: PersonalInfo },
+
         ]),
         JwtModule.register({
             secret: jwtConstants.secret,
@@ -25,7 +27,7 @@ import { PersonalInfo } from "./schema/personal-info.schema";
         HttpModule
     ],
     controllers: [ AuthController ],
-    providers: [ AuthService, AccountRepository, JwtStrategy, DropboxService ],
+    providers: [ AuthService, AccountRepository, PersonalInfoRepository ,JwtStrategy, DropboxService ],
     exports: [ JwtModule ]
 })
 export class AuthModule {

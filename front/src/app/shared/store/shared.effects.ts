@@ -10,13 +10,10 @@ import { AuthState } from './shared.reducer';
 import { selectAuth } from '../selectors/auth.selectors';
 import { SnackbarService } from '../services/toastr.service';
 import {
-  AuthAction,
   SetPersonalData,
-  UpdatePersonalData,
   UpdatePersonalDataError,
   UpdatePersonalDataSuccess
 } from './shared.actions';
-import { PersonalData } from '../models/common.models';
 
 
 @Injectable()
@@ -29,7 +26,9 @@ export class SharedEffects {
               private store$: Store<AuthState>) {
   }
 
-  /** Эффект входа в аккаунт */
+  /**
+   * Эффект входа в аккаунт
+   */
   login$ = createEffect(() => this.actions$.pipe(
     ofType(SharedActions.AuthAction.login),
     // @ts-ignore
@@ -47,7 +46,9 @@ export class SharedEffects {
       ))
   ));
 
-  /** Эффект регистрации */
+  /**
+   * Эффект регистрации
+   */
   signUp$ = createEffect(() => this.actions$.pipe(
     ofType(SharedActions.AuthAction.signUp),
     // @ts-ignore
@@ -77,10 +78,16 @@ export class SharedEffects {
       return auth.token;
     }),
     mergeMap((token: string) => this.authService.getUserProfile(token).pipe(
-      map((r: any) => new SetPersonalData({ ...r.personalInfo, ...r }))
+      map((r: any) => {
+        console.log(r);
+        return new SetPersonalData({ ...r.personalInfo, ...r });
+      })
     )),
   ));
 
+  /**
+   * Установка данных пользователя
+   */
   $setPersonalData = createEffect(() => this.actions$.pipe(
     ofType(SharedActions.AuthAction.setPersonalData),
     map(async () => {
@@ -100,16 +107,23 @@ export class SharedEffects {
     })
   ), { dispatch: false });
 
+  /**
+   * Эффект изменения данных профиля
+   */
   updatePersonalInfo$ = createEffect(() => this.actions$.pipe(
     ofType(SharedActions.AuthAction.updatePersonalData),
     withLatestFrom(this.store$.select(selectAuth)),
     // @ts-ignore
-    mergeMap(([action, auth]) => this.authService.updatePersonaInfo(action.payload, auth.token).pipe(
-      map(res => {
-        console.log(res);
-        return new UpdatePersonalDataSuccess({});
-      }),
-      catchError(() => of(new UpdatePersonalDataError({})))
-    )),
-  ));
+    mergeMap(([ action, auth ]) => this.authService.updatePersonaInfo(action.payload, auth.token)
+      .pipe(
+        map(res => {
+          console.log(res);
+          this.snackBarService.open('Сохранено!');
+          return new UpdatePersonalDataSuccess({});
+        })
+      ),
+    ),
+    catchError(() => of(new UpdatePersonalDataError({})))
+    )
+  );
 }

@@ -24,7 +24,7 @@ export interface Profile {
 }
 
 export interface PersonalData {
-  name?: string;
+  firstName?: string;
   email?: string;
   photo?: string | File;
   phone?: string;

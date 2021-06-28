@@ -48,9 +48,8 @@ export class AuthService extends ServerService {
   }
 
   public updatePersonaInfo(data: PersonalData, token: string): Observable<any> {
-    console.log(data);
     return this.http.post(this.build('auth', 'updateProfile'), data, {
-      headers: this.setAuthorize({}, token)
+      headers: this.setAuthorize({}, token),
     });
   }
 
