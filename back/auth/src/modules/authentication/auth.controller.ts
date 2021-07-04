@@ -1,8 +1,19 @@
-import { Body, Controller, Get, Post, Query, UseGuards, Headers, UseInterceptors, UploadedFile } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    Post,
+    Query,
+    UseGuards,
+    Headers,
+    UseInterceptors,
+    UploadedFile,
+    Req
+} from '@nestjs/common';
 import { AuthService } from "./services/auth.service";
 import { JwtAuthGuard } from "./jwt/jwt-auth.guard";
 import { AddUserDto, LoginUserDto, UpdatePersonalInfoDto } from "./dtos/user.dto";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { PersonalInfo } from "./interfaces/account.interface";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { DropboxService } from "./services/dropbox.service";

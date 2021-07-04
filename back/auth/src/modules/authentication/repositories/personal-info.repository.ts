@@ -1,9 +1,8 @@
 import { HttpService, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { EnforceDocument, Model } from "mongoose";
+import { Model } from "mongoose";
 import { Account, PersonalInfo } from "../interfaces/account.interface";
 import { DropboxService } from "../services/dropbox.service";
-import { catchError, map, mergeMap } from "rxjs/operators";
 import { AccountRepository } from "./account.repository";
 import { JwtService } from "@nestjs/jwt";
 import { UpdatePersonalInfoDto } from "../dtos/user.dto";
@@ -28,21 +27,16 @@ export class PersonalInfoRepository {
         const userId = this.jwtService.decode(token.slice(token.indexOf(' ') + 1)).sub;
 
         const user: Account = await this.accountRepos.getAccountWithPersonalInfo(userId);
-
-        if (data.photo) {
-            return this.dropboxService.uploadFile(data.photo).pipe(
-                mergeMap(fileName => this._updatePersonalInfo(userId, user, data, fileName))
-            )
-        } else {
-            return this._updatePersonalInfo(userId, user, data);
-        }
+        return this._updatePersonalInfo(userId, user, data, data.img);
     }
 
     private async _updatePersonalInfo(userId: string, user: Account, data: any, photoPath = '/profile-images/thumb.png'): Promise<(PersonalInfo & Document) | null> {
         let file = '';
         const thumb = '/profile-images/thumb.png';
 
-        if (photoPath !== thumb && photoPath !== user.personalInfo.photo) {
+        if (photoPath === '') {
+            file = user.personalInfo.photo;
+        } else if (photoPath !== thumb && photoPath !== user.personalInfo.photo) {
             file = photoPath
         } else
             file = user.personalInfo.photo;

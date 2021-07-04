@@ -4,7 +4,6 @@ import { Model } from "mongoose";
 import { JwtService } from "@nestjs/jwt";
 import { JwtToken } from "../dtos/jwt-token.interface";
 import { DropboxService } from "../services/dropbox.service";
-import { map } from "rxjs/operators";
 import { AddUserDto, LoginUserDto } from "../dtos/user.dto";
 import { Account, PersonalInfo } from "../interfaces/account.interface";
 
@@ -52,7 +51,7 @@ export class AccountRepository {
             bio: '',
             site: '',
             phone: '',
-            email: ''
+            email: addUser.login
         });
 
         await this.account.findByIdAndUpdate(user._id, { $set: { personalInfo: p._id } }).exec();
@@ -68,17 +67,15 @@ export class AccountRepository {
     public async getUserData(token: string): Promise<Account> {
         const userId = this.jwtService.decode(token.slice(token.indexOf(' ') + 1)).sub;
 
-        const user: Account = await this.getAccountWithPersonalInfo(userId);
+        // user.personalInfo.photo = await this.dropboxService
+        //     .getTemporaryLink(user.personalInfo.photo)
+        //     .pipe(
+        //         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //         // @ts-ignore
+        //         map(res => res.data)
+        //     ).toPromise();
 
-        user.personalInfo.photo = await this.dropboxService
-            .getTemporaryLink(user.personalInfo.photo)
-            .pipe(
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                map(res => res.data)
-            ).toPromise();
-
-        return user;
+        return await this.getAccountWithPersonalInfo(userId);
     }
 
     /**

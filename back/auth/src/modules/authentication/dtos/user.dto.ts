@@ -21,7 +21,8 @@ export interface AddUserDto {
 
 export interface UpdatePersonalInfoDto {
     name?: string;
-    photo?: Express.Multer.File;
+    photo?: any;
+    img?: string
     bio?: string;
     site?: string;
     username?: string;

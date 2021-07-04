@@ -2,7 +2,7 @@ import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthService } from '../../services/auth.service';
-import { catchError, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, filter, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
 import * as SharedActions from './shared.actions';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,18 +10,21 @@ import { AuthState } from './shared.reducer';
 import { selectAuth } from '../selectors/auth.selectors';
 import { SnackbarService } from '../services/toastr.service';
 import {
-  SetPersonalData,
+  LoginError, LoginSuccess,
+  SetPersonalData, UpdatePersonalData,
   UpdatePersonalDataError,
   UpdatePersonalDataSuccess
 } from './shared.actions';
 import { ACCOUNT_NOT_FOUND, SUCCESS_SAVED } from '../constants/snack-messages.constants';
-import { ACCESS_TOKEN } from "../constants/app.constants";
+import { ACCESS_TOKEN } from '../constants/app.constants';
+import { DropboxService } from '../../services/dropbox.service';
 
 
 @Injectable()
 export class SharedEffects {
   constructor(private actions$: Actions,
               private authService: AuthService,
+              private dropboxService: DropboxService,
               private router: Router,
               private route: ActivatedRoute,
               private snackBarService: SnackbarService,
@@ -79,12 +82,17 @@ export class SharedEffects {
 
       return auth.token;
     }),
-    mergeMap((token: string) => this.authService.getUserProfile(token).pipe(
-      map((r: any) => {
-        console.log(r);
-        return new SetPersonalData({ ...r.personalInfo, ...r });
-      })
-    )),
+    mergeMap((token: string) => this.authService.getUserProfile(token)
+      .pipe(
+        mergeMap((r: any) => this.dropboxService.getLink(r.personalInfo.photo)
+          .pipe(
+            map(link => new SetPersonalData({
+              ...r.personalInfo,
+              ...r, photo: link
+            })),
+            catchError(() => of(new LoginError()))
+          ))
+      )),
   ));
 
   /**
@@ -97,6 +105,7 @@ export class SharedEffects {
       await this.router.navigate([ url.includes('auth') ? 'main' : url ], { relativeTo: this.route });
     })
   ), { dispatch: false });
+
 
   /**
    * Эффект выхода из аккаунта
@@ -116,16 +125,20 @@ export class SharedEffects {
     ofType(SharedActions.AuthAction.updatePersonalData),
     withLatestFrom(this.store$.select(selectAuth)),
     // @ts-ignore
-    mergeMap(([ action, auth ]) => this.authService.updatePersonaInfo(action.payload, auth.token)
+    mergeMap(([ action, auth ]) => this.dropboxService.uploadFile(action.payload.file)
       .pipe(
-        map(res => {
-          console.log(res);
-          this.snackBarService.open(SUCCESS_SAVED);
-          return new UpdatePersonalDataSuccess({});
-        })
-      ),
-    ),
-    catchError(() => of(new UpdatePersonalDataError({})))
-    )
-  );
+        mergeMap((filePath: string) => this.authService.updatePersonaInfo({
+          ...(action as UpdatePersonalData).payload,
+          img: filePath
+        }, auth.token)
+          .pipe(
+            map(r => {
+                this.snackBarService.open(SUCCESS_SAVED);
+                return new LoginSuccess(auth);
+              }
+            ),
+            catchError(() => of(new UpdatePersonalDataError({})))
+          )))),
+  ));
+
 }

@@ -53,10 +53,10 @@ export class AuthService {
      * @param data данные для обновления
      * @param token токен авторизированного пользователя
      */
-    updateProfileData(f: any, data: any, token: string): Observable<any> {
-        return this.httpService.post(`${ this.API_AUTH_URL }/updateProfile`, { photo: f, ...data }, {
+    updateProfileData(data: any, token: string): Observable<any> {
+        return this.httpService.post(`${ this.API_AUTH_URL }/updateProfile`, data,{
             headers: {
-                'Authorization': token
+                'Authorization': token,
             }
         })
             .pipe(map(res => res.data));

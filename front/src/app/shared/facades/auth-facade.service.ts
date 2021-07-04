@@ -39,7 +39,7 @@ export class AuthFacadeService {
     this.store.dispatch(new Logout());
   }
 
-  updateProfileData(data: FormData): void {
+  updateProfileData(data: any): void {
     this.store.dispatch(new UpdatePersonalData(data));
   }
 }
