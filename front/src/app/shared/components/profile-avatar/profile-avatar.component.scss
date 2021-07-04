@@ -50,7 +50,11 @@
         }
 
         &-img {
-          width: 100%;
+          //width: 100%;
+          height: 100%;
+          -webkit-background-clip: padding-box;
+          -moz-background-clip: padding;
+          background-clip: padding-box;
         }
       }
 
@@ -125,13 +129,17 @@
       border-radius: 50%;
       margin-right: 0 !important;
       transition: transform .2s ease-in-out;
+      object-fit: contain;
 
       &:hover {
         transform: scale(1.3);
       }
 
       &-img {
-        width: 100%;
+        height: 100%;
+        -webkit-background-clip: padding-box;
+        -moz-background-clip: padding;
+        background-clip: padding-box;
       }
     }
   }

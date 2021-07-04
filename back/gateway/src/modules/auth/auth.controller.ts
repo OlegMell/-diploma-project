@@ -1,9 +1,8 @@
-import { Body, Controller, Get, Post, Query, Req, Headers, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req, Headers } from '@nestjs/common';
 import { AuthService } from "./services/auth.service";
-import { Observable, of } from "rxjs";
+import { Observable } from "rxjs";
 import { Credentials } from "./models/credentials.model";
 import { CreateAccount } from "./models/create-account.model";
-import { FileInterceptor } from "@nestjs/platform-express";
 
 @Controller('api')
 export class AuthController {
@@ -27,8 +26,6 @@ export class AuthController {
 
     @Post('/auth/updateProfile')
     updateProfile(@Body() data: any, @Headers('Authorization') a: string): Observable<any> {
-        console.log(data);
         return this.authService.updateProfileData(data, a);
-        // return of('ok');
     }
 }
