@@ -8,12 +8,14 @@ import { JwtModule } from "@nestjs/jwt";
 import { jwtConstants } from "./modules/authentication/jwt/jwt.contants";
 import { PassportModule } from "@nestjs/passport";
 import { JwtStrategy } from "./modules/authentication/jwt/jwt.strategy";
+import {Settings} from "./modules/authentication/schema/settings.schema";
 
 @Module({
     imports: [
         MongooseModule.forFeature([
             { name: 'AccountModel', schema: Account },
             { name: 'PersonalInfoModel', schema: PersonalInfo },
+            { name: 'SettingsModel', schema: Settings}
         ]),
         JwtModule.register({
             secret: jwtConstants.secret,
