@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { MongooseModule } from '@nestjs/mongoose';
-import { MONGO_URL } from './config';
 import { AuthModule } from "./modules/authentication/auth.module";
+import { SearchModule } from "./modules/search/search.module";
+import { SharedModule } from "./shared.module";
+import { MongooseModule } from "@nestjs/mongoose";
+import { MONGO_URL } from "./config";
 
 @Module({
     imports: [
@@ -12,10 +14,12 @@ import { AuthModule } from "./modules/authentication/auth.module";
             useFindAndModify: false,
             useCreateIndex: true
         }),
+        SharedModule,
         AuthModule,
+        SearchModule
     ],
     controllers: [ AppController ],
-    providers: [ ],
+    providers: [],
 })
 export class AppModule {
 }

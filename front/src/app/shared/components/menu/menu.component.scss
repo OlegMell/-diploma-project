@@ -1,6 +1,7 @@
 @import "../../../../styles/colors";
 @import "../../../../styles/animations";
 
+/* Основной вид */
 .menu {
   transition: .1s all ease-in-out;
 
@@ -25,11 +26,11 @@
     font-weight: 500;
     display: flex;
     align-items: center;
+    padding: 8px;
 
     &:hover {
       cursor: pointer;
       border-radius: 30px;
-      padding: 8px;
     }
 
     &:nth-child(2) {
@@ -47,20 +48,21 @@
   }
 }
 
+/* Когда пользователь на странице Профиль */
 .self-end {
   position: absolute;
-  top: 30px;
+  top: 20px;
   right: 20px;
 }
 
-
+/* Когда страница прокручена вниз */
 .sidebar-mode {
   position: fixed;
   left: 200px;
   top: 25px;
   display: flex;
   border-radius: 30px;
-  height: 150px;
+  height: 190px;
   width: 200px !important;
   flex-direction: column !important;
   animation: slide-in-left 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
@@ -68,7 +70,7 @@
 
   .menu-item {
     font-size: 20px;
-    margin: 15px;
+    margin: 10px;
     text-align: left;
   }
 }

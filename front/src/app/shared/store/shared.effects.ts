@@ -1,8 +1,8 @@
-import { of } from 'rxjs';
+import { from, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthService } from '../../services/auth.service';
-import { catchError, filter, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, filter, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import * as SharedActions from './shared.actions';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { AuthState } from './shared.reducer';
 import { selectAuth } from '../selectors/auth.selectors';
 import { SnackbarService } from '../services/toastr.service';
 import {
-  LoginError, LoginSuccess,
+  LoginError, LoginSuccess, SearchUsers, SearchUsersError, SearchUsersSuccess,
   SetPersonalData, UpdatePersonalData,
   UpdatePersonalDataError,
   UpdatePersonalDataSuccess
@@ -18,12 +18,15 @@ import {
 import { ACCOUNT_NOT_FOUND, SUCCESS_SAVED } from '../constants/snack-messages.constants';
 import { ACCESS_TOKEN } from '../constants/app.constants';
 import { DropboxService } from '../../services/dropbox.service';
+import { SearchService } from '../../services/search.service';
+import { Auth, FoundUser, FoundUsers } from '../models/common.models';
 
 
 @Injectable()
 export class SharedEffects {
   constructor(private actions$: Actions,
               private authService: AuthService,
+              private readonly searchService: SearchService,
               private dropboxService: DropboxService,
               private router: Router,
               private route: ActivatedRoute,
@@ -140,5 +143,17 @@ export class SharedEffects {
             catchError(() => of(new UpdatePersonalDataError({})))
           )))),
   ));
+
+  searchUsers$ = createEffect(() => this.actions$.pipe(
+    ofType(SharedActions.AppActions.searchUsers),
+    withLatestFrom(this.store$.select(selectAuth)),
+    // @ts-ignore
+    mergeMap(([ action, auth ]) => this.searchService.findUsers(action.payload, auth.token)
+      .pipe(
+        map((res: FoundUsers) => new SearchUsersSuccess(res)),
+        catchError(() => of(new SearchUsersError('ERROR')))
+      ))
+  ));
+
 
 }

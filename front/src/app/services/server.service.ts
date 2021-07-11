@@ -11,6 +11,12 @@ const REQUESTS = {
       getProfile: '/getProfile',
       updateProfile: '/updateProfile'
     }
+  },
+  search: {
+    root: 'search',
+    child: {
+      findUser: '/findUser'
+    }
   }
 };
 

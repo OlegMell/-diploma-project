@@ -1,18 +1,16 @@
 import { HttpService, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { Account, PersonalInfo } from "../interfaces/account.interface";
-import { DropboxService } from "../services/dropbox.service";
+import { Account, PersonalInfo } from "../../modules/authentication/interfaces/account.interface";
 import { AccountRepository } from "./account.repository";
 import { JwtService } from "@nestjs/jwt";
-import { UpdatePersonalInfoDto } from "../dtos/user.dto";
+import { UpdatePersonalInfoDto } from "../../modules/authentication/dtos/user.dto";
 
 
 @Injectable()
 export class PersonalInfoRepository {
     constructor(@InjectModel('PersonalInfoModel') private personalInfo: Model<PersonalInfo>,
                 private readonly http: HttpService,
-                private readonly dropboxService: DropboxService,
                 private readonly jwtService: JwtService,
                 private readonly accountRepos: AccountRepository) {
     }

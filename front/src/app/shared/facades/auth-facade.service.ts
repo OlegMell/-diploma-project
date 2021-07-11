@@ -11,12 +11,17 @@ import {
 } from '../selectors/auth.selectors';
 import { AppState } from '../../store';
 import { Logout, UpdatePersonalData } from '../store/shared.actions';
-import { PersonalData } from "../models/common.models";
 
 
+/**
+ * Фасад-Сервис для работы с хранилищем и доступом к стейту
+ */
 @Injectable({ providedIn: 'root' })
 export class AuthFacadeService {
 
+  /**
+   * Данные пользователя
+   */
   token$ = this.store.select(selectAuth);
   photo$ = this.store.select(selectImage);
   username$ = this.store.select(selectProfileName);
@@ -27,18 +32,36 @@ export class AuthFacadeService {
   constructor(private store: Store<AppState>) {
   }
 
+  /**
+   * Метод авторизации польователя
+   * @param login эмайл или никнейм
+   * @param password пароль
+   */
   signIn(login: string, password: string): void {
     this.store.dispatch(new SharedActions.Login({ login, password }));
   }
 
+  /**
+   * Метод регистрации пользователя
+   * @param username никнейм
+   * @param login емайл пользователя
+   * @param password пароль
+   */
   signUp(username: string, login: string, password: string): void {
     this.store.dispatch(new SharedActions.SignUp({ login, password, username }));
   }
 
+  /**
+   * Метод выхода из аккаунта
+   */
   logout(): void {
     this.store.dispatch(new Logout());
   }
 
+  /**
+   * Метод обновления данных о пользователе
+   * @param data новые данные из формы редактирования профиля
+   */
   updateProfileData(data: any): void {
     this.store.dispatch(new UpdatePersonalData(data));
   }

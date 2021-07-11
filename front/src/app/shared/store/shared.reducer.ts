@@ -1,4 +1,4 @@
-import { Auth, PersonalData, Themes } from '../models/common.models';
+import { Auth, FoundUsers, PersonalData, Themes } from '../models/common.models';
 import { AppActions, AuthAction, SharedActionUnion } from './shared.actions';
 import { ThemeHelper } from '../helpers/theme.helper';
 import { APP_THEME } from '../constants/app.constants';
@@ -12,7 +12,9 @@ export interface AuthState {
   pending: boolean;
   theme: string;
   personalData: PersonalData | null;
+  foundUsers: FoundUsers | null;
 }
+
 
 
 
@@ -29,17 +31,18 @@ if (theme) {
 /**
  * Начальное состояние
  */
-export const initialState: AuthState = {
+export const initialAuthState: AuthState = {
   auth: null,
   pending: false,
   theme: t,
-  personalData: null
+  personalData: null,
+  foundUsers: null
 };
 
 /**
  * Редьюсер авторизации
  */
-export function reducer(state: AuthState = initialState, action: SharedActionUnion): AuthState {
+export function reducer(state: AuthState = initialAuthState, action: SharedActionUnion): AuthState {
   switch (action.type) {
     case AuthAction.login:
       return { ...state, pending: true };
@@ -75,6 +78,15 @@ export function reducer(state: AuthState = initialState, action: SharedActionUni
       return { ...state, pending: false };
 
     case AuthAction.updatePersonalDataError:
+      return { ...state, pending: false };
+
+    case AppActions.searchUsers:
+      return { ...state, pending: true };
+
+    case AppActions.searchUsersSuccess:
+      return { ...state, foundUsers: action.payload, pending: false };
+
+    case AppActions.searchUsersError:
       return { ...state, pending: false };
 
     default:

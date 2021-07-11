@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { AuthFacadeService } from '../../facades/auth-facade.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { SnackbarService } from '../../services/toastr.service';
+import { WRONG_FILE_EXT } from '../../constants/snack-messages.constants';
 
 @Component({
   selector: 'app-edit-prof-dialog',
@@ -24,6 +26,7 @@ export class EditProfileDialogComponent implements OnInit, OnDestroy {
   name!: string; // ФИО пользователя
 
   constructor(private readonly fb: FormBuilder,
+              private readonly snackBarService: SnackbarService,
               public readonly authFacade: AuthFacadeService) {
   }
 
@@ -68,9 +71,15 @@ export class EditProfileDialogComponent implements OnInit, OnDestroy {
 
       // @ts-ignore
       this.file = input.files[0];
+      const ext = ['png', 'jpg', 'jpeg', 'gif'];
+      const v = ext.includes(this.file.name.substring(this.file.name.indexOf('.') + 1));
+
+      if (!v) {
+        this.snackBarService.open(WRONG_FILE_EXT);
+        return;
+      }
 
       // @ts-ignore
-      // this.form.get('img').updateValueAndValidity();
       const reader = new FileReader();
 
       reader.onload = (e: any) => {

@@ -3,3 +3,5 @@ export const SUCCESS_SAVED = 'Изменения успешно сохранен
 export const TOKEN_EXPIRED = 'Время вашей сессии истекло, войдите заново!';
 
 export const ACCOUNT_NOT_FOUND = 'Аккаунт не найден, проверьте логин и пароль!';
+
+export const WRONG_FILE_EXT = 'Неподходящий формат файла!';

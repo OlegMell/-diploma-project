@@ -21,10 +21,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
-  @HostListener('window:scroll', [])
-  onWindowScroll(): void {
-    this.scrolled = window.pageYOffset > 48;
-  }
+  // @HostListener('window:scroll', [])
+  // onWindowScroll(): void {
+  //   this.scrolled = window.pageYOffset > 48;
+  // }
 
   ngOnDestroy(): void {
   }

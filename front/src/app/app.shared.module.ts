@@ -10,7 +10,9 @@ import { ProfileAvatarComponent } from './shared/components/profile-avatar/profi
 import { RouterModule } from '@angular/router';
 import { LogoComponent } from './shared/components/logo/logo.component';
 import { SearchbarComponent } from './shared/components/searchbar/searchbar.component';
-import { EditProfileDialogComponent } from "./shared/components/edit-profile-dialog/edit-profile-dialog.component";
+import { EditProfileDialogComponent } from './shared/components/edit-profile-dialog/edit-profile-dialog.component';
+import { InViewportDirective } from './shared/directives/in-viewport.directive';
+import { SmallUserComponent } from "./shared/components/small-user/small-user.component";
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { EditProfileDialogComponent } from "./shared/components/edit-profile-dia
     ProfileAvatarComponent,
     LogoComponent,
     SearchbarComponent,
-    EditProfileDialogComponent
+    EditProfileDialogComponent,
+    InViewportDirective,
+    SmallUserComponent
   ],
   imports: [
     AppMaterialModule,

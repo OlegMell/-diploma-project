@@ -5,8 +5,11 @@
 
   <!-- Меню -->
   <app-menu [currTitle]="title"></app-menu>
+  <div style="display:flex; align-items: center; width: 35%; justify-content: space-evenly;">
+    <!-- Поиск -->
+    <app-searchbar></app-searchbar>
 
-  <!-- Профиль -->
-  <app-profile-avatar [centerPosition]="title === 'Профиль'"></app-profile-avatar>
-
+    <!-- Профиль -->
+    <app-profile-avatar [centerPosition]="title === 'Профиль'"></app-profile-avatar>
+  </div>
 </header>

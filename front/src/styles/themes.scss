@@ -64,6 +64,20 @@
       }
     }
   }
+
+  .search-bar {
+    &_inp {
+      background-color: rgba(lightgray, .45);
+
+      &:focus {
+        background-color: rgba(#9FA8DA, .5);
+      }
+    }
+
+    .results {
+      background-color: $lightPrimary2;
+    }
+  }
 }
 
 .dark-theme {
@@ -151,6 +165,25 @@
   .mat-dialog-container {
     background-color: #202124;
     color: inherit;
+  }
+
+  .search-bar {
+    &_inp {
+      color: rgba(white, .8);
+      background-color: rgba(white, .2);
+
+      &:focus {
+        background-color: rgba($darkModePrimary, .9);
+      }
+
+      &::placeholder {
+        color: rgba(white, .8);
+      }
+    }
+
+    .results {
+      background-color: $darkModePrimary;
+    }
   }
 }
 

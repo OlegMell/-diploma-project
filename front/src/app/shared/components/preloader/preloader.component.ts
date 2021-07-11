@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AppFacadeService } from '../../facades/app-facade.service';
 
 @Component({
@@ -7,6 +7,8 @@ import { AppFacadeService } from '../../facades/app-facade.service';
   styleUrls: [ './preloader.component.scss' ]
 })
 export class PreloaderComponent {
-  constructor(public appFacade: AppFacadeService) {
+  @Input() diameter!: number; // размер крутилки
+
+  constructor(public readonly appFacade: AppFacadeService) {
   }
 }

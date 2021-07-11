@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { AccountRepository } from "../repositories/account.repository";
+import { AccountRepository } from "../../../shared/repositories/account.repository";
 import { JwtToken } from "../dtos/jwt-token.interface";
 import { AddUserDto, LoginUserDto, UpdatePersonalInfoDto } from "../dtos/user.dto";
 import { Observable } from "rxjs";
-import { PersonalInfoRepository } from "../repositories/personal-info.repository";
+import { PersonalInfoRepository } from "../../../shared/repositories/personal-info.repository";
 
 /**
  * Сервис авторизации

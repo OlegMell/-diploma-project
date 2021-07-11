@@ -1,0 +1,18 @@
+@import "colors";
+
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 30px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: rgba($lightPrimary2, 1);
+    border-radius: 30px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $darkModePrimary;
+    border-radius: 30px;
+  }
+}

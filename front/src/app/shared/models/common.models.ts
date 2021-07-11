@@ -32,3 +32,15 @@ export interface PersonalData {
   site?: string;
   username?: string;
 }
+
+export interface FoundUser {
+  username: string;
+  email: string;
+  photo: string;
+  firstName: string;
+  personalInfo: any;
+}
+
+export interface FoundUsers {
+  foundUsers: FoundUser[];
+}

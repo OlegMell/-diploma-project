@@ -21,6 +21,7 @@ export class ProfileAvatarComponent implements OnInit, OnDestroy {
   isPhotoLoaded = false; // флаг загрузки фоto
   scrolled = false; // флаг скролла страницы
   photo!: string; // photo
+  close = true; // флаг отображения
 
   constructor(public readonly authFacade: AuthFacadeService,
               public readonly themeService: ThemeService,
@@ -54,6 +55,16 @@ export class ProfileAvatarComponent implements OnInit, OnDestroy {
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
     this.scrolled = window.pageYOffset > 48;
+  }
+
+  @HostListener('body:click', [])
+  onBodyClick(): void {
+    this.isProfileClicked = false;
+  }
+
+  @HostListener('click', [ '$event' ])
+  public onClick(event: any): void {
+    event.stopPropagation();
   }
 
   /**

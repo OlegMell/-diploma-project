@@ -1,0 +1,110 @@
+@import "../../../../styles/mixins";
+
+.search-bar {
+  width: 100px;
+  height: auto;
+  border-radius: 30px;
+  position: fixed;
+  top: 15px;
+  right: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: .1s all ease-in-out;
+
+  &_inp-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      position: absolute;
+      right: 0;
+
+      .mat-icon {
+        font-size: 20px;
+      }
+    }
+  }
+
+  &:hover {
+    width: 250px;
+  }
+
+  &_inp {
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    border: 0;
+    width: 100%;
+    height: 40px;
+    padding: 15px;
+    font-size: 1rem;
+    border-radius: 30px;
+    box-sizing: border-box;
+    transition: all .2s ease-in-out;
+    box-shadow: -1px 2px 31px -7px rgba(34, 60, 80, 0.05) inset;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .results {
+    display: none;
+    width: 250px;
+    max-height: 200px;
+    scroll-behavior: smooth;
+    position: relative;
+    bottom: 0;
+    top: 20px;
+    left: 0;
+    right: 0;
+    border-radius: 30px;
+    padding: 15px;
+
+    &_scroll-view {
+      @include scrollbar;
+      height: auto;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .menu-item {
+      font-size: 20px;
+      margin: 15px;
+      text-align: left;
+      transition: .1s all ease-in-out;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      padding: 8px;
+
+      &:hover {
+        cursor: pointer;
+        border-radius: 30px;
+      }
+    }
+  }
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(darkgrey, .5);
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.active {
+  display: block !important;
+}
+
+.scrolled {
+  right: 200px;
+  top: 40px;
+}

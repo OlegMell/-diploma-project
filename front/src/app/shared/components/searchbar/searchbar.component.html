@@ -1,0 +1,37 @@
+<div class="search-bar" [class.scrolled]="scrolled">
+  <div class="search-bar_inp-wrapper" style="display: flex;">
+    <input type="text"
+           class="search-bar_inp"
+           placeholder="Поиск.."
+           [formControl]="searchField"
+           (click)="openPanel($event)">
+
+    <button matSuffix
+            *ngIf="searchField.value"
+            mat-icon-button
+            aria-label="Clear"
+            (click)="clearSearchField()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="results" [class.active]="close">
+
+   <div class="results_scroll-view">
+
+    <app-preloader [diameter]="30"></app-preloader>
+
+     <!--  Подсказка пока пусто в поле поиска  -->
+     <div class="menu-item" *ngIf="!(appFacade.foundUsers$ | async) || !(appFacade.foundUsers$ | async).length">
+       Начните что-нибудь печатать...
+     </div>
+
+     <!--  Вывод пользователей найденных  -->
+     <div *ngFor="let user of appFacade.foundUsers$ | async" class="menu-item">
+       <app-small-user *inView [user]="user"></app-small-user>
+     </div>
+
+   </div>
+
+  </div>
+</div>

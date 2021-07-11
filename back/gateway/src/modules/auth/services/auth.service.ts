@@ -3,6 +3,7 @@ import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { CreateAccount } from "../models/create-account.model";
 import { JwtToken } from "../models/jwt-token.model";
+import { API_AUTH_URL } from "../../../config/microservices-endpoints.config";
 
 /**
  * Сервис для работы с микросервисом авторизации пользователя
@@ -10,7 +11,6 @@ import { JwtToken } from "../models/jwt-token.model";
 
 @Injectable()
 export class AuthService {
-    API_AUTH_URL = 'http://localhost:4000/api/auth'; // url auth микросервиса
 
     constructor(private readonly httpService: HttpService) {
     }
@@ -21,7 +21,7 @@ export class AuthService {
      * @param password захешированный пароль
      */
     signIn({ login, password }): Observable<JwtToken> {
-        return this.httpService.get(`${ this.API_AUTH_URL }/signIn?login=${ login }&password=${ password }`)
+        return this.httpService.get(`${ API_AUTH_URL }auth/signIn?login=${ login }&password=${ password }`)
             .pipe(map(res => res.data));
     }
 
@@ -31,7 +31,7 @@ export class AuthService {
      * @param account данные для регистрации
      */
     signUp(account: CreateAccount): Observable<JwtToken> {
-        return this.httpService.post(`${ this.API_AUTH_URL }/signIn`, account)
+        return this.httpService.post(`${ API_AUTH_URL }auth/signIn`, account)
             .pipe(map(res => res.data));
     }
 
@@ -40,7 +40,7 @@ export class AuthService {
      * @param token токен пользователя
      */
     getProfile(token: string): any {
-        return this.httpService.get(`${ this.API_AUTH_URL }/getProfile`, {
+        return this.httpService.get(`${ API_AUTH_URL }auth/getProfile`, {
             headers: {
                 'Authorization': token
             }
@@ -54,7 +54,7 @@ export class AuthService {
      * @param token токен авторизированного пользователя
      */
     updateProfileData(data: any, token: string): Observable<any> {
-        return this.httpService.post(`${ this.API_AUTH_URL }/updateProfile`, data,{
+        return this.httpService.post(`${ API_AUTH_URL }auth/updateProfile`, data,{
             headers: {
                 'Authorization': token,
             }

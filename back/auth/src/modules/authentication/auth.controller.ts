@@ -15,13 +15,10 @@ import { JwtAuthGuard } from "./jwt/jwt-auth.guard";
 import { AddUserDto, LoginUserDto, UpdatePersonalInfoDto } from "./dtos/user.dto";
 import { Observable, of } from "rxjs";
 import { PersonalInfo } from "./interfaces/account.interface";
-import { FileInterceptor } from "@nestjs/platform-express";
-import { DropboxService } from "./services/dropbox.service";
 
 @Controller('api')
 export class AuthController {
-    constructor(private readonly authService: AuthService,
-                private readonly dropboxService: DropboxService) {
+    constructor(private readonly authService: AuthService) {
     }
 
     @Get('/auth/signIn')

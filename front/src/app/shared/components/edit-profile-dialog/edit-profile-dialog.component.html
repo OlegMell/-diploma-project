@@ -25,7 +25,7 @@
             alt="profile avatar">
 
         </label>
-        <input (change)="selectImage($event)" id="img" type="file" class="file-inp" formControlName="img">
+        <input accept="image/*" (change)="selectImage($event)" id="img" type="file" class="file-inp" formControlName="img">
       </div>
 
       <mat-form-field appearance="outline">

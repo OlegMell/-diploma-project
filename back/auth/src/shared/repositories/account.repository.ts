@@ -2,10 +2,9 @@ import { HttpService, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { JwtService } from "@nestjs/jwt";
-import { JwtToken } from "../dtos/jwt-token.interface";
-import { DropboxService } from "../services/dropbox.service";
-import { AddUserDto, LoginUserDto } from "../dtos/user.dto";
-import { Account, PersonalInfo } from "../interfaces/account.interface";
+import { JwtToken } from "../../modules/authentication/dtos/jwt-token.interface";
+import { AddUserDto, LoginUserDto } from "../../modules/authentication/dtos/user.dto";
+import { Account, PersonalInfo } from "../../modules/authentication/interfaces/account.interface";
 
 /**
  * Репозиторий для работы с аккаунтами пользователей
@@ -15,8 +14,7 @@ export class AccountRepository {
     constructor(@InjectModel('AccountModel') private account: Model<Account>,
                 @InjectModel('PersonalInfoModel') private personalInfo: Model<PersonalInfo>,
                 private readonly jwtService: JwtService,
-                private readonly http: HttpService,
-                private readonly dropboxService: DropboxService) {
+                private readonly http: HttpService) {
     }
 
     /**
@@ -67,14 +65,6 @@ export class AccountRepository {
     public async getUserData(token: string): Promise<Account> {
         const userId = this.jwtService.decode(token.slice(token.indexOf(' ') + 1)).sub;
 
-        // user.personalInfo.photo = await this.dropboxService
-        //     .getTemporaryLink(user.personalInfo.photo)
-        //     .pipe(
-        //         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //         // @ts-ignore
-        //         map(res => res.data)
-        //     ).toPromise();
-
         return await this.getAccountWithPersonalInfo(userId);
     }
 
@@ -96,6 +86,19 @@ export class AccountRepository {
      */
     public async updateUsername(id: string, username: string): Promise<void> {
         await this.account.findByIdAndUpdate(id, { $set: { username: username } });
+    }
+
+    public async findUsers(query: string): Promise<Account[]> {
+        if (!query.length) {
+            return [];
+        }
+
+        return this.account.find({
+            $or: [ { login: { $regex: query } }, { username: { $regex: query } } ],
+        }, null, { limit: 100 }).populate({
+            path: 'personalInfo',
+            model: 'PersonalInfoModel'
+        });
     }
 
     /**

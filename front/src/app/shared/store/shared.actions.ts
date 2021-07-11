@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Auth, CreateAccount, Credentials, PersonalData, Themes } from '../models/common.models';
+import { Auth, CreateAccount, Credentials, FoundUsers, PersonalData, Themes } from '../models/common.models';
 
 /**
  * Экшены авторизации и регистрации
@@ -24,7 +24,10 @@ export enum AuthAction {
 }
 
 export enum AppActions {
-  setAppTheme = '[Theme] Set Current Theme'
+  setAppTheme = '[Theme] Set Current Theme',
+  searchUsers = '[SEARCH] SEARCH USERS',
+  searchUsersSuccess = '[SEARCH] SEARCH USERS Success',
+  searchUsersError = '[SEARCH] SEARCH USERS Error',
 }
 
 
@@ -71,12 +74,6 @@ export class Logout implements Action {
   readonly type = AuthAction.logout;
 }
 
-export class SetTheme implements Action {
-  readonly type = AppActions.setAppTheme;
-
-  constructor(public payload: string) {
-  }
-}
 
 export class SetPersonalData implements Action {
   readonly type = AuthAction.setPersonalData;
@@ -106,6 +103,33 @@ export class UpdatePersonalDataError implements Action {
   }
 }
 
+export class SetTheme implements Action {
+  readonly type = AppActions.setAppTheme;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class SearchUsers implements Action {
+  readonly type = AppActions.searchUsers;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class SearchUsersSuccess implements Action {
+  readonly type = AppActions.searchUsersSuccess;
+
+  constructor(public payload: FoundUsers | null) {
+  }
+}
+
+export class SearchUsersError implements Action {
+  readonly type = AppActions.searchUsersError;
+
+  constructor(public payload: string) {
+  }
+}
 
 export type SharedActionUnion = Login
   | LoginSuccess
@@ -114,6 +138,9 @@ export type SharedActionUnion = Login
   | SignUpSuccess
   | SignUpError
   | SetTheme
+  | SearchUsers
+  | SearchUsersSuccess
+  | SearchUsersError
   | SetPersonalData
   | UpdatePersonalData
   | UpdatePersonalDataSuccess
