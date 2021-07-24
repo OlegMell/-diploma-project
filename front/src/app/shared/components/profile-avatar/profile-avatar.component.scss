@@ -1,9 +1,10 @@
-@import "../../../../styles/colors";
+@import "colors";
 
 .relative-container {
   position: relative;
   height: 90px;
-  width: 220px;
+  width: 200px;
+  left: 70px;
   transition: .2s all ease-in-out;
 
   .menu-box {
@@ -15,17 +16,17 @@
 
     @media (max-width: 650px) {
       display: flex;
-      flex-direction: column;
       align-items: center;
+      flex-direction: column;
     }
 
     .profile {
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       width: 200px;
-      border-radius: 50px;
       padding: 5px;
+      border-radius: 50px;
       transition: .1s all ease-in-out;
 
       @media (max-width: 650px) {

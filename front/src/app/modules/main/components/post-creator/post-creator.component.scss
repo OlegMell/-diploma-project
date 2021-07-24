@@ -1,11 +1,12 @@
-@import "../../../../../styles/colors";
-@import "../../../../../styles/mixins";
+@import "colors";
+@import "mixins";
 
 $btnBoxShadow: 0 3px 6px rgba(0, 0, 0, 0.05), 0 3px 6px rgba(0, 0, 0, 0.05);
 
 .post-creator {
   width: 100%;
   position: relative;
+  margin-top: 70px;
   margin-bottom: 10px;
   height: min-content;
   background-color: whitesmoke;
@@ -33,17 +34,16 @@ $btnBoxShadow: 0 3px 6px rgba(0, 0, 0, 0.05), 0 3px 6px rgba(0, 0, 0, 0.05);
         min-width: 100%;
         max-width: 550px;
         font-size: 1rem;
-        font-family: Roboto, "Helvetica Neue", sans-serif;
+        border-radius: 15px;
         box-sizing: border-box;
         border: .2px solid rgba(grey, .5);
-        border-radius: 15px;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
 
         &:focus {
           outline: 0 solid transparent;
         }
       }
     }
-
   }
 
   &-actions-wrapper {

@@ -1,4 +1,4 @@
-@import "../../../../styles/mixins";
+@import "mixins";
 
 .search-bar {
   width: 100px;
@@ -106,6 +106,6 @@
 }
 
 .scrolled {
-  right: 200px;
-  top: 40px;
+  //right: 200px;
+  top: 10px;
 }
