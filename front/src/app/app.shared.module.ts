@@ -12,31 +12,38 @@ import { LogoComponent } from './shared/components/logo/logo.component';
 import { SearchbarComponent } from './shared/components/searchbar/searchbar.component';
 import { EditProfileDialogComponent } from './shared/components/edit-profile-dialog/edit-profile-dialog.component';
 import { InViewportDirective } from './shared/directives/in-viewport.directive';
-import { SmallUserComponent } from "./shared/components/small-user/small-user.component";
+import { SmallUserComponent } from './shared/components/small-user/small-user.component';
+import { WritePostBtnComponent } from './shared/components/write-post-btn/write-post-btn.component';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 @NgModule({
   declarations: [
-    PreloaderComponent,
-    HeaderComponent,
     MenuComponent,
-    ProfileAvatarComponent,
     LogoComponent,
+    HeaderComponent,
     SearchbarComponent,
-    EditProfileDialogComponent,
+    PreloaderComponent,
+    SmallUserComponent,
     InViewportDirective,
-    SmallUserComponent
+    WritePostBtnComponent,
+    ProfileAvatarComponent,
+    EditProfileDialogComponent,
   ],
   imports: [
     AppMaterialModule,
     ReactiveFormsModule,
     CommonModule,
-    RouterModule
+    RouterModule,
+    PickerModule
   ],
   exports: [
     AppMaterialModule,
     ReactiveFormsModule,
     PreloaderComponent,
-    HeaderComponent
+    HeaderComponent,
+    WritePostBtnComponent,
+    InViewportDirective,
+    SmallUserComponent
   ],
   entryComponents: [
     EditProfileDialogComponent

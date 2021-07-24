@@ -1,19 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Auth, CreateAccount, Credentials, PersonalData, Profile } from '../shared/models/common.models';
+import { Auth, CreateAccount, PersonalData, TokenResult } from '../shared/models/common.models';
 import { ServerService } from './server.service';
 import { Md5 } from 'ts-md5';
 import jwt_decode from 'jwt-decode';
-import { AuthState } from '../shared/store/shared.reducer';
-import { Store } from '@ngrx/store';
-import { selectAuth } from '../shared/selectors/auth.selectors';
-
-export interface TokenResult {
-  readonly id: string;
-  readonly exp: number;
-  readonly iat: number;
-}
 
 @Injectable({ providedIn: 'root' })
 export class AuthService extends ServerService {

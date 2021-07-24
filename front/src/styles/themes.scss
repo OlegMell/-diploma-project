@@ -185,6 +185,19 @@
       background-color: $darkModePrimary;
     }
   }
+
+  .post-creator {
+    background-color: rgba(white, .05) !important;
+
+    .editor {
+      background-color: transparent;
+      color: inherit;
+
+      &::placeholder {
+        color: inherit !important;
+      }
+    }
+  }
 }
 
 

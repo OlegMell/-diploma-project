@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&display=swap');
+@import '~@ctrl/ngx-emoji-mart/picker';
 @import "./styles/themes";
 @import "./styles/colors";
 @import "./styles/mixins";
@@ -47,4 +47,10 @@ body {
 .mat-dialog-container {
   position: relative !important;
   overflow: hidden !important;
+}
+
+
+.emoji-mart-scroll {
+  @include scrollbar;
+  overflow-x: hidden;
 }

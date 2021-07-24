@@ -1,4 +1,4 @@
-import { HttpService, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { JwtService } from "@nestjs/jwt";
@@ -13,8 +13,7 @@ import { Account, PersonalInfo } from "../../modules/authentication/interfaces/a
 export class AccountRepository {
     constructor(@InjectModel('AccountModel') private account: Model<Account>,
                 @InjectModel('PersonalInfoModel') private personalInfo: Model<PersonalInfo>,
-                private readonly jwtService: JwtService,
-                private readonly http: HttpService) {
+                private readonly jwtService: JwtService) {
     }
 
     /**
@@ -96,6 +95,17 @@ export class AccountRepository {
         return this.account.find({
             $or: [ { login: { $regex: query } }, { username: { $regex: query } } ],
         }, null, { limit: 100 }).populate({
+            path: 'personalInfo',
+            model: 'PersonalInfoModel'
+        });
+    }
+
+    public async findById(id: string): Promise<Account> {
+        if (!id.length) {
+            return null;
+        }
+
+        return this.account.findById(id).populate({
             path: 'personalInfo',
             model: 'PersonalInfoModel'
         });

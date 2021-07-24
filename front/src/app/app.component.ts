@@ -1,9 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthService } from './services/auth.service';
 import { AppFacadeService } from './shared/facades/app-facade.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from "rxjs/operators";
-import { ThemeService } from "./services/theme.service";
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -18,9 +16,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // this.appFacade.theme$
-    //   .pipe(takeUntil(this.uns$))
-    //   .subscribe((theme => this.themeService.))
   }
 
   ngOnDestroy(): void {

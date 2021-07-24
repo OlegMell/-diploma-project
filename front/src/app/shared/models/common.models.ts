@@ -44,3 +44,30 @@ export interface FoundUser {
 export interface FoundUsers {
   foundUsers: FoundUser[];
 }
+
+export interface Post {
+  author: string;
+  text?: string;
+  date: number;
+  images?: string[];
+  voice?: string;
+}
+
+export interface FullPost {
+  date: number;
+  text?: string;
+  author: string;
+  voice?: string;
+  images?: string[];
+  likes: number;
+  views: number;
+  comments: string[];
+}
+
+
+export interface TokenResult {
+  readonly id: string;
+  readonly exp: number;
+  readonly iat: number;
+  readonly sub: string;
+}

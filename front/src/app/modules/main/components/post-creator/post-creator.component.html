@@ -1,0 +1,61 @@
+<div class="post-creator">
+  <div class="post-creator-text-wrapper">
+    <div class="edit-box">
+
+      <textarea
+        #editor
+        cols="70"
+        rows="4"
+        matInput
+        id="editor"
+        class="editor"
+        contenteditable="true"
+        [formControl]="postTextField"
+        placeholder="Что нового, {{(authFacade.firstname$ | async) || ''}}?"
+        (click)="isFocused = true"></textarea>
+
+    </div>
+  </div>
+  <div class="post-creator-actions-wrapper">
+
+    <div class="sub-btn-wrapper">
+      <button mat-mini-fab matTooltip="Добавить запись">
+        <mat-icon>
+          record_voice_over
+        </mat-icon>
+      </button>
+
+      <button mat-mini-fab matTooltip="Добавить картинку">
+        <mat-icon>
+          image
+        </mat-icon>
+      </button>
+
+      <button mat-mini-fab matTooltip="Добавить эмодзи" (click)="emojiBtnClicked = !emojiBtnClicked">
+        <mat-icon>
+          emoji_emotions
+        </mat-icon>
+      </button>
+    </div>
+
+    <button mat-ripple class="send-btn"
+            (click)="send(editor.value)">
+      Отправить
+      <mat-icon matSuffix>send</mat-icon>
+    </button>
+  </div>
+
+  <emoji-mart class="emoji"
+              [isNative]="true"
+              [virtualize]="true"
+              [showPreview]="false"
+              *ngIf="emojiBtnClicked"
+              (emojiSelect)="onEmojiSelected($event, editor)"
+              [style]="{width: '100%',
+              position: 'absolute',
+              overflow: 'hidden',
+              boxShadow: '0 14px 28px rgba(0,0,0,0.10), 0 10px 10px rgba(0,0,0,0.10)'}"
+              [darkMode]="(appFacade.theme$ | async) === 'dark'"></emoji-mart>
+</div>
+
+

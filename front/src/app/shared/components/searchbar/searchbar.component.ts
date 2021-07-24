@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { AppFacadeService } from '../../facades/app-facade.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -15,17 +15,13 @@ export class SearchbarComponent implements OnInit {
 
   close = false; // флаг отображения панели результатов поиска
   scrolled = false; // флаг скролла страницы
-  searchField = new FormControl('');
+  searchField = new FormControl('', [ Validators.minLength(3) ]); // поле для поиска
 
   constructor(public readonly appFacade: AppFacadeService) {
   }
 
   ngOnInit(): void {
     this.searchFieldValuesChanges();
-
-    this.appFacade.foundUsers$.subscribe(u => {
-      console.log(u);
-    });
   }
 
   /**

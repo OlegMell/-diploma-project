@@ -15,7 +15,15 @@ const REQUESTS = {
   search: {
     root: 'search',
     child: {
-      findUser: '/findUser'
+      findUser: '/findUser',
+      findById: '/findById'
+    }
+  },
+  posts: {
+    root: 'posts',
+    child: {
+      getAll: '/getAll',
+      create: '/create'
     }
   }
 };

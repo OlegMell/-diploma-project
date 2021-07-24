@@ -7,3 +7,7 @@ export interface FoundUsers {
 export interface SearchRequestQuery {
     query: string;
 }
+
+export interface SearchByIdReq {
+    id: string;
+}

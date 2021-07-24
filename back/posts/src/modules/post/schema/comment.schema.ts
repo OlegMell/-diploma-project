@@ -11,8 +11,4 @@ export const Comment = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account',
   },
-  post: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Post',
-  },
 });
