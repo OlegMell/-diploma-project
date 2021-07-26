@@ -14,7 +14,9 @@ export class SmallUserComponent implements OnInit, OnDestroy {
   private uns$: Subject<void> = new Subject<void>(); // отписчик от всех подписок
   @Input() user!: FoundUser; // текущий найденный пользователь
   @Input() user$!: Observable<FoundUser>; // текущий найденный пользователь
-  public link!: string; // ссылка на картинку из дропбокса
+  @Input() photo!: string; // текущий найденный пользователь
+  @Input() username!: string; // текущий найденный пользователь
+  @Input() link!: string; // ссылка на картинку из дропбокса
 
   constructor(public readonly appFacade: AppFacadeService,
               private readonly dropbox: DropboxService) {
@@ -24,6 +26,7 @@ export class SmallUserComponent implements OnInit, OnDestroy {
    * Инициализация
    */
   ngOnInit(): void {
+    this.link = this.photo;
     this.getImageLink(); // запуск листенера получения ссылки
   }
 
@@ -31,9 +34,7 @@ export class SmallUserComponent implements OnInit, OnDestroy {
    * Листенер получения ссылки на картинку пользователя если он есть
    */
   getImageLink(): void {
-    console.log(this.user);
     if (this.user && this.user.personalInfo) {
-      console.log(this.user);
       this.dropbox
         .getLink(this.user.personalInfo.photo)
         .pipe(takeUntil(this.uns$))

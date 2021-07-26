@@ -35,6 +35,12 @@ export function reducer(state: PostsState = initialState, action: PostsActionsUn
       return { ...state, posts: action.payload };
     case PostsActions.getAllPostsError:
       return { ...state };
+    case PostsActions.getByAuthorId:
+      return { ...state };
+    case PostsActions.getByAuthorIdSuccess:
+      return { ...state, posts: action.payload };
+    case PostsActions.getByAuthorIdError:
+      return { ...state };
     default:
       return { ...state };
   }

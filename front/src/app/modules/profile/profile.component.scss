@@ -1,3 +1,17 @@
+@import "colors";
+
 main {
   height: 90vh;
+
+  .post-lent {
+    padding-top: 450px;
+    width: 40%;
+    margin: 0 auto;
+
+    .divider {
+      height: 1px;
+      margin-bottom: 10px;
+      border-top: 1px solid rgba($primary, .5);
+    }
+  }
 }

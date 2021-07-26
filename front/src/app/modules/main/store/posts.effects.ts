@@ -5,7 +5,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SnackbarService } from '../../../shared/services/toastr.service';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../shared/store/shared.reducer';
-import { CreatePostError, GetAllPosts, GetAllPostsError, GetAllPostsSuccess, PostsActions } from './posts.actions';
+import {
+  CreatePostError,
+  GetAllPosts,
+  GetAllPostsError,
+  GetAllPostsSuccess,
+  GetByAuthorIdError, GetByAuthorIdSuccess,
+  PostsActions
+} from './posts.actions';
 import { catchError, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { PostsService } from '../../../services/posts.service';
 import { selectAuth } from '../../../shared/selectors/auth.selectors';
@@ -46,6 +53,19 @@ export class PostsEffects {
         return new GetAllPostsSuccess(res);
       }),
       catchError(() => of(new GetAllPostsError()))
+    ))
+  ));
+
+  getByAuthorId$ = createEffect(() => this.actions$.pipe(
+    ofType(PostsActions.getByAuthorId),
+    withLatestFrom(this.store$.select(selectAuth)),
+    // @ts-ignore
+    mergeMap(([ action, auth ]) => this.postsService.getByAuthorId(action.payload, auth.token).pipe(
+      map(res => {
+        console.log(res);
+        return new GetByAuthorIdSuccess(res);
+      }),
+      catchError(() => of(new GetByAuthorIdError()))
     ))
   ));
 }

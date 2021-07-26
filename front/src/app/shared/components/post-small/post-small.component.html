@@ -1,0 +1,23 @@
+<div class="post">
+
+  <div class="post-header">
+
+    <div class="user" *ngIf="user$ | async">
+      <app-small-user [routerLink]="['/profile/'+postData.author]" *inView [user$]="user$"></app-small-user>
+    </div>
+
+    <div class="date">
+      <span>
+        {{postData.date | date : "yyyy:MM:dd hh:mm"}}
+      </span>
+    </div>
+
+  </div>
+
+  <div class="post-main">
+    <div class="text" [class.hide-shadow]="postData.text?.length > 50" *ngIf="postData.text">{{postData.text}}</div>
+  </div>
+
+</div>
+
+

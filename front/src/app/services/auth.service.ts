@@ -66,6 +66,10 @@ export class AuthService extends ServerService {
     return date;
   }
 
+  public getIdFromToken(token: string): string {
+    return jwt_decode<TokenResult>(token).sub;
+  }
+
   public isTokenExpired(accessToken: string): boolean {
     if (!accessToken) {
       return true;

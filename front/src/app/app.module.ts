@@ -15,8 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProfileModule } from './modules/profile/profile.module';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { MainModule } from './modules/main/main.module';
-import { ReactiveFormsModule } from "@angular/forms";
-import { SettingsModule } from "./modules/settings/settings.module";
+import { ReactiveFormsModule } from '@angular/forms';
+import { SettingsModule } from './modules/settings/settings.module';
 
 @NgModule({
   declarations: [

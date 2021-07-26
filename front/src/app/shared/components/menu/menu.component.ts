@@ -1,4 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AuthFacadeService } from '../../facades/auth-facade.service';
+import { takeUntil } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -6,23 +10,25 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
   styleUrls: [ './menu.component.scss' ]
 })
 export class MenuComponent implements OnInit, OnDestroy {
-
-  @Input() currTitle: string | undefined;
+  private uns$: Subject<void> = new Subject<void>(); // отписчик от всех подписок
+  @Input() currTitle: string | undefined; // текущий заголовок станицы
   scrolled = false;
 
-  constructor() {
-
+  constructor(private readonly route: ActivatedRoute,
+              private readonly authFacade: AuthFacadeService) {
   }
 
   ngOnInit(): void {
+    this.authFacade.getCurrentUserId(this.route)
+      .pipe(takeUntil(this.uns$))
+      .subscribe(id => {
+        console.log(id);
+      });
   }
 
-  // @HostListener('window:scroll', [])
-  // onWindowScroll(): void {
-  //   this.scrolled = window.pageYOffset > 48;
-  // }
-
   ngOnDestroy(): void {
+    this.uns$.next();
+    this.uns$.complete();
   }
 
 }

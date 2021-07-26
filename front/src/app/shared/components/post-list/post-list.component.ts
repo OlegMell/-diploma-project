@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { PostsFacadeService } from '../../services/posts-facade.service';
+import { PostsFacadeService } from '../../../modules/main/services/posts-facade.service';
 
 @Component({
   selector: 'app-post-list',

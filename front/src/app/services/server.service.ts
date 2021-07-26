@@ -23,7 +23,8 @@ const REQUESTS = {
     root: 'posts',
     child: {
       getAll: '/getAll',
-      create: '/create'
+      create: '/create',
+      getByAuthorId: '/getByAuthorId'
     }
   }
 };

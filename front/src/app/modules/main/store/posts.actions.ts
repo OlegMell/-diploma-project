@@ -9,6 +9,9 @@ export enum PostsActions {
   getAllPosts = '[POSTS] Get All',
   getAllPostsSuccess = '[POSTS] Get All Success',
   getAllPostsError = '[POSTS] Get All Error',
+  getByAuthorId = '[POSTS] Get By Author Id',
+  getByAuthorIdSuccess = '[POSTS] Get By Author Id Success',
+  getByAuthorIdError = '[POSTS] Get By Author Id Error',
 }
 
 export class CreatePost implements Action {
@@ -32,6 +35,7 @@ export class GetAllPosts implements Action {
 
 export class GetAllPostsSuccess implements Action {
   readonly type = PostsActions.getAllPostsSuccess;
+
   constructor(public payload: FullPost[]) {
   }
 }
@@ -40,10 +44,31 @@ export class GetAllPostsError implements Action {
   readonly type = PostsActions.getAllPostsError;
 }
 
+export class GetByAuthorId implements Action {
+  readonly type = PostsActions.getByAuthorId;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class GetByAuthorIdSuccess implements Action {
+  readonly type = PostsActions.getByAuthorIdSuccess;
+
+  constructor(public payload: FullPost[]) {
+  }
+}
+
+export class GetByAuthorIdError implements Action {
+  readonly type = PostsActions.getByAuthorIdError;
+}
+
 
 export type PostsActionsUnion = CreatePost
   | CreatePostSuccess
   | CreatePostError
   | GetAllPosts
   | GetAllPostsSuccess
-  | GetAllPostsError;
+  | GetAllPostsError
+  | GetByAuthorId
+  | GetByAuthorIdSuccess
+  | GetByAuthorIdError;

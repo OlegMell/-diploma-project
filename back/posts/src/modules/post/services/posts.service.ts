@@ -14,4 +14,8 @@ export class PostsService {
   public getAll(): any {
     return this.postsRepos.getAll();
   }
+
+  public getByAuthorId(query): any {
+    return this.postsRepos.getByAuthorId(query);
+  }
 }

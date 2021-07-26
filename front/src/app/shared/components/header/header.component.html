@@ -10,6 +10,6 @@
     <app-searchbar></app-searchbar>
 
     <!-- Профиль -->
-    <app-profile-avatar [centerPosition]="title === 'Профиль'"></app-profile-avatar>
+    <app-profile-avatar *ngIf="(title === 'Профиль' && !scrolled) ||title !== 'Профиль'" [centerPosition]="title === 'Профиль'"></app-profile-avatar>
   </div>
 </header>

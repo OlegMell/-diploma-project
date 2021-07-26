@@ -18,4 +18,9 @@ export class PostsRepository {
   public getAll(): any {
     return this.post.find({}).sort({ date: 'desc' });
   }
+
+  public getByAuthorId(query): any {
+    console.log(query);
+    return this.post.find({ author: query.id }).sort({ date: 'desc' });
+  }
 }

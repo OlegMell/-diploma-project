@@ -3,8 +3,11 @@ import { AuthFacadeService } from '../../facades/auth-facade.service';
 import { ThemeService } from '../../../services/theme.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditProfileDialogComponent } from '../edit-profile-dialog/edit-profile-dialog.component';
-import { Subject } from 'rxjs';
-import { filter, takeUntil, tap } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
+import { mergeMap, takeUntil } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { SearchService } from '../../../services/search.service';
+import { DropboxService } from '../../../services/dropbox.service';
 
 @Component({
   selector: 'app-profile-avatar',
@@ -22,20 +25,53 @@ export class ProfileAvatarComponent implements OnInit, OnDestroy {
   scrolled = false; // флаг скролла страницы
   photo!: string; // photo
   close = true; // флаг отображения
+  user: any;
 
   constructor(public readonly authFacade: AuthFacadeService,
               public readonly themeService: ThemeService,
-              private readonly dialog: MatDialog) {
+              private readonly searchService: SearchService,
+              private readonly dropboxService: DropboxService,
+              private readonly dialog: MatDialog,
+              private readonly route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.isPhotoLoaded = false;
-    this.authFacade.photo$
+
+    this.route.params
       .pipe(
         takeUntil(this.uns$),
-        filter(value => value),
-        tap(() => this.isPhotoLoaded = true))
-      .subscribe(photo => this.photo = photo);
+        mergeMap((params) => {
+          if (!params.id) {
+            return this.authFacade.photo$;
+          }
+          return of(params);
+        }),
+        mergeMap((params) => {
+          if (typeof params === 'object') {
+            return this.authFacade.token$.pipe(
+              mergeMap((token) => this.searchService.findById(params.id, token)),
+              mergeMap(user => {
+                this.user = user;
+                return this.dropboxService.getLink(user.personalInfo.photo);
+              })
+            );
+          } else {
+            return of(params);
+          }
+        }),
+      )
+      .subscribe(res => {
+        this.photo = res;
+        this.isPhotoLoaded = true;
+      });
+
+    // this.isPhotoLoaded = false;
+    // this.authFacade.photo$
+    //   .pipe(
+    //     takeUntil(this.uns$),
+    //     filter(value => value),
+    //     tap(() => this.isPhotoLoaded = true))
+    //   .subscribe(photo => this.photo = photo);
   }
 
   /**

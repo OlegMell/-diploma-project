@@ -15,6 +15,8 @@ import { InViewportDirective } from './shared/directives/in-viewport.directive';
 import { SmallUserComponent } from './shared/components/small-user/small-user.component';
 import { WritePostBtnComponent } from './shared/components/write-post-btn/write-post-btn.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { PostListComponent } from './shared/components/post-list/post-list.component';
+import { PostSmallComponent } from './shared/components/post-small/post-small.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     WritePostBtnComponent,
     ProfileAvatarComponent,
     EditProfileDialogComponent,
+    PostListComponent,
+    PostSmallComponent
   ],
   imports: [
     AppMaterialModule,
@@ -43,7 +47,9 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     HeaderComponent,
     WritePostBtnComponent,
     InViewportDirective,
-    SmallUserComponent
+    SmallUserComponent,
+    PostListComponent,
+    PostSmallComponent
   ],
   entryComponents: [
     EditProfileDialogComponent

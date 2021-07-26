@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as SharedActions from '../store/shared.actions';
+import { Logout, UpdatePersonalData } from '../store/shared.actions';
 import {
   selectAuth,
   selectBio,
@@ -10,7 +11,10 @@ import {
   selectSIte
 } from '../selectors/auth.selectors';
 import { AppState } from '../../store';
-import { Logout, UpdatePersonalData } from '../store/shared.actions';
+import { Observable, of } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+import { ActivatedRoute, Params } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 
 /**
@@ -18,7 +22,6 @@ import { Logout, UpdatePersonalData } from '../store/shared.actions';
  */
 @Injectable({ providedIn: 'root' })
 export class AuthFacadeService {
-
   /**
    * Данные пользователя
    */
@@ -29,7 +32,8 @@ export class AuthFacadeService {
   bio$ = this.store.select(selectBio);
   site$ = this.store.select(selectSIte);
 
-  constructor(private store: Store<AppState>) {
+  constructor(private readonly store: Store<AppState>,
+              private readonly authService: AuthService) {
   }
 
   /**
@@ -64,5 +68,20 @@ export class AuthFacadeService {
    */
   updateProfileData(data: any): void {
     this.store.dispatch(new UpdatePersonalData(data));
+  }
+
+  getCurrentUserId(route: ActivatedRoute): Observable<string> {
+    return route.params
+      .pipe(
+        mergeMap((params: Params) => {
+          if (!params.id) {
+            return this.token$
+              .pipe(
+                map(auth => this.authService.getIdFromToken(auth.token))
+              );
+          }
+          return of(params.id);
+        })
+      );
   }
 }

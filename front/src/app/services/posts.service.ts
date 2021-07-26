@@ -25,4 +25,11 @@ export class PostsService extends ServerService {
       headers: this.setAuthorize(this.defaultHeaders(), token)
     });
   }
+
+  getByAuthorId(id: string, token: string): Observable<any> {
+    return this.http.get(this.build('posts', 'getByAuthorId'), {
+      params: { id },
+      headers: this.setAuthorize(this.defaultHeaders(), token)
+    });
+  }
 }

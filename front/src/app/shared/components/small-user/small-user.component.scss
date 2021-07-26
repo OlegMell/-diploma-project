@@ -1,20 +1,12 @@
+@import "mixins";
+
 .user {
+  width: 100%;
   display: flex;
   align-items: center;
-  width: 100%;
 
-  &-img_wrapper {
-    width: 50px;
-    height: 50px;
-    overflow: hidden;
-    border-radius: 50%;
+  .img-wrapper {
+    @include profile-img-circle(35px, 35px);
     margin-right: 10px;
-
-    img {
-      height: 100%;
-      -webkit-background-clip: padding-box;
-      -moz-background-clip: padding;
-      background-clip: padding-box;
-    }
   }
 }

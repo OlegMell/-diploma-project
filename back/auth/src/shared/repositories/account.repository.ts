@@ -47,7 +47,7 @@ export class AccountRepository {
             lastName: '',
             bio: '',
             site: '',
-            phone: '',
+            phone: '-',
             email: addUser.login
         });
 

@@ -17,16 +17,30 @@ export class PostsService {
      * Создание поста
      * @param post новый пост
      */
-    create(post: CreatePostReq): Observable<CreatedPostRes> {
+    public create(post: CreatePostReq): Observable<CreatedPostRes> {
         return this.http.post<CreatedPostRes>(`${ API_POSTS_URL }posts/create`, post).pipe(
             map((res) => res.data)
         );
     }
 
-
-    getAll(): any {
-        return this.http.get(`${API_POSTS_URL}posts/getAll`).pipe(
+    /**
+     * Запрос на получение постов
+     */
+    public getAll(): any {
+        return this.http.get(`${ API_POSTS_URL }posts/getAll`).pipe(
             map(res => res.data)
         );
+    }
+
+    /**
+     * Запрос на получение постов по ID автора поста
+     * @param query
+     */
+    public getByAuthorId(query: { id: string }): any {
+        return this.http.get(`${ API_POSTS_URL }posts/getByAuthorId`, {
+            params: { ...query }
+        }).pipe(
+            map(res => res.data)
+        )
     }
 }

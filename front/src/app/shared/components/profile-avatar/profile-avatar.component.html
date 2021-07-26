@@ -15,13 +15,13 @@
         <mat-spinner *ngIf="!isPhotoLoaded" diameter="40"></mat-spinner>
 
       </div>
-
-      <span class="username">@{{authFacade.username$ | async}}</span>
+      <span class="username" *ngIf="user">@{{user.username}}</span>
+      <span class="username" *ngIf="!user">@{{authFacade.username$ | async}}</span>
     </div>
 
     <div class="overlay">
 
-      <div class="dropdown">
+      <div class="dropdown" *ngIf="!user">
 
         <div class="dropdown-option" (click)="editProfile()">Редактировать</div>
 

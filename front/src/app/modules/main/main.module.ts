@@ -7,16 +7,12 @@ import { PostCreatorComponent } from './components/post-creator/post-creator.com
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EffectsModule } from '@ngrx/effects';
 import { PostsEffects } from './store/posts.effects';
-import { PostSmallComponent } from './components/post-small/post-small.component';
-import { PostListComponent } from './components/post-list/post-list.component';
 
 
 @NgModule({
   declarations: [
     MainComponent,
     PostCreatorComponent,
-    PostListComponent,
-    PostSmallComponent
   ],
   providers: [],
   imports: [
@@ -27,7 +23,7 @@ import { PostListComponent } from './components/post-list/post-list.component';
     EffectsModule.forFeature([ PostsEffects ])
   ],
   exports: [
-    MainComponent
+    MainComponent,
   ]
 })
 export class MainModule {

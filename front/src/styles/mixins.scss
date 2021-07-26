@@ -16,3 +16,18 @@
     border-radius: 30px;
   }
 }
+
+@mixin profile-img-circle($width: 50px, $height: 50px) {
+  width: $width;
+  height: $height;
+  overflow: hidden;
+  border-radius: 50%;
+
+  img {
+    height: 100%;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+  }
+
+}
