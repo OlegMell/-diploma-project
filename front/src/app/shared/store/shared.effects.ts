@@ -1,25 +1,28 @@
-import { from, of } from 'rxjs';
+import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthService } from '../../services/auth.service';
-import { catchError, filter, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import * as SharedActions from './shared.actions';
+import {
+  LoginError,
+  LoginSuccess,
+  SearchUsersError,
+  SearchUsersSuccess,
+  SetPersonalData,
+  UpdatePersonalData,
+  UpdatePersonalDataError
+} from './shared.actions';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthState } from './shared.reducer';
 import { selectAuth } from '../selectors/auth.selectors';
 import { SnackbarService } from '../services/toastr.service';
-import {
-  LoginError, LoginSuccess, SearchUsers, SearchUsersError, SearchUsersSuccess,
-  SetPersonalData, UpdatePersonalData,
-  UpdatePersonalDataError,
-  UpdatePersonalDataSuccess
-} from './shared.actions';
 import { ACCOUNT_NOT_FOUND, SUCCESS_SAVED } from '../constants/snack-messages.constants';
 import { ACCESS_TOKEN } from '../constants/app.constants';
 import { DropboxService } from '../../services/dropbox.service';
 import { SearchService } from '../../services/search.service';
-import { Auth, FoundUser, FoundUsers } from '../models/common.models';
+import { FoundUsers } from '../models/common.models';
 
 
 @Injectable()

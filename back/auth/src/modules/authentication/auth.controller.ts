@@ -1,19 +1,8 @@
-import {
-    Body,
-    Controller,
-    Get,
-    Post,
-    Query,
-    UseGuards,
-    Headers,
-    UseInterceptors,
-    UploadedFile,
-    Req
-} from '@nestjs/common';
+import { Body, Controller, Get, Headers, Post, Query, UseGuards } from '@nestjs/common';
 import { AuthService } from "./services/auth.service";
 import { JwtAuthGuard } from "./jwt/jwt-auth.guard";
 import { AddUserDto, LoginUserDto, UpdatePersonalInfoDto } from "./dtos/user.dto";
-import { Observable, of } from "rxjs";
+import { Observable } from "rxjs";
 import { PersonalInfo } from "./interfaces/account.interface";
 
 @Controller('api')
@@ -26,7 +15,7 @@ export class AuthController {
         return this.authService.findUser(credentials);
     }
 
-    @Post('/auth/signIn')
+    @Post('/auth/signUp')
     signUp(@Body() account: AddUserDto): any {
         return this.authService.createUser(account);
     }
@@ -39,7 +28,8 @@ export class AuthController {
 
     @UseGuards(JwtAuthGuard)
     @Post('/auth/updateProfile')
-    async updateProfile(@Body() data: UpdatePersonalInfoDto, @Headers('authorization') authToken: string): Promise<Observable<any>> {
+    async updateProfile(@Body() data: UpdatePersonalInfoDto,
+                        @Headers('authorization') authToken: string): Promise<Observable<any>> {
         return await this.authService.updateProfile(data, authToken);
     }
 }

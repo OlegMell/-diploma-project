@@ -31,7 +31,7 @@ export class AuthService {
      * @param account данные для регистрации
      */
     signUp(account: CreateAccount): Observable<JwtToken> {
-        return this.httpService.post(`${ API_AUTH_URL }auth/signIn`, account)
+        return this.httpService.post(`${ API_AUTH_URL }auth/signUp`, account)
             .pipe(map(res => res.data));
     }
 

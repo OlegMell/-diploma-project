@@ -49,7 +49,7 @@ export interface Post {
   author: string;
   text?: string;
   date: number;
-  images?: string[];
+  images?: FileList | string[];
   voice?: string;
 }
 

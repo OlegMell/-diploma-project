@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, Req, Headers } from '@nestjs/common';
+import { Body, Controller, Get, Headers, Post, Query } from '@nestjs/common';
 import { AuthService } from "./services/auth.service";
 import { Observable } from "rxjs";
 import { Credentials } from "./models/credentials.model";

@@ -13,7 +13,7 @@ import {
   GetByAuthorIdError, GetByAuthorIdSuccess,
   PostsActions
 } from './posts.actions';
-import { catchError, map, mergeMap, withLatestFrom } from 'rxjs/operators';
+import { catchError, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
 import { PostsService } from '../../../services/posts.service';
 import { selectAuth } from '../../../shared/selectors/auth.selectors';
 import { of } from 'rxjs';
@@ -30,18 +30,40 @@ export class PostsEffects {
               private store$: Store<AuthState>) {
   }
 
+  // $createPost = createEffect(() => this.actions$.pipe(
+  //   ofType(PostsActions.create),
+  //   withLatestFrom(this.store$.select(selectAuth)),
+  //   // @ts-ignore
+  //   mergeMap(([ action, auth ]) => this.postsService.create(action.payload, auth.token)
+  //     .pipe(
+  //       map(res => {
+  //         console.log(res);
+  //         return new GetAllPosts();
+  //       }),
+  //       catchError(() => of(new CreatePostError()))
+  //     ))
+  // ));
+
   $createPost = createEffect(() => this.actions$.pipe(
     ofType(PostsActions.create),
+    tap(() => console.log('HERE')),
     withLatestFrom(this.store$.select(selectAuth)),
     // @ts-ignore
-    mergeMap(([ action, auth ]) => this.postsService.create(action.payload, auth.token)
+    mergeMap(([ action, auth ]) => this.dropboxService.uploadFilesArray(action.payload.images)
       .pipe(
+        mergeMap(filesPaths => {
+          return this.postsService.create({
+            // @ts-ignore
+            ...action.payload,
+            images: filesPaths
+          }, auth.token);
+        }),
         map(res => {
           console.log(res);
           return new GetAllPosts();
         }),
         catchError(() => of(new CreatePostError()))
-      ))
+      )),
   ));
 
   getAll$ = createEffect(() => this.actions$.pipe(

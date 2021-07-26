@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { from, Observable, of } from 'rxjs';
+import { catchError, map, mergeMap, reduce, scan } from 'rxjs/operators';
 
 
 /**
@@ -44,8 +44,9 @@ export class DropboxService {
   /**
    * Отправка файла на Dropbox
    * @param file файл для загрузки
+   * @param partPath начальная часть пути (директория)
    */
-  public uploadFile(file: File): Observable<any> {
+  public uploadFile(file: File, partPath: string = '/profile-images/'): Observable<string> {
     // если файл есть, то загружаем и возвращаем путь файла на Dropbox
     if (file) {
       const url = `${ this.UPLOAD_DROPBOX_API_URL }upload`;
@@ -54,7 +55,7 @@ export class DropboxService {
       const modifiedName = arr[0] + new Date().getMilliseconds().toString();
       const fileName = modifiedName + '.' + arr[1];
 
-      const path = `/profile-images/${ fileName }`;
+      const path = `${partPath}${ fileName }`;
 
       return this.http.post(url, file, {
         headers: {
@@ -66,9 +67,18 @@ export class DropboxService {
         // @ts-ignore
         map((res) => res.path_lower),
       );
-    // иначе возвращаем пустую строку
+      // иначе возвращаем пустую строку
     } else {
       return of('');
     }
+  }
+
+  uploadFilesArray(files: FileList): Observable<string[]> {
+    // return of(...Array.from(files)).pipe(
+    //   mergeMap(file => this.uploadFile(file, '/posts-images/')),
+    //   scan((acc: string[], img: string) => [...acc, img], [])
+    // );
+
+    return of([]);
   }
 }

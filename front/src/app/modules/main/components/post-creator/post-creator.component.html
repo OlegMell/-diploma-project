@@ -19,31 +19,47 @@
   </div>
   <div class="post-creator-actions-wrapper">
 
-    <div class="sub-btn-wrapper">
-      <button mat-mini-fab matTooltip="Добавить запись">
-        <mat-icon>
-          record_voice_over
-        </mat-icon>
-      </button>
+    <div class="actions">
+      <div class="sub-btn-wrapper">
+        <button mat-mini-fab matTooltip="Добавить запись">
+          <mat-icon>
+            record_voice_over
+          </mat-icon>
+        </button>
 
-      <button mat-mini-fab matTooltip="Добавить картинку">
-        <mat-icon>
-          image
-        </mat-icon>
-      </button>
+        <label for="img">
+          <button (click)="img.click()" mat-mini-fab matTooltip="Добавить картинку">
+            <mat-icon>
+              image
+            </mat-icon>
+          </button>
+        </label>
 
-      <button mat-mini-fab matTooltip="Добавить эмодзи" (click)="emojiBtnClicked = !emojiBtnClicked">
-        <mat-icon>
-          emoji_emotions
-        </mat-icon>
+        <input #img id="img" multiple="multiple" (change)="selectImage($event)" type="file" accept="image/*"
+               class="file-inp">
+
+        <button mat-mini-fab matTooltip="Добавить эмодзи" (click)="emojiBtnClicked = !emojiBtnClicked">
+          <mat-icon>
+            emoji_emotions
+          </mat-icon>
+        </button>
+      </div>
+
+      <button mat-ripple class="send-btn"
+              (click)="send(editor.value)">
+        Отправить
+        <mat-icon matSuffix>send</mat-icon>
       </button>
     </div>
 
-    <button mat-ripple class="send-btn"
-            (click)="send(editor.value)">
-      Отправить
-      <mat-icon matSuffix>send</mat-icon>
-    </button>
+    <div class="imgs-preview-box" *ngIf="imgPreview.length">
+      <div class="img-preview-item" *ngFor="let img of imgPreview">
+        <!--        <button class="close-btn" mat-icon-button>-->
+        <mat-icon (click)="removeImg(img)">close</mat-icon>
+        <!--        </button>-->
+        <img src="{{img}}" alt="preview">
+      </div>
+    </div>
   </div>
 
   <emoji-mart class="emoji"

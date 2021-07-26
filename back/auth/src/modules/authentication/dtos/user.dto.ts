@@ -18,7 +18,6 @@ export interface AddUserDto {
 /**
  * Модель обновления персональных данных
  */
-
 export interface UpdatePersonalInfoDto {
     name?: string;
     photo?: any;
