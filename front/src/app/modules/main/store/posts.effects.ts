@@ -12,7 +12,7 @@ import {
   GetAllPostsSuccess,
   GetByAuthorIdError,
   GetByAuthorIdSuccess,
-  PostsActions
+  PostsActions, RemovePostError, RemovePostSuccess
 } from './posts.actions';
 import { catchError, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { PostsService } from '../../../services/posts.service';
@@ -65,7 +65,10 @@ export class PostsEffects {
             images: filesPaths
           }, auth.token);
         }),
-        map(() => new GetAllPosts()),
+        map((res) => {
+          // TODO  Изменить логику обновления состояния
+          return new GetAllPosts();
+        }),
         catchError(() => of(new CreatePostError()))
       )),
   ));
@@ -76,12 +79,13 @@ export class PostsEffects {
   getAll$ = createEffect(() => this.actions$.pipe(
     ofType(PostsActions.getAllPosts),
     withLatestFrom(this.store$.select(selectAuth)),
-    mergeMap(([ _, auth ]) => this.postsService.getAll(auth.token).pipe(
-      map((res: FullPost[]) => {
-        return new GetAllPostsSuccess(res);
-      }),
-      catchError(() => of(new GetAllPostsError()))
-    ))
+    mergeMap(([ _, auth ]) => this.postsService.getAll(auth.token)
+      .pipe(
+        map((res: FullPost[]) => {
+          return new GetAllPostsSuccess(res);
+        }),
+        catchError(() => of(new GetAllPostsError()))
+      ))
   ));
 
   /**
@@ -91,11 +95,25 @@ export class PostsEffects {
     ofType(PostsActions.getByAuthorId),
     withLatestFrom(this.store$.select(selectAuth)),
     // @ts-ignore
-    mergeMap(([ action, auth ]) => this.postsService.getByAuthorId(action.payload, auth.token).pipe(
-      map(res => {
-        return new GetByAuthorIdSuccess(res);
-      }),
-      catchError(() => of(new GetByAuthorIdError()))
-    ))
+    mergeMap(([ action, auth ]) => this.postsService.getByAuthorId(action.payload, auth.token)
+      .pipe(
+        map(res => new GetByAuthorIdSuccess(res)),
+        catchError(() => of(new GetByAuthorIdError()))
+      ))
+  ));
+
+  /**
+   * Удаление поста
+   */
+  removePost$ = createEffect(() => this.actions$.pipe(
+    ofType(PostsActions.removePost),
+    withLatestFrom(this.store$.select(selectAuth)),
+    // @ts-ignore
+    mergeMap(([ action, auth ]) => this.postsService.remove(action.payload, auth.token)
+      .pipe(
+        // @ts-ignore
+        map(() => new RemovePostSuccess(action.payload)),
+        catchError(() => of(new RemovePostError()))
+      ))
   ));
 }

@@ -12,7 +12,7 @@ import { Subject } from 'rxjs';
 export class MenuComponent implements OnInit, OnDestroy {
   private uns$: Subject<void> = new Subject<void>(); // отписчик от всех подписок
   @Input() currTitle: string | undefined; // текущий заголовок станицы
-  scrolled = false;
+  scrolled = false; // флаг скролла страницы
 
   constructor(private readonly route: ActivatedRoute,
               private readonly authFacade: AuthFacadeService) {

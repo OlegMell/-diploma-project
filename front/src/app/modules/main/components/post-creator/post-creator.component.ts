@@ -53,13 +53,10 @@ export class PostCreatorComponent implements OnInit, OnDestroy {
    * Метод отправки поста
    */
   send(tc: string): void {
-    if (!tc) {
-      return;
-    }
 
     const post: Post = {
       text: tc,
-      images: [...Array.from(this.files as FileList)],
+      images: this.files?.length ? [ ...Array.from(this.files as FileList) ] : [],
       voice: '',
       date: Date.now(),
       author: ''

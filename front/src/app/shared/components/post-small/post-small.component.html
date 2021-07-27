@@ -24,6 +24,23 @@
     </div>
   </div>
 
+  <div class="post-btns">
+    <button mat-icon-button matTooltip="Нравиться">
+      <mat-icon>
+        favorite_border
+      </mat-icon>
+    </button>
+
+    <button mat-icon-button
+            *ngIf="isRootProfile"
+            (click)="postsFacade.removePost(postData._id)"
+            matTooltip="Удалить пост">
+      <mat-icon>
+        delete
+      </mat-icon>
+    </button>
+  </div>
+
 </div>
 
 

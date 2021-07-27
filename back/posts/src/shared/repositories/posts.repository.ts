@@ -5,7 +5,10 @@ import {
   CreatedPost,
   Post,
 } from '../../modules/post/models/interfaces/posts.interfaces';
-import { CreatePostReq } from '../../modules/post/models/dtos/posts.dtos';
+import {
+  CreatePostReq,
+  GetByAuthorIdDto,
+} from '../../modules/post/models/dtos/posts.dtos';
 
 @Injectable()
 export class PostsRepository {
@@ -19,8 +22,13 @@ export class PostsRepository {
     return this.post.find({}).sort({ date: 'desc' });
   }
 
-  public getByAuthorId(query): any {
-    console.log(query);
+  public getByAuthorId(query: GetByAuthorIdDto): any {
     return this.post.find({ author: query.id }).sort({ date: 'desc' });
+  }
+
+  public remove(id: string): any {
+    return this.post.remove({
+      _id: id,
+    });
   }
 }

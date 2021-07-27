@@ -1,5 +1,9 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { CreatePostReq } from './models/dtos/posts.dtos';
+import {
+  CreatePostReq,
+  GetByAuthorIdDto,
+  RemoveReqDto,
+} from './models/dtos/posts.dtos';
 import { PostsService } from './services/posts.service';
 import { CreatedPost } from './models/interfaces/posts.interfaces';
 
@@ -18,7 +22,12 @@ export class PostsController {
   }
 
   @Get('/getByAuthorId')
-  public getByAuthorId(@Query() query: any): Promise<any> {
+  public getByAuthorId(@Query() query: GetByAuthorIdDto): Promise<any> {
     return this.postsService.getByAuthorId(query);
+  }
+
+  @Get('/removePost')
+  public removePost(@Query() query: RemoveReqDto): Promise<any> {
+    return this.postsService.removePost(query);
   }
 }

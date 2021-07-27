@@ -24,7 +24,8 @@ const REQUESTS = {
     child: {
       getAll: '/getAll',
       create: '/create',
-      getByAuthorId: '/getByAuthorId'
+      remove: '/remove',
+      getByAuthorId: '/getByAuthorId',
     }
   }
 };

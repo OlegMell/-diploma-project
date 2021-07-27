@@ -54,6 +54,7 @@ export interface Post {
 }
 
 export interface FullPost {
+  _id: string;
   date: number;
   text?: string;
   author: string;

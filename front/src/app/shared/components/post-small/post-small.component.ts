@@ -3,8 +3,10 @@ import { FullPost } from '../../models/common.models';
 import { Observable, of, Subject } from 'rxjs';
 import { SearchService } from '../../../services/search.service';
 import { AuthFacadeService } from '../../facades/auth-facade.service';
-import { mergeMap, reduce, takeUntil } from 'rxjs/operators';
+import { filter, mergeMap, reduce, takeUntil } from 'rxjs/operators';
 import { DropboxService } from '../../../services/dropbox.service';
+import { ActivatedRoute, Params } from '@angular/router';
+import { PostsFacadeService } from '../../../modules/main/services/posts-facade.service';
 
 @Component({
   selector: 'app-post-small',
@@ -16,8 +18,11 @@ export class PostSmallComponent implements OnInit, OnDestroy {
   @Input() postData!: FullPost;
   user$!: any;
   images!: Observable<string[]>;
+  isRootProfile!: boolean;
 
   constructor(private readonly searchService: SearchService,
+              private readonly route: ActivatedRoute,
+              public readonly postsFacade: PostsFacadeService,
               private readonly dropboxService: DropboxService,
               private readonly authFacade: AuthFacadeService) {
   }
@@ -25,6 +30,11 @@ export class PostSmallComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getUserDataObserver();
     this.getImages();
+
+    this.route.params.pipe(
+      takeUntil(this.uns$),
+      filter((params: Params) => !params.id)
+    ).subscribe(() => this.isRootProfile = true);
   }
 
   /**
