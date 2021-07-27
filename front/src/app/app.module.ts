@@ -17,6 +17,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { MainModule } from './modules/main/main.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SettingsModule } from './modules/settings/settings.module';
+import { NgAudioRecorderModule } from 'ng-audio-recorder';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SettingsModule } from './modules/settings/settings.module';
     BrowserAnimationsModule,
     AppSharedModule,
     HttpClientModule,
+    NgAudioRecorderModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([SharedEffects]),
     AuthModule,

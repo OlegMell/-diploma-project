@@ -19,6 +19,7 @@ export class PostSmallComponent implements OnInit, OnDestroy {
   user$!: any;
   images!: Observable<string[]>;
   isRootProfile!: boolean;
+  voice!: Observable<string>;
 
   constructor(private readonly searchService: SearchService,
               private readonly route: ActivatedRoute,
@@ -30,6 +31,7 @@ export class PostSmallComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getUserDataObserver();
     this.getImages();
+    this.getVoice();
 
     this.route.params.pipe(
       takeUntil(this.uns$),
@@ -56,7 +58,17 @@ export class PostSmallComponent implements OnInit, OnDestroy {
         .pipe(
           takeUntil(this.uns$),
           mergeMap((img: string) => this.dropboxService.getLink(img)),
-          reduce((acc: string[], val: string) => [...acc, val], [])
+          reduce((acc: string[], val: string) => [ ...acc, val ], [])
+        );
+    }
+  }
+
+  private getVoice(): void {
+    if (this.postData && this.postData.voice?.length) {
+      this.voice = of(this.postData.voice)
+        .pipe(
+          takeUntil(this.uns$),
+          mergeMap((voice: string) => this.dropboxService.getLink(voice))
         );
     }
   }
@@ -65,4 +77,6 @@ export class PostSmallComponent implements OnInit, OnDestroy {
     this.uns$.next();
     this.uns$.complete();
   }
+
+
 }

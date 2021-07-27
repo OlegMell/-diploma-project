@@ -56,20 +56,25 @@ export class PostsEffects {
     ofType(PostsActions.create),
     withLatestFrom(this.store$.select(selectAuth)),
     // @ts-ignore
-    mergeMap(([ action, auth ]) => this.dropboxService.uploadFilesArray(action.payload.images)
+    mergeMap(([ action, auth ]) => this.dropboxService.uploadFile(action.payload.voice, '/post-audio/')
       .pipe(
-        mergeMap(filesPaths => {
-          return this.postsService.create({
-            // @ts-ignore
-            ...action.payload,
-            images: filesPaths
-          }, auth.token);
-        }),
-        map((res) => {
-          // TODO  Изменить логику обновления состояния
-          return new GetAllPosts();
-        }),
-        catchError(() => of(new CreatePostError()))
+        // @ts-ignore
+        mergeMap((filePath: string) => this.dropboxService.uploadFilesArray(action.payload.images)
+          .pipe(
+            mergeMap(filesPaths => {
+              return this.postsService.create({
+                // @ts-ignore
+                ...action.payload,
+                images: filesPaths,
+                voice: filePath
+              }, auth.token);
+            }),
+            map(() => {
+              // TODO  Изменить логику обновления состояния
+              return new GetAllPosts();
+            }),
+            catchError(() => of(new CreatePostError()))
+          ))
       )),
   ));
 

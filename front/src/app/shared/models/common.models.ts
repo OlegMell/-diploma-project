@@ -50,7 +50,7 @@ export interface Post {
   text?: string;
   date: number;
   images?: File[] | string[];
-  voice?: string;
+  voice?: File | string;
 }
 
 export interface FullPost {

@@ -8,6 +8,9 @@ import { PostsFacadeService } from '../../services/posts-facade.service';
 import { Post } from '../../../../shared/models/common.models';
 import { WRONG_FILE_EXT } from '../../../../shared/constants/snack-messages.constants';
 import { SnackbarService } from '../../../../shared/services/toastr.service';
+import { NgAudioRecorderService } from 'ng-audio-recorder';
+import { DomSanitizer } from '@angular/platform-browser';
+import * as RecordRTC from 'recordrtc';
 
 @Component({
   selector: 'app-post-creator',
@@ -23,9 +26,18 @@ export class PostCreatorComponent implements OnInit, OnDestroy {
   file: any; // выбранный файл
   files!: FileList | null; // выбранные картинки
   imgPreview: string[] = []; // массив картинок поста
+  isRecording!: boolean;
+  output: any;
+  audio!: File;
+
+  record: any;
+  url: any;
+  error: any;
 
   constructor(public readonly authFacade: AuthFacadeService,
               public readonly appFacade: AppFacadeService,
+              private readonly audioRecorderService: NgAudioRecorderService,
+              private readonly sanitizer: DomSanitizer,
               private readonly snackBarService: SnackbarService,
               private readonly postsFacade: PostsFacadeService) {
   }
@@ -57,7 +69,7 @@ export class PostCreatorComponent implements OnInit, OnDestroy {
     const post: Post = {
       text: tc,
       images: this.files?.length ? [ ...Array.from(this.files as FileList) ] : [],
-      voice: '',
+      voice: this.audio || '',
       date: Date.now(),
       author: ''
     };
@@ -146,6 +158,71 @@ export class PostCreatorComponent implements OnInit, OnDestroy {
    */
   removeImg(img: string): void {
     this.imgPreview = this.imgPreview.filter(i => i !== img);
+  }
+
+  /**
+   * Листенер нажатия на кнопку записи
+   */
+  startRecording(): void {
+    this.isRecording = !this.isRecording;
+
+    if (this.isRecording) {
+      const media = {
+        video: false,
+        audio: true
+      };
+
+      navigator.mediaDevices
+        .getUserMedia(media)
+        .then(this.success.bind(this));
+    } else {
+      this.stopRecording();
+    }
+  }
+
+  /**
+   * Удачное наало записи
+   * @param stream поток для записи
+   */
+  success(stream: any): void {
+    const options = {
+      mimeType: 'audio/wav',
+      numberOfAudioChannels: 2,
+      audioBitsPerSecond: 128000,
+      frameInterval: 90,
+      desiredSampRate: 16000,
+      bitrate: 128000,
+      bufferSize: 16384,
+    };
+
+    const StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
+    this.record = new StereoAudioRecorder(stream, options);
+    this.record.record();
+  }
+
+  /**
+   * Остановка записи
+   */
+  stopRecording(): void {
+    this.isRecording = false;
+    this.record.stop(this.processRecording.bind(this));
+  }
+
+  /**
+   * Обработка записи
+   * @param blob данные записи в Blob формате
+   */
+  processRecording(blob: Blob): void {
+    this.url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
+    this.audio = new File([ blob ], 'test.wav', { lastModified: new Date().getDate() });
+    // this.url = f;
+    // console.log('url', this.url);
+    // const reader = new FileReader();
+    //
+    // reader.onload = (ev: any) => {
+    //   this.url = (ev.target.result.toString());
+    // };
+    // reader.readAsDataURL(f);
   }
 
   ngOnDestroy(): void {

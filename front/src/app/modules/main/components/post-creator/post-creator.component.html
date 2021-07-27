@@ -21,7 +21,7 @@
 
     <div class="actions">
       <div class="sub-btn-wrapper">
-        <button mat-mini-fab matTooltip="Добавить запись">
+        <button mat-mini-fab matTooltip="Добавить запись" (click)="startRecording()">
           <mat-icon>
             record_voice_over
           </mat-icon>
@@ -60,6 +60,12 @@
         <img src="{{img}}" alt="preview">
       </div>
     </div>
+
+    <audio *ngIf="url" controls="controls">
+      <source [src]="url" type="audio/wav">
+      <p>Ваш браузер не поддерживает HTML5 аудио. Вот взамен</p>
+    </audio>
+
   </div>
 
   <emoji-mart class="emoji"
