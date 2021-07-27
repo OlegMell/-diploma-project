@@ -74,11 +74,9 @@ export class DropboxService {
   }
 
   uploadFilesArray(files: FileList): Observable<string[]> {
-    // return of(...Array.from(files)).pipe(
-    //   mergeMap(file => this.uploadFile(file, '/posts-images/')),
-    //   scan((acc: string[], img: string) => [...acc, img], [])
-    // );
-
-    return of([]);
+    return of(...Array.from(files)).pipe(
+      mergeMap(file => this.uploadFile(file, '/posts-images/')),
+      reduce((acc: string[], img: string) => [...acc, img], [])
+    );
   }
 }

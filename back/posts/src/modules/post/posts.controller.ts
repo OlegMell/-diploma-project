@@ -19,7 +19,6 @@ export class PostsController {
 
   @Get('/getByAuthorId')
   public getByAuthorId(@Query() query: any): Promise<any> {
-    console.log(query);
     return this.postsService.getByAuthorId(query);
   }
 }

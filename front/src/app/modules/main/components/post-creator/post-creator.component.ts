@@ -21,7 +21,7 @@ export class PostCreatorComponent implements OnInit, OnDestroy {
   emojiBtnClicked!: boolean; // флаг нажатия на кнопку эмо дзи
   postTextField: FormControl = new FormControl(''); // поле ввода текста поста
   file: any; // выбранный файл
-  files!: FileList; // выбранные картинки
+  files!: FileList | null; // выбранные картинки
   imgPreview: string[] = []; // массив картинок поста
 
   constructor(public readonly authFacade: AuthFacadeService,
@@ -59,14 +59,16 @@ export class PostCreatorComponent implements OnInit, OnDestroy {
 
     const post: Post = {
       text: tc,
-      images: this.files,
+      images: [...Array.from(this.files as FileList)],
       voice: '',
       date: Date.now(),
       author: ''
     };
-    console.log(post);
+
     this.postsFacade.createPost(post);
     // @ts-ignore
+    this.imgPreview = [];
+    this.files = null;
   }
 
   /**

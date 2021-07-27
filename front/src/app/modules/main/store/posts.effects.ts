@@ -10,15 +10,20 @@ import {
   GetAllPosts,
   GetAllPostsError,
   GetAllPostsSuccess,
-  GetByAuthorIdError, GetByAuthorIdSuccess,
+  GetByAuthorIdError,
+  GetByAuthorIdSuccess,
   PostsActions
 } from './posts.actions';
-import { catchError, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { PostsService } from '../../../services/posts.service';
 import { selectAuth } from '../../../shared/selectors/auth.selectors';
 import { of } from 'rxjs';
 import { FullPost } from '../../../shared/models/common.models';
 
+
+/**
+ * Эффекты работы с постами
+ */
 @Injectable()
 export class PostsEffects {
   constructor(private actions$: Actions,
@@ -44,9 +49,11 @@ export class PostsEffects {
   //     ))
   // ));
 
+  /**
+   * Эффект создания поста
+   */
   $createPost = createEffect(() => this.actions$.pipe(
     ofType(PostsActions.create),
-    tap(() => console.log('HERE')),
     withLatestFrom(this.store$.select(selectAuth)),
     // @ts-ignore
     mergeMap(([ action, auth ]) => this.dropboxService.uploadFilesArray(action.payload.images)
@@ -58,33 +65,34 @@ export class PostsEffects {
             images: filesPaths
           }, auth.token);
         }),
-        map(res => {
-          console.log(res);
-          return new GetAllPosts();
-        }),
+        map(() => new GetAllPosts()),
         catchError(() => of(new CreatePostError()))
       )),
   ));
 
+  /**
+   * Получение постов
+   */
   getAll$ = createEffect(() => this.actions$.pipe(
     ofType(PostsActions.getAllPosts),
     withLatestFrom(this.store$.select(selectAuth)),
     mergeMap(([ _, auth ]) => this.postsService.getAll(auth.token).pipe(
       map((res: FullPost[]) => {
-        console.log(res);
         return new GetAllPostsSuccess(res);
       }),
       catchError(() => of(new GetAllPostsError()))
     ))
   ));
 
+  /**
+   * Получеине поста по айди автора
+   */
   getByAuthorId$ = createEffect(() => this.actions$.pipe(
     ofType(PostsActions.getByAuthorId),
     withLatestFrom(this.store$.select(selectAuth)),
     // @ts-ignore
     mergeMap(([ action, auth ]) => this.postsService.getByAuthorId(action.payload, auth.token).pipe(
       map(res => {
-        console.log(res);
         return new GetByAuthorIdSuccess(res);
       }),
       catchError(() => of(new GetByAuthorIdError()))

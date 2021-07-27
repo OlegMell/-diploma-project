@@ -18,6 +18,12 @@
     <div class="text" [class.hide-shadow]="postData.text?.length > 50" *ngIf="postData.text">{{postData.text}}</div>
   </div>
 
+  <div class="images" *ngIf="postData.images.length">
+    <div class="img-item" *ngFor="let img of (images | async)">
+      <img src="{{img}}" alt="img">
+    </div>
+  </div>
+
 </div>
 
 
