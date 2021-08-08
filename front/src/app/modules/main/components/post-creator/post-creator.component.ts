@@ -53,7 +53,7 @@ export class PostCreatorComponent implements OnInit, OnDestroy {
     this.postTextField.valueChanges
       .pipe(takeUntil(this.uns$))
       .subscribe(value => {
-        console.log(value);
+        // console.log(value);
         // if (this.prevCaretPos) {
         //   console.log('here');
         //   this.prevCaretPos = value.length;
@@ -63,11 +63,12 @@ export class PostCreatorComponent implements OnInit, OnDestroy {
 
   /**
    * Метод отправки поста
+   * @param text текст из поля ввода
    */
-  send(tc: string): void {
+  send(text: string): void {
 
     const post: Post = {
-      text: tc,
+      text,
       images: this.files?.length ? [ ...Array.from(this.files as FileList) ] : [],
       voice: this.audio || '',
       date: Date.now(),
@@ -77,6 +78,7 @@ export class PostCreatorComponent implements OnInit, OnDestroy {
     this.postsFacade.createPost(post);
     // @ts-ignore
     this.imgPreview = [];
+    this.url = '';
     this.files = null;
   }
 
@@ -132,6 +134,7 @@ export class PostCreatorComponent implements OnInit, OnDestroy {
 
       // @ts-ignore
       this.file = input.files[0];
+      console.log(this.file);
       this.files = input.files;
       const ext = [ 'png', 'jpg', 'jpeg', 'gif' ];
       const v = ext.includes(this.file.name.substring(this.file.name.indexOf('.') + 1));
@@ -144,9 +147,11 @@ export class PostCreatorComponent implements OnInit, OnDestroy {
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < input.files.length; i++) {
         const reader = new FileReader();
+
         reader.onload = (ev: any) => {
           this.imgPreview.push(ev.target.result.toString());
         };
+
         reader.readAsDataURL(input.files[i]);
       }
     }

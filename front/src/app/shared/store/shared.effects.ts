@@ -18,22 +18,24 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthState } from './shared.reducer';
 import { selectAuth } from '../selectors/auth.selectors';
 import { SnackbarService } from '../services/toastr.service';
-import { ACCOUNT_NOT_FOUND, SUCCESS_SAVED } from '../constants/snack-messages.constants';
+import { ACCOUNT_NOT_FOUND, SERVER_ERRORS_MESSAGES, SUCCESS_SAVED } from '../constants/snack-messages.constants';
 import { ACCESS_TOKEN } from '../constants/app.constants';
 import { DropboxService } from '../../services/dropbox.service';
 import { SearchService } from '../../services/search.service';
 import { FoundUsers } from '../models/common.models';
+import { ErrorCatchService } from '../services/error-catch.service';
 
 
 @Injectable()
 export class SharedEffects {
   constructor(private actions$: Actions,
+              private router: Router,
               private authService: AuthService,
               private readonly searchService: SearchService,
               private dropboxService: DropboxService,
-              private router: Router,
               private route: ActivatedRoute,
               private snackBarService: SnackbarService,
+              private errorCatchService: ErrorCatchService,
               private store$: Store<AuthState>) {
   }
 
@@ -53,7 +55,10 @@ export class SharedEffects {
             return new SharedActions.LoginSuccess({ token: res.token });
           }
         }),
-        catchError(() => of(new SharedActions.LoginError()))
+        catchError((err) => {
+          this.errorCatchService.checkError(err);
+          return of(new SharedActions.LoginError());
+        })
       ))
   ));
 
@@ -68,7 +73,10 @@ export class SharedEffects {
         map(res => {
           return new SharedActions.LoginSuccess({ token: res.token });
         }),
-        catchError(() => of(new SharedActions.SignUpError()))
+        catchError(err => {
+          this.errorCatchService.checkError(err);
+          return of(new SharedActions.SignUpError());
+        })
       ))
   ));
 
@@ -159,4 +167,11 @@ export class SharedEffects {
   ));
 
 
+  private displayErrors(err: any): void {
+    if (err.status === 500) {
+      this.snackBarService.open(SERVER_ERRORS_MESSAGES.AUTH_SERVICE_IS_NOT_RESPONDING);
+    } else {
+      this.snackBarService.open(SERVER_ERRORS_MESSAGES.SERVER_IS_NOT_RESPONDING);
+    }
+  }
 }

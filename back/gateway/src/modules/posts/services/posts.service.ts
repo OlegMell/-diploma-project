@@ -26,8 +26,12 @@ export class PostsService {
     /**
      * Запрос на получение постов
      */
-    public getAll(): any {
-        return this.http.get(`${ API_POSTS_URL }posts/getAll`).pipe(
+    public getAll(a: string): any {
+        return this.http.get(`${ API_POSTS_URL }posts/getAll`, {
+            headers: {
+                Authorization: a
+            }
+        }).pipe(
             map(res => res.data)
         );
     }
@@ -51,6 +55,17 @@ export class PostsService {
     public remove(query: RemoveReqDto): any {
         return this.http.get(`${ API_POSTS_URL }posts/removePost`, {
             params: { ...query }
+        }).pipe(
+            map(res => res.data)
+        )
+    }
+
+    /**
+     * Отправка запроса на отметку "Лайк"
+     */
+    public setLike(token: string, postId: any): any {
+        return this.http.put(`${ API_POSTS_URL }posts/setLike`, {
+            token, ...postId
         }).pipe(
             map(res => res.data)
         )

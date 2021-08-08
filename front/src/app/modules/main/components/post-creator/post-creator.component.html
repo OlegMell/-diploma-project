@@ -20,14 +20,16 @@
   <div class="post-creator-actions-wrapper">
 
     <div class="actions">
+
       <div class="sub-btn-wrapper">
+
         <button mat-mini-fab matTooltip="Добавить запись" (click)="startRecording()">
           <mat-icon>
             record_voice_over
           </mat-icon>
         </button>
 
-        <label for="img">
+        <label for="profileImg">
           <button (click)="img.click()" mat-mini-fab matTooltip="Добавить картинку">
             <mat-icon>
               image
@@ -35,7 +37,7 @@
           </button>
         </label>
 
-        <input #img id="img" multiple="multiple" (change)="selectImage($event)" type="file" accept="image/*"
+        <input #img id="profileImg" multiple="multiple" (change)="selectImage($event)" type="file" accept="image/*"
                class="file-inp">
 
         <button mat-mini-fab matTooltip="Добавить эмодзи" (click)="emojiBtnClicked = !emojiBtnClicked">
@@ -46,17 +48,16 @@
       </div>
 
       <button mat-ripple class="send-btn"
-              (click)="send(editor.value)">
+              (click)="send(editor.value); editor.value = ''">
         Отправить
         <mat-icon matSuffix>send</mat-icon>
       </button>
+
     </div>
 
     <div class="imgs-preview-box" *ngIf="imgPreview.length">
       <div class="img-preview-item" *ngFor="let img of imgPreview">
-        <!--        <button class="close-btn" mat-icon-button>-->
         <mat-icon (click)="removeImg(img)">close</mat-icon>
-        <!--        </button>-->
         <img src="{{img}}" alt="preview">
       </div>
     </div>

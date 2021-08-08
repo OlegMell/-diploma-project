@@ -39,4 +39,12 @@ export class PostsService extends ServerService {
       headers: this.setAuthorize(this.defaultHeaders(), token)
     });
   }
+
+  setLike(postId: string, token: string): Observable<any> {
+    return this.http.put(this.build('posts', 'setLike'), {
+      postId
+    }, {
+      headers: this.setAuthorize(this.defaultHeaders(), token)
+    });
+  }
 }

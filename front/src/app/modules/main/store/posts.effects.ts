@@ -12,13 +12,18 @@ import {
   GetAllPostsSuccess,
   GetByAuthorIdError,
   GetByAuthorIdSuccess,
-  PostsActions, RemovePostError, RemovePostSuccess
+  PostsActions,
+  RemovePostError,
+  RemovePostSuccess,
+  SetLikeError,
+  SetLikeSuccess
 } from './posts.actions';
 import { catchError, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { PostsService } from '../../../services/posts.service';
 import { selectAuth } from '../../../shared/selectors/auth.selectors';
 import { of } from 'rxjs';
-import { FullPost } from '../../../shared/models/common.models';
+import { PostWithAuthorData } from '../../../shared/models/common.models';
+import { ErrorCatchService } from '../../../shared/services/error-catch.service';
 
 
 /**
@@ -32,6 +37,7 @@ export class PostsEffects {
               private route: ActivatedRoute,
               private readonly postsService: PostsService,
               private snackBarService: SnackbarService,
+              private errorCatchService: ErrorCatchService,
               private store$: Store<AuthState>) {
   }
 
@@ -86,10 +92,14 @@ export class PostsEffects {
     withLatestFrom(this.store$.select(selectAuth)),
     mergeMap(([ _, auth ]) => this.postsService.getAll(auth.token)
       .pipe(
-        map((res: FullPost[]) => {
+        map((res: PostWithAuthorData[]) => {
+          console.log(res);
           return new GetAllPostsSuccess(res);
         }),
-        catchError(() => of(new GetAllPostsError()))
+        catchError((err) => {
+          this.errorCatchService.checkError(err);
+          return of(new GetAllPostsError());
+        })
       ))
   ));
 
@@ -120,5 +130,21 @@ export class PostsEffects {
         map(() => new RemovePostSuccess(action.payload)),
         catchError(() => of(new RemovePostError()))
       ))
+  ));
+
+  /**
+   * Эффект установки лайка посту
+   */
+  setLike$ = createEffect(() => this.actions$.pipe(
+    ofType(PostsActions.setLike),
+    withLatestFrom(this.store$.select(selectAuth)),
+    // @ts-ignore
+    mergeMap(([action, auth]) => this.postsService.setLike(action.payload, auth.token).pipe(
+      map(res => {
+        console.log(res);
+        return new SetLikeSuccess(res);
+      }),
+      catchError(() => of(new SetLikeError()))
+    ))
   ));
 }

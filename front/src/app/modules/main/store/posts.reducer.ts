@@ -1,4 +1,4 @@
-import { FullPost } from '../../../shared/models/common.models';
+import { FullPost, PostWithAuthorData } from '../../../shared/models/common.models';
 import { PostsActions, PostsActionsUnion } from './posts.actions';
 
 /**
@@ -6,7 +6,8 @@ import { PostsActions, PostsActionsUnion } from './posts.actions';
  */
 
 export interface PostsState {
-  posts: FullPost[] | null;
+  posts: PostWithAuthorData[] | null;
+  userPosts: PostWithAuthorData[] | null;
   pending: boolean;
 }
 
@@ -15,14 +16,14 @@ export interface PostsState {
  */
 export const initialState: PostsState = {
   posts: [],
+  userPosts: [],
   pending: false
 };
 
 
 /**
- * Редьюсер
+ * Редьюсер постов
  */
-
 export function reducer(state: PostsState = initialState, action: PostsActionsUnion): PostsState {
   switch (action.type) {
     case PostsActions.create:
@@ -32,7 +33,6 @@ export function reducer(state: PostsState = initialState, action: PostsActionsUn
     case PostsActions.createSuccess:
       return {
         ...state,
-        posts: [ ...state.posts as FullPost[], action.payload ],
         pending: false
       };
     case PostsActions.getAllPosts:
@@ -44,7 +44,7 @@ export function reducer(state: PostsState = initialState, action: PostsActionsUn
     case PostsActions.getByAuthorId:
       return { ...state, pending: true };
     case PostsActions.getByAuthorIdSuccess:
-      return { ...state, posts: action.payload, pending: false };
+      return { ...state, userPosts: action.payload, pending: false };
     case PostsActions.getByAuthorIdError:
       return { ...state, pending: false };
     case PostsActions.removePost:
@@ -52,10 +52,24 @@ export function reducer(state: PostsState = initialState, action: PostsActionsUn
     case PostsActions.removePostSuccess:
       return {
         ...state,
-        posts: [ ...state.posts?.filter(post => post._id !== action.payload) as FullPost[] ],
+        posts: [ ...state.posts?.filter(post => post.post._id !== action.payload) as PostWithAuthorData[] ],
         pending: false
       };
     case PostsActions.removePostError:
+      return { ...state, pending: false };
+    case PostsActions.setLike:
+      return { ...state, pending: true };
+    case PostsActions.setLikeSuccess:
+      // @ts-ignore
+      return { ...state, pending: false, posts: [...state.posts?.slice(0).map((postData) => {
+        const nPost = Object.assign({}, postData);
+        if (nPost.post._id === action.payload._id) {
+          nPost.post.isLiked = !nPost.post.isLiked;
+          nPost.post.likes = nPost.post.isLiked ? nPost.post.likes + 1 : nPost.post.likes - 1;
+          }
+        return nPost;
+        })] };
+    case PostsActions.setLikeError:
       return { ...state, pending: false };
     default:
       return { ...state };

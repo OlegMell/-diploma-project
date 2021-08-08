@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { PostsState } from '../store/posts.reducer';
 import { Store } from '@ngrx/store';
-import { CreatePost, GetAllPosts, GetByAuthorId, RemovePost } from '../store/posts.actions';
+import { CreatePost, GetAllPosts, GetByAuthorId, RemovePost, SetLike } from '../store/posts.actions';
 import { Post } from '../../../shared/models/common.models';
-import { selectPosts } from '../store/posts.selectors';
+import { selectPending, selectPosts, selectUserPosts } from '../store/posts.selectors';
 
 @Injectable({ providedIn: 'root' })
 export class PostsFacadeService {
   posts$ = this.store$.select(selectPosts);
+  userPosts$ = this.store$.select(selectUserPosts);
+  pending$ = this.store$.select(selectPending);
 
-  constructor(private readonly store$: Store<PostsState> ) {
+  constructor(private readonly store$: Store<PostsState>) {
   }
 
   createPost(post: Post): void {
@@ -26,5 +28,9 @@ export class PostsFacadeService {
 
   removePost(id: string): void {
     this.store$.dispatch(new RemovePost(id));
+  }
+
+  setLike(id: string): void {
+    this.store$.dispatch(new SetLike(id));
   }
 }

@@ -26,6 +26,7 @@ const REQUESTS = {
       create: '/create',
       remove: '/remove',
       getByAuthorId: '/getByAuthorId',
+      setLike: '/setLike'
     }
   }
 };

@@ -13,6 +13,7 @@ export interface AddUserDto {
     username: string;
     login: string;
     password: string
+    phone: string;
 }
 
 /**

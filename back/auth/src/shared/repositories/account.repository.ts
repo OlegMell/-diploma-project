@@ -43,13 +43,11 @@ export class AccountRepository {
         if (!user) return null;
 
         const p: PersonalInfo = await this.personalInfo.create({
-            firstName: '',
-            lastName: '',
-            bio: '',
-            site: '',
-            phone: '-',
-            email: addUser.login
+            email: addUser.login,
+            phone: addUser.phone
         });
+
+        console.log(p);
 
         await this.account.findByIdAndUpdate(user._id, { $set: { personalInfo: p._id } }).exec();
 
@@ -100,15 +98,15 @@ export class AccountRepository {
         });
     }
 
-    public async findById(id: string): Promise<Account> {
+    public async findById(id: string): Promise<any> {
         if (!id.length) {
             return null;
         }
 
-        return this.account.findById(id).populate({
+        return this.account.findOne({ _id: id }).populate({
             path: 'personalInfo',
             model: 'PersonalInfoModel'
-        });
+        }).exec();
     }
 
     /**

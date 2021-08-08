@@ -33,6 +33,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   createSignUpForm(): void {
     this.signUpForm = this.fb.group({
       email: this.fb.control('', [ Validators.required, Validators.email ]),
+      phone: this.fb.control('', [ Validators.required ]),
       password: this.fb.control('', [ Validators.required,
         Validators.minLength(4) ]),
       repPassword: this.fb.control('', [ Validators.required, Validators.minLength(4) ]),
@@ -47,7 +48,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.authFacade
       .signUp(this.signUpForm.get('username')?.value,
         this.signUpForm.get('email')?.value,
-        this.signUpForm.get('password')?.value);
+        this.signUpForm.get('password')?.value,
+        this.signUpForm.get('phone')?.value);
   }
 
   ngOnDestroy(): void {

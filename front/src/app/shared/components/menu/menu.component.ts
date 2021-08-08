@@ -13,6 +13,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   private uns$: Subject<void> = new Subject<void>(); // отписчик от всех подписок
   @Input() currTitle: string | undefined; // текущий заголовок станицы
   scrolled = false; // флаг скролла страницы
+  userId!: string;
 
   constructor(private readonly route: ActivatedRoute,
               private readonly authFacade: AuthFacadeService) {
@@ -21,9 +22,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.authFacade.getCurrentUserId(this.route)
       .pipe(takeUntil(this.uns$))
-      .subscribe(id => {
-        console.log(id);
-      });
+      .subscribe(id => this.userId = id);
   }
 
   ngOnDestroy(): void {

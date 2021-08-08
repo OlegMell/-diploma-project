@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { FullPost, Post } from '../../../shared/models/common.models';
+import { FullPost, Post, PostWithAuthorData } from '../../../shared/models/common.models';
 
 export enum PostsActions {
   create = '[POSTS] Create Post',
@@ -16,6 +16,10 @@ export enum PostsActions {
   removePost = '[POSTS] Remove Post',
   removePostSuccess = '[POSTS] Remove Post Success',
   removePostError = '[POSTS] Remove Post Error',
+
+  setLike = '[POST] SET_LIKE',
+  setLikeSuccess = '[POST] SET_LIKE_SUCCESS',
+  setLikeError = '[POST] SET_LIKE_ERROR',
 }
 
 export class CreatePost implements Action {
@@ -43,7 +47,7 @@ export class GetAllPosts implements Action {
 export class GetAllPostsSuccess implements Action {
   readonly type = PostsActions.getAllPostsSuccess;
 
-  constructor(public payload: FullPost[]) {
+  constructor(public payload: PostWithAuthorData[]) {
   }
 }
 
@@ -61,7 +65,7 @@ export class GetByAuthorId implements Action {
 export class GetByAuthorIdSuccess implements Action {
   readonly type = PostsActions.getByAuthorIdSuccess;
 
-  constructor(public payload: FullPost[]) {
+  constructor(public payload: PostWithAuthorData[]) {
   }
 }
 
@@ -87,6 +91,22 @@ export class RemovePostError implements Action {
   readonly type = PostsActions.removePostError;
 }
 
+export class SetLike implements Action {
+  readonly type = PostsActions.setLike;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class SetLikeSuccess implements Action {
+  readonly type = PostsActions.setLikeSuccess;
+  constructor(public payload: FullPost) {
+  }
+}
+
+export class SetLikeError implements Action {
+  readonly type = PostsActions.setLikeError;
+}
 
 export type PostsActionsUnion = CreatePost
   | CreatePostSuccess
@@ -99,4 +119,7 @@ export type PostsActionsUnion = CreatePost
   | GetByAuthorIdError
   | RemovePost
   | RemovePostSuccess
-  | RemovePostError;
+  | RemovePostError
+  | SetLike
+  | SetLikeSuccess
+  | SetLikeError;

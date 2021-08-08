@@ -8,7 +8,7 @@ import { PostsModule } from "./modules/posts/posts.module";
 @Module({
     imports: [ AuthModule, SearchModule, PostsModule, HttpModule ],
     controllers: [ AppController ],
-    providers: [],
+    providers: [ ],
 })
 export class AppModule {
 }

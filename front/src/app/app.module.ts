@@ -30,7 +30,12 @@ import { NgAudioRecorderModule } from 'ng-audio-recorder';
     AppSharedModule,
     HttpClientModule,
     NgAudioRecorderModule,
-    StoreModule.forRoot(reducers),
+    StoreModule.forRoot(reducers, {
+      runtimeChecks: {
+        strictStateImmutability: false, // для иммутабельности состояния (лайки)
+        strictActionImmutability: false, // для иммутабельности состояния (лайки)
+      },
+    }),
     EffectsModule.forRoot([SharedEffects]),
     AuthModule,
     ProfileModule,

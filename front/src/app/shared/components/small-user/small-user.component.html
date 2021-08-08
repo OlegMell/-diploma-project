@@ -1,10 +1,10 @@
 <div class="user">
   <div class="img-wrapper">
-    <img *ngIf="link" src="{{link}}" alt="profile avatar">
+    <img *ngIf="user.photo" src="{{user.photo}}" alt="profile avatar">
   </div>
   <div class="user-name">
     <span *ngIf="user">{{user.username}}</span>
-    <span *ngIf="user$">{{(user$ | async)?.username}}</span>
+<!--    <span *ngIf="user$">{{(user$ | async)?.username}}</span>-->
     <span *ngIf="username">{{username}}</span>
   </div>
 </div>

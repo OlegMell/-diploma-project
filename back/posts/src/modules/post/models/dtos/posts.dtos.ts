@@ -17,3 +17,9 @@ export interface GetByAuthorIdDto {
 export interface RemoveReqDto {
   id: string;
 }
+
+export interface LikePost {
+  token?: string;
+  postId: string;
+  userId?: string;
+}

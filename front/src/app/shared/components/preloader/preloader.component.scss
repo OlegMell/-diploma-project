@@ -1,4 +1,28 @@
+@import "colors";
+
 .preloader {
   margin: 15px;
   position: absolute;
+}
+
+.center {
+  left: 45%;
+  top: 30%;
+  z-index: 9999;
+}
+
+.overlay {
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
+  position: absolute;
+  background-color: rgba(gray, .04);
+  backdrop-filter: blur(8px);
+  display: flex;
+  overflow: hidden;
+
+  .circle {
+    margin: auto;
+    color: $primary !important;
+  }
 }

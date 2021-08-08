@@ -1,11 +1,28 @@
+import { Types } from 'mongoose';
+
 export interface Post extends Document {
   _id: string;
   date: Date;
   voice?: string;
   text?: string;
   likes: number;
+  isLiked: boolean;
+  likedUsers: [Types.ObjectId];
   view?: number;
-  author: any;
+  author: Types.ObjectId;
+  comments: any;
+}
+
+export interface Post1 {
+  _id: string;
+  date: Date;
+  voice?: string;
+  text?: string;
+  likes: number;
+  likedUsers: [Types.ObjectId];
+  isLiked?: boolean;
+  view?: number;
+  author: Types.ObjectId;
   comments: any;
 }
 
