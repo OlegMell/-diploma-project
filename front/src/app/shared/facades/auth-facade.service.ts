@@ -50,9 +50,10 @@ export class AuthFacadeService {
    * @param username никнейм
    * @param login емайл пользователя
    * @param password пароль
+   * @param phone номер телефона
    */
-  signUp(username: string, login: string, password: string): void {
-    this.store.dispatch(new SharedActions.SignUp({ login, password, username }));
+  signUp(username: string, login: string, password: string, phone: string): void {
+    this.store.dispatch(new SharedActions.SignUp({ login, password, username, phone }));
   }
 
   /**

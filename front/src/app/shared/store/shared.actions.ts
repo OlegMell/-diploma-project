@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Auth, CreateAccount, Credentials, FoundUsers, PersonalData, Themes } from '../models/common.models';
+import { Auth, CreateAccount, Credentials, FollowDto, FoundUsers } from '../models/common.models';
 
 /**
  * Экшены авторизации и регистрации
@@ -28,6 +28,12 @@ export enum AppActions {
   searchUsers = '[SEARCH] SEARCH USERS',
   searchUsersSuccess = '[SEARCH] SEARCH USERS Success',
   searchUsersError = '[SEARCH] SEARCH USERS Error',
+}
+
+export enum FollowSubscriptionsActions {
+  setFollow = '[FOLLOWS] SET_FOLLOW',
+  setFollowSuccess = '[FOLLOWS] SET_FOLLOW_SUCCESS',
+  setFollowError = '[FOLLOWS] SET_FOLLOW_ERROR',
 }
 
 
@@ -131,6 +137,21 @@ export class SearchUsersError implements Action {
   }
 }
 
+export class SetFollow implements Action {
+  readonly type = FollowSubscriptionsActions.setFollow;
+
+  constructor(public payload: FollowDto) {
+  }
+}
+
+export class SetFollowSuccess implements Action {
+  readonly type = FollowSubscriptionsActions.setFollowSuccess;
+}
+
+export class SetFollowError implements Action {
+  readonly type = FollowSubscriptionsActions.setFollowError;
+}
+
 export type SharedActionUnion = Login
   | LoginSuccess
   | LoginError
@@ -145,4 +166,7 @@ export type SharedActionUnion = Login
   | UpdatePersonalData
   | UpdatePersonalDataSuccess
   | UpdatePersonalDataError
+  | SetFollow
+  | SetFollowSuccess
+  | SetFollowError
   | Logout;

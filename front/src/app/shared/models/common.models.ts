@@ -1,3 +1,4 @@
+
 export interface Credentials {
   login: string;
   password: string;
@@ -7,6 +8,7 @@ export interface CreateAccount {
   login: string;
   password: string;
   username: string;
+  phone: string;
 }
 
 export interface Auth {
@@ -34,6 +36,7 @@ export interface PersonalData {
 }
 
 export interface FoundUser {
+  _id: string;
   username: string;
   email: string;
   photo: string;
@@ -49,13 +52,15 @@ export interface Post {
   author: string;
   text?: string;
   date: number;
-  images?: FileList | string[];
-  voice?: string;
+  images?: File[] | string[];
+  voice?: File | string;
 }
 
 export interface FullPost {
+  _id: string;
   date: number;
   text?: string;
+  isLiked?: boolean;
   author: string;
   voice?: string;
   images?: string[];
@@ -64,10 +69,19 @@ export interface FullPost {
   comments: string[];
 }
 
+export interface PostWithAuthorData {
+  post: FullPost;
+  authorData: FoundUser;
+}
 
 export interface TokenResult {
   readonly id: string;
   readonly exp: number;
   readonly iat: number;
   readonly sub: string;
+}
+
+export interface FollowDto {
+  sourceUserId: string;
+  targetUserId: string;
 }

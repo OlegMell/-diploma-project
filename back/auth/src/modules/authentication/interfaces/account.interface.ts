@@ -13,6 +13,7 @@ export interface PersonalInfo extends Document {
     firstName: string;
     lastName: string;
     email: string;
+    phone: string;
     photo: string;
     site: string;
     bio: string;

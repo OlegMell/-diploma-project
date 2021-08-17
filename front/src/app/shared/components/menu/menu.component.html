@@ -9,7 +9,7 @@
   </span>
 
   <span class="menu-item" *ngIf="currTitle !== 'Профиль'">
-    <a title class="menu-item_link" [routerLink]="['/profile']"> Профиль </a>
+    <a title class="menu-item_link" [routerLink]="['/profile/'+userId]"> Профиль </a>
   </span>
 
   <span class="menu-item" *ngIf="currTitle !== 'Настройки'">

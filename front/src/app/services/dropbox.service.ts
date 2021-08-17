@@ -55,7 +55,7 @@ export class DropboxService {
       const modifiedName = arr[0] + new Date().getMilliseconds().toString();
       const fileName = modifiedName + '.' + arr[1];
 
-      const path = `${partPath}${ fileName }`;
+      const path = `${ partPath }${ fileName }`;
 
       return this.http.post(url, file, {
         headers: {
@@ -74,11 +74,13 @@ export class DropboxService {
   }
 
   uploadFilesArray(files: FileList): Observable<string[]> {
-    // return of(...Array.from(files)).pipe(
-    //   mergeMap(file => this.uploadFile(file, '/posts-images/')),
-    //   scan((acc: string[], img: string) => [...acc, img], [])
-    // );
+    if (!files.length) {
+      return of([]);
+    }
 
-    return of([]);
+    return of(...Array.from(files)).pipe(
+      mergeMap(file => this.uploadFile(file, '/posts-images/')),
+      reduce((acc: string[], img: string) => [ ...acc, img ], [])
+    );
   }
 }

@@ -2,20 +2,56 @@
 
   <div class="post-header">
 
-    <div class="user" *ngIf="user$ | async">
-      <app-small-user [routerLink]="['/profile/'+postData.author]" *inView [user$]="user$"></app-small-user>
+    <div class="user" *ngIf="postData.authorData">
+      <app-small-user [routerLink]="['/profile/'+postData.authorData._id]" [user]="postData.authorData"></app-small-user>
     </div>
 
     <div class="date">
       <span>
-        {{postData.date | date : "yyyy:MM:dd hh:mm"}}
+        {{postData.post.date | date : "yyyy:MM:dd hh:mm"}}
       </span>
     </div>
 
   </div>
 
   <div class="post-main">
-    <div class="text" [class.hide-shadow]="postData.text?.length > 50" *ngIf="postData.text">{{postData.text}}</div>
+    <div class="text" [class.hide-shadow]="postData.post.text?.length > 50" *ngIf="postData.post.text">{{postData.post.text}}</div>
+  </div>
+
+  <div class="post-images" *ngIf="postData.post.images?.length">
+    <div class="img-item" *ngFor="let img of (images | async)">
+      <img src="{{img}}" alt="img">
+    </div>
+  </div>
+
+  <div class="post-voice" *ngIf="postData.post.voice.length">
+    <audio src="{{voice | async}}" controls="controls">
+    </audio>
+  </div>
+
+  <div class="post-btns">
+    <button mat-icon-button
+            [class.liked]="postData.post.isLiked"
+            matTooltip="Нравиться"
+            (click)="postsFacade.setLike(postData.post._id)">
+      <mat-icon *ngIf="!postData.post.isLiked">
+        favorite_border
+      </mat-icon>
+
+      <mat-icon *ngIf="postData.post.isLiked">favorite</mat-icon>
+      <span>
+        {{postData.post.likes > 100000 ? postData.post.likes / 10000 + 'k' : postData.post.likes}}
+      </span>
+    </button>
+
+    <button mat-icon-button
+            *ngIf="currUserId && currUserId === postData.authorData._id"
+            (click)="postsFacade.removePost(postData.post._id)"
+            matTooltip="Удалить пост">
+      <mat-icon>
+        delete
+      </mat-icon>
+    </button>
   </div>
 
 </div>

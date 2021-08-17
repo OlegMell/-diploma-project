@@ -18,7 +18,7 @@ export class EditProfileDialogComponent implements OnInit, OnDestroy {
 
   form!: FormGroup; // форма редактирования
   file!: File; // выбранный файл
-  imgPreview!: string; // превью выбранной картинки
+  editImgPreview!: string; // превью выбранной картинки
 
   username!: string; // имя пользователя (никнейм)
   bio!: string; // описание пользователя
@@ -65,7 +65,8 @@ export class EditProfileDialogComponent implements OnInit, OnDestroy {
    * Листенер выбора картинки
    * @param event событие выбора картинки
    */
-  selectImage(event: any): void {
+  selectProfileImage(event: any): void {
+    event.stopPropagation();
     const input = (event.target as HTMLInputElement);
     if (input.files && input.files[0]) {
 
@@ -83,7 +84,7 @@ export class EditProfileDialogComponent implements OnInit, OnDestroy {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        this.imgPreview = e.target.result.toString();
+        this.editImgPreview = e.target.result.toString();
       };
 
       reader.readAsDataURL(input.files[0]);

@@ -1,5 +1,5 @@
-<div *ngFor="let post of (postsFacade.posts$ | async)">
-  <app-post-small [postData]="post"
-                  *inView
-  ></app-post-small>
+<!--<div *ngIf="posts.length">-->
+<div *ngFor="let post of posts">
+  <app-post-small [postData]="post"></app-post-small>
 </div>
+<!--</div>-->

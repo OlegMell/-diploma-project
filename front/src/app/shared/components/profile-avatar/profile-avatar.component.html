@@ -1,4 +1,5 @@
 <div class="relative-container"
+     *ngIf="!scrolled"
      [ngClass]="centerPosition ? 'center-position' : ''">
   <div class="menu-box" [ngClass]="isProfileClicked ? 'active' : 'hidden'">
 
@@ -34,4 +35,5 @@
       </div>
     </div>
   </div>
+
 </div>

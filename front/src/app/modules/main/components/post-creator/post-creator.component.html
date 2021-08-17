@@ -20,14 +20,29 @@
   <div class="post-creator-actions-wrapper">
 
     <div class="actions">
-      <div class="sub-btn-wrapper">
-        <button mat-mini-fab matTooltip="Добавить запись">
-          <mat-icon>
-            record_voice_over
-          </mat-icon>
-        </button>
 
-        <label for="img">
+      <div class="sub-btn-wrapper">
+
+        <div class="record-btn-wrapper">
+          <button [class.record]="isRecording" mat-mini-fab matTooltip="Добавить запись" (click)="startRecording()">
+            <mat-icon>
+              record_voice_over
+            </mat-icon>
+          </button>
+
+          <div *ngIf="isRecording" class="animate">
+
+            <div id="bars">
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <label for="profileImg">
           <button (click)="img.click()" mat-mini-fab matTooltip="Добавить картинку">
             <mat-icon>
               image
@@ -35,7 +50,7 @@
           </button>
         </label>
 
-        <input #img id="img" multiple="multiple" (change)="selectImage($event)" type="file" accept="image/*"
+        <input #img id="profileImg" multiple="multiple" (change)="selectImage($event)" type="file" accept="image/*"
                class="file-inp">
 
         <button mat-mini-fab matTooltip="Добавить эмодзи" (click)="emojiBtnClicked = !emojiBtnClicked">
@@ -46,20 +61,29 @@
       </div>
 
       <button mat-ripple class="send-btn"
-              (click)="send(editor.value)">
+              (click)="send(editor.value); editor.value = ''">
         Отправить
         <mat-icon matSuffix>send</mat-icon>
       </button>
+
     </div>
 
     <div class="imgs-preview-box" *ngIf="imgPreview.length">
       <div class="img-preview-item" *ngFor="let img of imgPreview">
-        <!--        <button class="close-btn" mat-icon-button>-->
         <mat-icon (click)="removeImg(img)">close</mat-icon>
-        <!--        </button>-->
         <img src="{{img}}" alt="preview">
       </div>
     </div>
+
+    <div class="audio-wrapper">
+      <audio *ngIf="url" controls="controls">
+        <source [src]="url" type="audio/wav">
+        <p>Ваш браузер не поддерживает HTML5 аудио. Вот взамен</p>
+      </audio>
+
+      <button (click)="removeAudio()" class="remove-audio-btn" *ngIf="url" mat-mini-fab color="warn"><mat-icon>close</mat-icon></button>
+    </div>
+
   </div>
 
   <emoji-mart class="emoji"
@@ -69,8 +93,9 @@
               *ngIf="emojiBtnClicked"
               (emojiSelect)="onEmojiSelected($event, editor)"
               [style]="{width: '100%',
-              position: 'absolute',
+              position: 'relative',
               overflow: 'hidden',
+              'z-index': '100000',
               boxShadow: '0 14px 28px rgba(0,0,0,0.10), 0 10px 10px rgba(0,0,0,0.10)'}"
               [darkMode]="(appFacade.theme$ | async) === 'dark'"></emoji-mart>
 </div>

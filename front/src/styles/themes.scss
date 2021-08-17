@@ -1,9 +1,14 @@
 @import "colors";
 
 .light-theme {
-  background-color: white;
   color: $black;
+  background-color: whitesmoke;
   transition: all .2s ease-in-out;
+
+  audio::-webkit-media-controls-panel {
+    color: white;
+    background-color: rgba(#9FA8DA, .3);
+  }
 
   .mat-form-field-label {
     color: black;
@@ -78,12 +83,22 @@
       background-color: $lightPrimary2;
     }
   }
+
+  .date {
+    color: rgba(black, .6);
+    font-size: 12px;
+  }
 }
 
 .dark-theme {
   background-color: #202124;
   color: $darkModeWhite;
   transition: all .2s ease-in-out;
+
+  audio::-webkit-media-controls-panel {
+    background-color: rgba(#9FA8DA, .9);
+    color: white;
+  }
 
   .form-wrapper {
     background-color: rgba($white, .1);
@@ -197,6 +212,11 @@
         color: inherit !important;
       }
     }
+  }
+
+  .date {
+    color: rgba(white, .7);
+    font-size: 12px;
   }
 }
 

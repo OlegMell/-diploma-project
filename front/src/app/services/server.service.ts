@@ -24,7 +24,15 @@ const REQUESTS = {
     child: {
       getAll: '/getAll',
       create: '/create',
-      getByAuthorId: '/getByAuthorId'
+      remove: '/remove',
+      getByAuthorId: '/getByAuthorId',
+      setLike: '/setLike'
+    }
+  },
+  follows: {
+    root: 'follows',
+    child: {
+      setFollow: '/setFollow'
     }
   }
 };

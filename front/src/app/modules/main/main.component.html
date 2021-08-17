@@ -1,151 +1,16 @@
 <app-header title="Лента"></app-header>
+<app-preloader [center]="true" [pendingFactor]="postsFacade.pending$" [diameter]="100"></app-preloader>
 
 <div class="center-container">
 
   <main class="content">
+
+    <!--  Создание поста   -->
     <app-post-creator></app-post-creator>
-<!--    <h1> Main </h1>-->
-
-    <app-post-list></app-post-list>
-
-<!--    <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus fuga ipsam mollitia nisi. Aperiam corporis-->
-<!--      delectus eos id molestiae odio provident quia quibusdam quidem recusandae, repudiandae rerum suscipit tenetur-->
-<!--      voluptatem.-->
-<!--    </div>-->
-<!--    <div>Consequuntur culpa debitis dolore ipsa provident repellendus rerum! A ab, animi beatae laboriosam mollitia velit.-->
-<!--      Ab, adipisci cum dolore ducimus fuga fugiat illum labore laudantium nemo non recusandae sunt, voluptatem?-->
-<!--    </div>-->
-<!--    <div>Adipisci aliquam architecto asperiores dicta dolorem doloribus est et eum hic laborum magnam nemo non odit optio-->
-<!--      placeat quaerat quas, quibusdam, quisquam quos recusandae repellat sapiente sed voluptate voluptates, voluptatibus.-->
-<!--    </div>-->
-<!--    <div>Distinctio ea repudiandae sit. Blanditiis, dolor, voluptate. Adipisci alias beatae cum dicta laboriosam modi-->
-<!--      quas, quos temporibus unde veritatis. A atque deleniti dicta doloribus eligendi excepturi iusto nam ratione ut?-->
-<!--    </div>-->
-<!--    <div>Delectus deserunt dolorem dolores error id maiores, minus natus quibusdam veritatis voluptate. Provident saepe-->
-<!--      velit voluptatibus! Cupiditate distinctio et incidunt libero nobis, unde voluptatibus! Accusantium dolores illum-->
-<!--      nesciunt porro quidem?-->
-<!--    </div>-->
-<!--    <div>Ab, accusantium animi assumenda at atque cumque, dolor facere fugit illum laborum laudantium magnam molestias-->
-<!--      natus quas quasi quia similique soluta unde velit veniam! Aliquam asperiores molestiae nihil quo soluta.-->
-<!--    </div>-->
-<!--    <div>Ad, consequuntur dolore dolores ea, et expedita, in ipsa maxime modi molestias non optio pariatur perferendis-->
-<!--      perspiciatis quas qui quos ratione repellendus rerum sapiente sed suscipit ullam ut vel vitae?-->
-<!--    </div>-->
-<!--    <div>Illo ipsa nulla quae quia ratione. Ab consectetur dicta modi nesciunt nostrum odit, quibusdam quo sequi-->
-<!--      temporibus tenetur. Aliquid architecto error eum inventore laudantium odit perferendis perspiciatis quae quas-->
-<!--      sapiente.-->
-<!--    </div>-->
-<!--    <div>Adipisci aliquam, asperiores consequatur debitis deleniti dolore esse fuga illum inventore molestiae possimus rem-->
-<!--      repudiandae sapiente, sint, vel. Aliquid atque deserunt excepturi harum molestiae nesciunt, nisi ullam. Natus,-->
-<!--      veritatis, voluptates?-->
-<!--    </div>-->
-<!--    <div>A, aliquam aperiam beatae delectus ducimus esse quis saepe! Asperiores aspernatur, corporis cum debitis eum-->
-<!--      explicabo facere impedit laboriosam numquam quibusdam reprehenderit vero? Architecto blanditiis, ea earum-->
-<!--      perferendis repellendus saepe?-->
-<!--    </div>-->
-<!--    <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, aperiam architecto at cum, doloremque eum-->
-<!--      explicabo hic magnam maxime, nostrum officiis omnis possimus quae quisquam recusandae rerum sequi temporibus vel!-->
-<!--    </div>-->
-<!--    <div>Et eum expedita libero nihil nisi non. Accusantium alias aspernatur corporis debitis deleniti eius enim error-->
-<!--      iure natus necessitatibus nisi, qui quibusdam sapiente sed similique sint temporibus ut vero voluptas!-->
-<!--    </div>-->
-<!--    <div>Alias aperiam culpa doloribus dolorum, eligendi enim iure libero, maiores modi quas ratione repellat repudiandae-->
-<!--      vel! Ad cupiditate eius est facere nostrum officia quibusdam quidem rem! Ea eos id ut.-->
-<!--    </div>-->
-<!--    <div>Aliquid aut cumque debitis eligendi ex fuga harum itaque maxime, molestias nam odit provident ratione tempore?-->
-<!--      Adipisci commodi earum eos eum incidunt iste laborum, molestiae odit officiis omnis sed voluptates?-->
-<!--    </div>-->
-<!--    <div>Consectetur cum ea explicabo nostrum provident quaerat, repellendus temporibus voluptas! Amet aut cupiditate-->
-<!--      dicta, dignissimos dolor dolore doloremque facere ipsam laboriosam natus necessitatibus officiis repudiandae sequi-->
-<!--      tenetur ullam voluptas voluptates!-->
-<!--    </div>-->
-<!--    <div>A aperiam aut distinctio dolorem ducimus excepturi labore libero molestias neque nihil nostrum omnis perferendis-->
-<!--      possimus quam, quos repellendus soluta ut vel veniam voluptatum. Error ex ipsa natus officia soluta!-->
-<!--    </div>-->
-<!--    <div>Blanditiis cum deserunt enim molestias nam nesciunt nobis nulla suscipit voluptatem voluptatibus. At beatae-->
-<!--      commodi dignissimos dolorem fugit, hic impedit iste neque nisi perferendis quaerat quasi quos sapiente sint tempore!-->
-<!--    </div>-->
-<!--    <div>Accusamus assumenda dolores esse harum iste modi nesciunt tenetur. Alias aliquid amet aperiam dolorum eum illo-->
-<!--      ipsa libero maiores mollitia nulla, officia optio placeat porro quaerat quod ratione, rem? Blanditiis.-->
-<!--    </div>-->
-<!--    <div>A accusantium cum dolor doloremque earum eius eos esse explicabo facilis hic illo minus nemo neque obcaecati-->
-<!--      quam, quia recusandae repellat saepe, similique sit temporibus tenetur veniam voluptates voluptatibus voluptatum?-->
-<!--    </div>-->
-<!--    <div>Alias dolor, ducimus ea enim eos laudantium magnam officia totam? Eveniet fugiat iure nobis quis quo quod sunt.-->
-<!--      Ab, doloremque est fuga hic maxime nostrum numquam porro sapiente sit veritatis.-->
-<!--    </div>-->
-<!--    <div>Ab aspernatur, blanditiis, facere fugiat fugit in ipsa labore magnam maiores natus necessitatibus obcaecati-->
-<!--      placeat reiciendis repellendus veniam veritatis vitae. Commodi facere ipsam veniam! Est incidunt magnam placeat-->
-<!--      velit veniam!-->
-<!--    </div>-->
-<!--    <div>Nihil nulla quibusdam repellendus. Laboriosam optio quam quidem sint voluptatum! Accusantium adipisci aperiam-->
-<!--      deleniti impedit, mollitia omnis perspiciatis, placeat possimus provident quae quod saepe sequi, sint soluta unde-->
-<!--      voluptates voluptatibus?-->
-<!--    </div>-->
-<!--    <div>Animi assumenda atque commodi dolore doloremque ducimus et eveniet ex id illo incidunt ipsa magnam magni minus-->
-<!--      molestiae mollitia natus nemo quas, ratione rem reprehenderit saepe sapiente sed sunt totam.-->
-<!--    </div>-->
-<!--    <div>Consequuntur culpa eaque est facilis laudantium natus officiis placeat quisquam ullam voluptatibus. Corporis-->
-<!--      dolore, et explicabo harum impedit minus modi soluta vel. A ab ex molestiae numquam odit pariatur quisquam.-->
-<!--    </div>-->
-<!--    <div>Ad animi architecto aspernatur commodi corporis dignissimos dolorem doloremque doloribus eaque eius, est ipsum-->
-<!--      laboriosam magnam officiis perspiciatis ratione repudiandae saepe sequi similique sint tenetur totam ullam ut vel-->
-<!--      voluptatum.-->
-<!--    </div>-->
-<!--    <div>Animi asperiores aspernatur blanditiis, eligendi esse, explicabo fugit ipsam libero maxime natus odit-->
-<!--      perspiciatis quia quisquam veritatis voluptates? Dolorem doloremque eaque enim minus molestias quibusdam quidem-->
-<!--      recusandae similique voluptatibus. Impedit.-->
-<!--    </div>-->
-<!--    <div>Ab alias asperiores, assumenda cum dolor doloribus earum eligendi fuga impedit iste quaerat tempore, veritatis-->
-<!--      voluptatibus. Ab animi cumque explicabo, itaque iure libero minus, omnis provident quaerat sed soluta totam?-->
-<!--    </div>-->
-<!--    <div>Cumque non placeat quo veritatis vero! Alias amet animi cum debitis dolore eaque error iusto maxime minima minus,-->
-<!--      mollitia nulla porro quas sequi ullam velit voluptatibus! Cupiditate expedita maxime repellat!-->
-<!--    </div>-->
-<!--    <div>Architecto at dolores eligendi eum illum mollitia nobis, placeat rerum vero voluptates! Accusantium aliquam-->
-<!--      consectetur ducimus ea illum ipsam nemo nihil non optio quia quis repudiandae, totam unde! Accusamus, culpa.-->
-<!--    </div>-->
-<!--    <div>At consequuntur doloremque dolorum, eveniet in nobis quae sit. Autem quia recusandae saepe! Amet blanditiis culpa-->
-<!--      enim ex porro quis sed sit suscipit! A ex fugit ipsum officia pariatur! Soluta!-->
-<!--    </div>-->
-<!--    <div>Alias at beatae corporis cupiditate id molestias nobis odit, placeat repudiandae rerum sapiente ullam vel veniam.-->
-<!--      Amet atque, eum eveniet harum in ipsam optio quis, quod repellat rerum sapiente, voluptatibus.-->
-<!--    </div>-->
-<!--    <div>Fuga impedit ipsum itaque iusto numquam! Ad aliquam amet animi, asperiores consectetur corporis dolorum error eum-->
-<!--      fugit id incidunt ipsam nisi obcaecati omnis, provident quia soluta tenetur totam veniam, voluptatum?-->
-<!--    </div>-->
-<!--    <div>Beatae cum cumque deserunt dolorem eos facere hic impedit ipsum itaque libero natus necessitatibus officia-->
-<!--      pariatur quasi quo ratione reiciendis saepe sint soluta, ut! A aliquam impedit iste minima quasi.-->
-<!--    </div>-->
-<!--    <div>Aliquid amet animi aperiam dolor doloribus eligendi labore repellat, reprehenderit temporibus vero? Aspernatur-->
-<!--      excepturi fugiat illo laudantium minus. Assumenda eius eos hic illum ipsam iusto nam omnis repellat sit totam.-->
-<!--    </div>-->
-<!--    <div>Ad maxime molestiae molestias officia quod vero. At consequatur nisi placeat quos vero! Aspernatur blanditiis-->
-<!--      consequuntur ea ex fugiat illo incidunt laudantium modi necessitatibus quod quos rem repellendus tempora, veritatis?-->
-<!--    </div>-->
-<!--    <div>Assumenda deserunt eum inventore laborum modi quaerat quibusdam recusandae tempora. Autem deleniti sint voluptas.-->
-<!--      Accusamus aliquid atque autem, deleniti ea excepturi laboriosam laborum, obcaecati odio perspiciatis, quo tenetur-->
-<!--      vitae voluptate.-->
-<!--    </div>-->
-<!--    <div>Ab culpa debitis, hic in perspiciatis quidem saepe similique temporibus tenetur voluptas. Accusantium aliquid-->
-<!--      autem consequatur cum deleniti, dolor, facilis minima nam nesciunt perspiciatis praesentium provident quae, quod-->
-<!--      sapiente voluptatem!-->
-<!--    </div>-->
-<!--    <div>Aliquam assumenda at, doloribus est et hic incidunt iusto labore minima molestias mollitia nam nesciunt nobis-->
-<!--      odit omnis possimus velit voluptas! Enim esse facilis id incidunt natus pariatur saepe, tempora.-->
-<!--    </div>-->
-<!--    <div>Blanditiis consequatur eum maiores praesentium recusandae? Aliquid asperiores consectetur, cumque delectus-->
-<!--      deleniti dicta et facilis id magni molestiae nesciunt, nihil obcaecati officiis omnis perspiciatis porro quae totam-->
-<!--      veniam voluptatem voluptatibus!-->
-<!--    </div>-->
-<!--    <div>Animi eum fugit labore saepe voluptatem? Alias beatae deserunt doloribus earum enim est excepturi ipsa ipsum-->
-<!--      mollitia nobis nostrum nulla obcaecati quae quibusdam quidem repellat repudiandae, sint suscipit ut voluptas.-->
-<!--    </div>-->
+    <!--  Лента постов  -->
+    <app-post-list [posts]="postsFacade.posts$ | async"></app-post-list>
 
   </main>
 
-
 </div>
-
-<app-write-post-btn></app-write-post-btn>
 

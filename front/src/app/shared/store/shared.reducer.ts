@@ -1,5 +1,5 @@
 import { Auth, FoundUsers, PersonalData, Themes } from '../models/common.models';
-import { AppActions, AuthAction, SharedActionUnion } from './shared.actions';
+import { AppActions, AuthAction, FollowSubscriptionsActions, SharedActionUnion } from './shared.actions';
 import { ThemeHelper } from '../helpers/theme.helper';
 import { APP_THEME } from '../constants/app.constants';
 
@@ -14,8 +14,6 @@ export interface AuthState {
   personalData: PersonalData | null;
   foundUsers: FoundUsers | null;
 }
-
-
 
 
 let t = Themes.LIGHT;
@@ -87,6 +85,15 @@ export function reducer(state: AuthState = initialAuthState, action: SharedActio
       return { ...state, foundUsers: action.payload, pending: false };
 
     case AppActions.searchUsersError:
+      return { ...state, pending: false };
+
+    case FollowSubscriptionsActions.setFollow:
+      return { ...state, pending: true };
+
+    case FollowSubscriptionsActions.setFollowSuccess:
+      return { ...state, pending: false };
+
+    case FollowSubscriptionsActions.setFollowError:
       return { ...state, pending: false };
 
     default:

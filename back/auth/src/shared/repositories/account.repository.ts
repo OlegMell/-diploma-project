@@ -5,6 +5,7 @@ import { JwtService } from "@nestjs/jwt";
 import { JwtToken } from "../../modules/authentication/dtos/jwt-token.interface";
 import { AddUserDto, LoginUserDto } from "../../modules/authentication/dtos/user.dto";
 import { Account, PersonalInfo } from "../../modules/authentication/interfaces/account.interface";
+import { FollowDto } from "../../modules/accounts/models/follow.dto";
 
 /**
  * Репозиторий для работы с аккаунтами пользователей
@@ -43,13 +44,11 @@ export class AccountRepository {
         if (!user) return null;
 
         const p: PersonalInfo = await this.personalInfo.create({
-            firstName: '',
-            lastName: '',
-            bio: '',
-            site: '',
-            phone: '-',
-            email: addUser.login
+            email: addUser.login,
+            phone: addUser.phone
         });
+
+        console.log(p);
 
         await this.account.findByIdAndUpdate(user._id, { $set: { personalInfo: p._id } }).exec();
 
@@ -100,15 +99,46 @@ export class AccountRepository {
         });
     }
 
-    public async findById(id: string): Promise<Account> {
+    public async findById(id: string): Promise<any> {
         if (!id.length) {
             return null;
         }
 
-        return this.account.findById(id).populate({
+        return this.account.findOne({ _id: id }).populate({
             path: 'personalInfo',
             model: 'PersonalInfoModel'
-        });
+        }).exec();
+    }
+
+    /**
+     * Установка подписки
+     * @param followDto Объект подписки
+     */
+    public async setFollow(followDto: FollowDto): Promise<any> {
+        const targetUser = (await this.account.findById(followDto.targetUserId)) as Account;
+
+        if (!targetUser) return null;
+
+        if (targetUser.followers.length && targetUser.followers.includes(followDto.sourceUserId)) {
+            await this.account.findByIdAndUpdate(followDto.targetUserId, {
+                $pull: { followers: followDto.sourceUserId }
+            }).exec();
+
+            await this.account.findByIdAndUpdate(followDto.sourceUserId, {
+                $pull: { subscription: followDto.targetUserId }
+            }).exec();
+
+        } else {
+            await this.account.findByIdAndUpdate(followDto.targetUserId, {
+                $push: { followers: followDto.sourceUserId }
+            });
+
+            await this.account.findByIdAndUpdate(followDto.sourceUserId, {
+                $push: { subscription: followDto.targetUserId }
+            });
+        }
+
+        return followDto.targetUserId;
     }
 
     /**

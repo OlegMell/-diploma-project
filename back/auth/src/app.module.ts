@@ -5,6 +5,7 @@ import { SearchModule } from "./modules/search/search.module";
 import { SharedModule } from "./shared.module";
 import { MongooseModule } from "@nestjs/mongoose";
 import { MONGO_URL } from "./config";
+import { AccountsModule } from "./modules/accounts/accounts.module";
 
 @Module({
     imports: [
@@ -16,7 +17,8 @@ import { MONGO_URL } from "./config";
         }),
         SharedModule,
         AuthModule,
-        SearchModule
+        SearchModule,
+        AccountsModule
     ],
     controllers: [ AppController ],
     providers: [],

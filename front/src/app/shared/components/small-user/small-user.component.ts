@@ -3,7 +3,7 @@ import { AppFacadeService } from '../../facades/app-facade.service';
 import { DropboxService } from '../../../services/dropbox.service';
 import { FoundUser } from '../../models/common.models';
 import { Observable, Subject } from 'rxjs';
-import { mergeMap, takeUntil } from 'rxjs/operators';
+import { mergeMap, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-small-user',
@@ -27,7 +27,7 @@ export class SmallUserComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.link = this.photo;
-    this.getImageLink(); // запуск листенера получения ссылки
+    // this.getImageLink(); // запуск листенера получения ссылки
   }
 
   /**
@@ -42,6 +42,7 @@ export class SmallUserComponent implements OnInit, OnDestroy {
     } else if (this.user$) {
       this.user$.pipe(
         takeUntil(this.uns$),
+        tap(() => console.log('PHOTOS')),
         mergeMap(user => this.dropbox.getLink(user.personalInfo.photo))
       ).subscribe(link => this.link = link);
     }

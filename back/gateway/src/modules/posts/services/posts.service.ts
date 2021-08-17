@@ -1,5 +1,5 @@
 import { HttpService, Injectable } from "@nestjs/common";
-import { CreatedPostRes, CreatePostReq } from "../models/dtos/posts.dtos";
+import { CreatedPostRes, CreatePostReq, GetByAuthorIdDto, RemoveReqDto } from "../models/dtos/posts.dtos";
 import { Observable } from "rxjs";
 import { API_POSTS_URL } from "../../../config/microservices-endpoints.config";
 import { map } from "rxjs/operators";
@@ -26,19 +26,46 @@ export class PostsService {
     /**
      * Запрос на получение постов
      */
-    public getAll(): any {
-        return this.http.get(`${ API_POSTS_URL }posts/getAll`).pipe(
+    public getAll(a: string): any {
+        return this.http.get(`${ API_POSTS_URL }posts/getAll`, {
+            headers: {
+                Authorization: a
+            }
+        }).pipe(
             map(res => res.data)
         );
     }
 
     /**
      * Запрос на получение постов по ID автора поста
-     * @param query
+     * @param query Объект с ID автора
      */
-    public getByAuthorId(query: { id: string }): any {
+    public getByAuthorId(query: GetByAuthorIdDto): any {
         return this.http.get(`${ API_POSTS_URL }posts/getByAuthorId`, {
             params: { ...query }
+        }).pipe(
+            map(res => res.data)
+        )
+    }
+
+    /**
+     * Запрос а удаление поста
+     * @param query Объект с ID поста
+     */
+    public remove(query: RemoveReqDto): any {
+        return this.http.get(`${ API_POSTS_URL }posts/removePost`, {
+            params: { ...query }
+        }).pipe(
+            map(res => res.data)
+        )
+    }
+
+    /**
+     * Отправка запроса на отметку "Лайк"
+     */
+    public setLike(token: string, postId: any): any {
+        return this.http.put(`${ API_POSTS_URL }posts/setLike`, {
+            token, ...postId
         }).pipe(
             map(res => res.data)
         )

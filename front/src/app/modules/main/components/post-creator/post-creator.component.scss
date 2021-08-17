@@ -7,10 +7,15 @@ $btnBoxShadow: 0 3px 6px rgba(0, 0, 0, 0.05), 0 3px 6px rgba(0, 0, 0, 0.05);
   width: 100%;
   position: relative;
   margin-top: 70px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   height: min-content;
-  background-color: whitesmoke;
+  padding: 0 10px;
+  box-sizing: border-box;
+  background-color: rgba(whitesmoke, .6);
+  backdrop-filter: blur(20px);
   border: .1px solid rgba(gray, .2);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  border-radius: 0 0 20px 20px;
 
   &-text-wrapper {
     height: 50%;
@@ -67,6 +72,20 @@ $btnBoxShadow: 0 3px 6px rgba(0, 0, 0, 0.05), 0 3px 6px rgba(0, 0, 0, 0.05);
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      .record-btn-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: auto;
+        transition: all .2s ease-out;
+
+        .animate {
+          width: 50px;
+          height: 50px;
+          overflow: hidden;
+        }
+      }
 
       .mat-mini-fab {
         width: 35px;
@@ -151,3 +170,20 @@ $btnBoxShadow: 0 3px 6px rgba(0, 0, 0, 0.05), 0 3px 6px rgba(0, 0, 0, 0.05);
     }
   }
 }
+
+.audio-wrapper {
+  margin-top: 15px;
+  position: relative;
+
+  .remove-audio-btn {
+    position: absolute;
+    right: 0;
+    top: 5px;
+  }
+}
+
+.record {
+  background-color: crimson !important;
+}
+
+

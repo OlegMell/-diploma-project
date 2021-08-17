@@ -9,6 +9,12 @@
     justify-content: center;
   }
 
+  @media (max-width: 600px) {
+    position: absolute;
+    left: 0;
+    top: 25px;
+  }
+
   &-small-text {
     font-size: 35px;
     font-weight: 500;

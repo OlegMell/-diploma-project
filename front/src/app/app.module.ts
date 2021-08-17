@@ -17,6 +17,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { MainModule } from './modules/main/main.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SettingsModule } from './modules/settings/settings.module';
+import { NgAudioRecorderModule } from 'ng-audio-recorder';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,13 @@ import { SettingsModule } from './modules/settings/settings.module';
     BrowserAnimationsModule,
     AppSharedModule,
     HttpClientModule,
-    StoreModule.forRoot(reducers),
+    NgAudioRecorderModule,
+    StoreModule.forRoot(reducers, {
+      runtimeChecks: {
+        strictStateImmutability: false, // для иммутабельности состояния (лайки)
+        strictActionImmutability: false, // для иммутабельности состояния (лайки)
+      },
+    }),
     EffectsModule.forRoot([SharedEffects]),
     AuthModule,
     ProfileModule,

@@ -13,6 +13,16 @@
   align-items: center;
   transition: .1s all ease-in-out;
 
+  @media (max-width: 1200px) {
+    width: 250px;
+    right: 25%;
+    left: 35%;
+  }
+
+  @media (max-width: 600px) {
+    left: 20%;
+  }
+
   &_inp-wrapper {
     position: relative;
     display: flex;

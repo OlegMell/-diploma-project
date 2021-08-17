@@ -1,22 +1,23 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PostsFacadeService } from './services/posts-facade.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  styleUrls: [ './main.component.scss' ]
 })
 export class MainComponent implements OnInit, OnDestroy {
+  posts: any;
 
-  constructor(private readonly postsFacade: PostsFacadeService) {
+  constructor(public readonly postsFacade: PostsFacadeService) {
   }
 
   ngOnInit(): void {
-
-    this.postsFacade.getAll();
-
+        this.postsFacade.getAll();
     // this.postsFacade.posts$.subscribe(posts => {
-    //   console.log(posts);
+    //   if (!posts.length) {
+    //   }
     // });
   }
 

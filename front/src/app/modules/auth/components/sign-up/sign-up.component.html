@@ -49,6 +49,21 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
+        <mat-label>Номер телефона</mat-label>
+        <span matPrefix>+380 &nbsp;</span>
+        <input type="text" matInput formControlName="phone">
+        <mat-error *ngIf="signUpForm.get('phone').hasError('pattern')">
+          Похоже, ваш номер телефона не украинский)
+        </mat-error>
+        <mat-error *ngIf="signUpForm.get('phone').hasError('required')">
+          Забыли написать)
+        </mat-error>
+        <mat-icon matSuffix>
+          phone
+        </mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
         <mat-label>Пароль</mat-label>
         <input type="password" matInput formControlName="password">
         <mat-error *ngIf="signUpForm.get('password').hasError('minlength')">

@@ -1,3 +1,9 @@
-<div class="preloader" *ngIf="appFacade.pending$ | async">
+<div class="preloader" *ngIf="(appFacade.pending$ | async)">
   <mat-spinner [diameter]="diameter"></mat-spinner>
+</div>
+
+<!--*ngIf="(appFacade.pending$ | async) || (pendingFactor | async)"-->
+
+<div class="overlay" *ngIf="center && (appFacade.pending$ | async) || (pendingFactor | async)">
+  <mat-spinner class="circle" [diameter]="diameter"></mat-spinner>
 </div>

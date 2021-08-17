@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Post, Query } from "@nestjs/common";
+import { Body, Controller, Get, Headers, Post, Put, Query } from "@nestjs/common";
 import { Observable } from "rxjs";
 import { PostsService } from "./services/posts.service";
-import { CreatedPostRes, CreatePostReq } from "./models/dtos/posts.dtos";
+import { CreatedPostRes, CreatePostReq, GetByAuthorIdDto, RemoveReqDto } from "./models/dtos/posts.dtos";
 
 @Controller('api/posts')
 export class PostsController {
@@ -14,12 +14,23 @@ export class PostsController {
     }
 
     @Get('/getAll')
-    public getAll(): any {
-        return this.postsService.getAll();
+    public getAll(@Headers('Authorization') a): any {
+        return this.postsService.getAll(a);
     }
 
     @Get('/getByAuthorId')
-    public getByAuthorId(@Query() query: any): any {
+    public getByAuthorId(@Query() query: GetByAuthorIdDto): any {
         return this.postsService.getByAuthorId(query);
+    }
+
+    @Get('/remove')
+    public remove(@Query() query: RemoveReqDto): any {
+        return this.postsService.remove(query);
+    }
+
+    @Put('/setLike')
+    public setLike(@Headers('Authorization') a: string, @Body() like: any): any {
+        console.log(a, like);
+        return this.postsService.setLike(a, like);
     }
 }

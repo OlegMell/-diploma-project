@@ -1,5 +1,5 @@
 {
-  "name": "front",
+  "name": "angular-heroku",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -24,7 +24,11 @@
     "@ctrl/ngx-emoji-mart": "^6.0.0",
     "@ngrx/effects": "^11.1.1",
     "@ngrx/store": "^11.1.1",
+    "express": "^4.17.1",
     "jwt-decode": "^3.1.2",
+    "ng-audio-recorder": "0.0.5",
+    "ngx-image-cropper": "^4.0.1",
+    "recordrtc": "^5.6.2",
     "rxjs": "~6.6.0",
     "ts-md5": "^1.2.8",
     "tslib": "^2.0.0",
@@ -36,6 +40,7 @@
     "@angular/compiler-cli": "~11.2.11",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
+    "@types/recordrtc": "^5.6.6",
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
