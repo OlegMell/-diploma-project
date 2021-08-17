@@ -40,8 +40,6 @@ export class PostSmallComponent implements OnInit, OnDestroy {
     this.getImages();
     this.getVoice();
 
-    console.log(this.postData);
-
     this.route.params.pipe(
       takeUntil(this.uns$),
       filter((params: Params) => !params.id)

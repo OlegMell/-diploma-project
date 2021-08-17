@@ -1,8 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { PostsFacadeService } from '../../../modules/main/services/posts-facade.service';
-import { FullPost, PostWithAuthorData } from '../../models/common.models';
-import { takeUntil } from 'rxjs/operators';
+import { PostWithAuthorData } from '../../models/common.models';
 
 @Component({
   selector: 'app-post-list',
@@ -12,11 +11,11 @@ import { takeUntil } from 'rxjs/operators';
 export class PostListComponent implements OnInit, OnDestroy {
   private uns$: Subject<void> = new Subject<void>();
   @Input() posts!: PostWithAuthorData[];
+
   constructor(public readonly postsFacade: PostsFacadeService) {
   }
 
   ngOnInit(): void {
-    console.log(this.posts);
   }
 
   ngOnDestroy(): void {

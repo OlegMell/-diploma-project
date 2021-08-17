@@ -8,7 +8,6 @@ import { API_AUTH_URL } from "../../../config/microservices-endpoints.config";
 /**
  * Сервис для работы с микросервисом авторизации пользователя
  */
-
 @Injectable()
 export class AuthService {
 

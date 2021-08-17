@@ -92,10 +92,7 @@ export class PostsEffects {
     withLatestFrom(this.store$.select(selectAuth)),
     mergeMap(([ _, auth ]) => this.postsService.getAll(auth.token)
       .pipe(
-        map((res: PostWithAuthorData[]) => {
-          console.log(res);
-          return new GetAllPostsSuccess(res);
-        }),
+        map((res: PostWithAuthorData[]) => new GetAllPostsSuccess(res)),
         catchError((err) => {
           this.errorCatchService.checkError(err);
           return of(new GetAllPostsError());
@@ -139,11 +136,8 @@ export class PostsEffects {
     ofType(PostsActions.setLike),
     withLatestFrom(this.store$.select(selectAuth)),
     // @ts-ignore
-    mergeMap(([action, auth]) => this.postsService.setLike(action.payload, auth.token).pipe(
-      map(res => {
-        console.log(res);
-        return new SetLikeSuccess(res);
-      }),
+    mergeMap(([ action, auth ]) => this.postsService.setLike(action.payload, auth.token).pipe(
+      map(res => new SetLikeSuccess(res)),
       catchError(() => of(new SetLikeError()))
     ))
   ));

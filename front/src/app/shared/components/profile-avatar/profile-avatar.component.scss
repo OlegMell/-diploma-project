@@ -109,17 +109,16 @@
 }
 
 .center-position {
-  position: absolute;
-  top: 85px;
-  margin: auto;
-
   left: 0;
   right: 0;
+  top: 85px;
+  margin: auto;
+  position: absolute;
 
   .profile {
+    align-items: center;
     flex-direction: column;
     justify-content: space-evenly !important;
-    align-items: center;
     height: 165px !important;
 
     .avatar {
@@ -164,3 +163,5 @@
   margin: 0 auto;
   z-index: 99999;
 }
+
+

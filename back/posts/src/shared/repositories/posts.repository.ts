@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Model, Schema, ObjectId, Types } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import {
   CreatedPost,
@@ -44,7 +44,11 @@ export class PostsRepository {
   public async setLike(like: LikePost): Promise<any> {
     const post = (await this.post.findById(like.postId)) as Post;
 
-    if (post && post.likedUsers.includes(Types.ObjectId(like.userId))) {
+    if (
+      post &&
+      post.likedUsers.length &&
+      post.likedUsers.includes(Types.ObjectId(like.userId))
+    ) {
       return this.post
         .findByIdAndUpdate(like.postId, {
           $pull: { likedUsers: like.userId },

@@ -3,12 +3,13 @@ import { AuthModule } from "./modules/auth/auth.module";
 import { AppController } from "./app.controller";
 import { SearchModule } from "./modules/search/search.module";
 import { PostsModule } from "./modules/posts/posts.module";
+import { AccountsModule } from "./modules/accounts/accounts.module";
 
 
 @Module({
-    imports: [ AuthModule, SearchModule, PostsModule, HttpModule ],
+    imports: [ AuthModule, SearchModule, PostsModule, AccountsModule, HttpModule ],
     controllers: [ AppController ],
-    providers: [ ],
+    providers: [],
 })
 export class AppModule {
 }

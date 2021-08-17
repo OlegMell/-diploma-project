@@ -4,8 +4,18 @@
 
 <main>
   <div class="post-lent">
+
+<!--    <button (click)="follow()" mat-raised-button color="primary" *ngIf="currentUserId !== id">Подписаться</button>-->
+
+    <div class="about">
+
+    </div>
+
     <div class="divider"></div>
-    <h2>{{isAnotherUser ? '' : 'Ваши'}} Посты</h2>
+
+    <h2>{{currentUserId !== id ? '' : 'Ваши'}} Посты</h2>
+
     <app-post-list [posts]="postsFacade.userPosts$ | async"></app-post-list>
+
   </div>
 </main>

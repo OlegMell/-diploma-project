@@ -5,6 +5,7 @@ import { JwtService } from "@nestjs/jwt";
 import { JwtToken } from "../../modules/authentication/dtos/jwt-token.interface";
 import { AddUserDto, LoginUserDto } from "../../modules/authentication/dtos/user.dto";
 import { Account, PersonalInfo } from "../../modules/authentication/interfaces/account.interface";
+import { FollowDto } from "../../modules/accounts/models/follow.dto";
 
 /**
  * Репозиторий для работы с аккаунтами пользователей
@@ -107,6 +108,37 @@ export class AccountRepository {
             path: 'personalInfo',
             model: 'PersonalInfoModel'
         }).exec();
+    }
+
+    /**
+     * Установка подписки
+     * @param followDto Объект подписки
+     */
+    public async setFollow(followDto: FollowDto): Promise<any> {
+        const targetUser = (await this.account.findById(followDto.targetUserId)) as Account;
+
+        if (!targetUser) return null;
+
+        if (targetUser.followers.length && targetUser.followers.includes(followDto.sourceUserId)) {
+            await this.account.findByIdAndUpdate(followDto.targetUserId, {
+                $pull: { followers: followDto.sourceUserId }
+            }).exec();
+
+            await this.account.findByIdAndUpdate(followDto.sourceUserId, {
+                $pull: { subscription: followDto.targetUserId }
+            }).exec();
+
+        } else {
+            await this.account.findByIdAndUpdate(followDto.targetUserId, {
+                $push: { followers: followDto.sourceUserId }
+            });
+
+            await this.account.findByIdAndUpdate(followDto.sourceUserId, {
+                $push: { subscription: followDto.targetUserId }
+            });
+        }
+
+        return followDto.targetUserId;
     }
 
     /**

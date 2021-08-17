@@ -1,13 +1,13 @@
 @import "colors";
 
 .light-theme {
-  background-color: whitesmoke;
   color: $black;
+  background-color: whitesmoke;
   transition: all .2s ease-in-out;
 
   audio::-webkit-media-controls-panel {
-    background-color: rgba(#9FA8DA, .3);
     color: white;
+    background-color: rgba(#9FA8DA, .3);
   }
 
   .mat-form-field-label {
@@ -82,6 +82,11 @@
     .results {
       background-color: $lightPrimary2;
     }
+  }
+
+  .date {
+    color: rgba(black, .6);
+    font-size: 12px;
   }
 }
 
@@ -207,6 +212,11 @@
         color: inherit !important;
       }
     }
+  }
+
+  .date {
+    color: rgba(white, .7);
+    font-size: 12px;
   }
 }
 

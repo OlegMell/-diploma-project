@@ -28,6 +28,12 @@ const REQUESTS = {
       getByAuthorId: '/getByAuthorId',
       setLike: '/setLike'
     }
+  },
+  follows: {
+    root: 'follows',
+    child: {
+      setFollow: '/setFollow'
+    }
   }
 };
 

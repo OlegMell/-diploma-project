@@ -24,6 +24,7 @@ import { DropboxService } from '../../services/dropbox.service';
 import { SearchService } from '../../services/search.service';
 import { FoundUsers } from '../models/common.models';
 import { ErrorCatchService } from '../services/error-catch.service';
+import { FollowsService } from '../../services/follows.service';
 
 
 @Injectable()
@@ -35,6 +36,7 @@ export class SharedEffects {
               private dropboxService: DropboxService,
               private route: ActivatedRoute,
               private snackBarService: SnackbarService,
+              private followsService: FollowsService,
               private errorCatchService: ErrorCatchService,
               private store$: Store<AuthState>) {
   }
@@ -146,7 +148,7 @@ export class SharedEffects {
           img: filePath
         }, auth.token)
           .pipe(
-            map(r => {
+            map(() => {
                 this.snackBarService.open(SUCCESS_SAVED);
                 return new LoginSuccess(auth);
               }
@@ -155,6 +157,9 @@ export class SharedEffects {
           )))),
   ));
 
+  /**
+   * Эффект поиска пользователей
+   */
   searchUsers$ = createEffect(() => this.actions$.pipe(
     ofType(SharedActions.AppActions.searchUsers),
     withLatestFrom(this.store$.select(selectAuth)),
@@ -166,6 +171,21 @@ export class SharedEffects {
       ))
   ));
 
+  /**
+   * Эффект подписки
+   */
+  setFollow$ = createEffect(() => this.actions$
+    .pipe(
+      ofType(SharedActions.FollowSubscriptionsActions.setFollow),
+      withLatestFrom(this.store$.select(selectAuth)),
+      // @ts-ignore
+      mergeMap(([ action, auth ]) => this.followsService.setFollow(action.payload, auth)
+        .pipe(
+          map(res => {
+            console.log(res);
+          })
+        ))
+    ), { dispatch: false });
 
   private displayErrors(err: any): void {
     if (err.status === 500) {

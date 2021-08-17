@@ -15,7 +15,8 @@ import * as RecordRTC from 'recordrtc';
 @Component({
   selector: 'app-post-creator',
   templateUrl: './post-creator.component.html',
-  styleUrls: [ './post-creator.component.scss' ]
+  styleUrls: [ './post-creator.component.scss',
+    '../../../../../styles/animations.scss' ]
 })
 export class PostCreatorComponent implements OnInit, OnDestroy {
   private uns$: Subject<void> = new Subject<void>(); // отписчик отвсех подписок
@@ -26,9 +27,9 @@ export class PostCreatorComponent implements OnInit, OnDestroy {
   file: any; // выбранный файл
   files!: FileList | null; // выбранные картинки
   imgPreview: string[] = []; // массив картинок поста
-  isRecording!: boolean;
+  isRecording!: boolean; // флаг записи звука
   output: any;
-  audio!: File;
+  audio!: File | undefined;
 
   record: any;
   url: any;
@@ -66,6 +67,9 @@ export class PostCreatorComponent implements OnInit, OnDestroy {
    * @param text текст из поля ввода
    */
   send(text: string): void {
+    if (!text && !this.imgPreview.length && !this.audio) {
+      return;
+    }
 
     const post: Post = {
       text,
@@ -129,12 +133,15 @@ export class PostCreatorComponent implements OnInit, OnDestroy {
    * @param e событие
    */
   selectImage(e: any): void {
+    if (this.imgPreview?.length >= 5) {
+      return;
+    }
+
     const input = (e.target as HTMLInputElement);
     if (input.files && input.files[0]) {
 
       // @ts-ignore
       this.file = input.files[0];
-      console.log(this.file);
       this.files = input.files;
       const ext = [ 'png', 'jpg', 'jpeg', 'gif' ];
       const v = ext.includes(this.file.name.substring(this.file.name.indexOf('.') + 1));
@@ -203,6 +210,8 @@ export class PostCreatorComponent implements OnInit, OnDestroy {
     const StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
     this.record = new StereoAudioRecorder(stream, options);
     this.record.record();
+
+    setTimeout(() => this.stopRecording(), 60000);
   }
 
   /**
@@ -217,7 +226,7 @@ export class PostCreatorComponent implements OnInit, OnDestroy {
    * Обработка записи
    * @param blob данные записи в Blob формате
    */
-  processRecording(blob: Blob): void {
+  processRecording(blob: Blob): void  {
     this.url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
     this.audio = new File([ blob ], 'test.wav', { lastModified: new Date().getDate() });
     // this.url = f;
@@ -228,6 +237,14 @@ export class PostCreatorComponent implements OnInit, OnDestroy {
     //   this.url = (ev.target.result.toString());
     // };
     // reader.readAsDataURL(f);
+  }
+
+  /**
+   * Удаление записанного аудио
+   */
+  removeAudio(): void {
+    this.url = undefined;
+    this.audio = undefined;
   }
 
   ngOnDestroy(): void {

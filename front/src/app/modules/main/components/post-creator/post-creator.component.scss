@@ -73,6 +73,20 @@ $btnBoxShadow: 0 3px 6px rgba(0, 0, 0, 0.05), 0 3px 6px rgba(0, 0, 0, 0.05);
       align-items: center;
       justify-content: space-between;
 
+      .record-btn-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: auto;
+        transition: all .2s ease-out;
+
+        .animate {
+          width: 50px;
+          height: 50px;
+          overflow: hidden;
+        }
+      }
+
       .mat-mini-fab {
         width: 35px;
         height: 35px;
@@ -156,3 +170,20 @@ $btnBoxShadow: 0 3px 6px rgba(0, 0, 0, 0.05), 0 3px 6px rgba(0, 0, 0, 0.05);
     }
   }
 }
+
+.audio-wrapper {
+  margin-top: 15px;
+  position: relative;
+
+  .remove-audio-btn {
+    position: absolute;
+    right: 0;
+    top: 5px;
+  }
+}
+
+.record {
+  background-color: crimson !important;
+}
+
+

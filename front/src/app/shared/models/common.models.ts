@@ -80,3 +80,8 @@ export interface TokenResult {
   readonly iat: number;
   readonly sub: string;
 }
+
+export interface FollowDto {
+  sourceUserId: string;
+  targetUserId: string;
+}

@@ -4,9 +4,16 @@ main {
   height: 90vh;
 
   .post-lent {
-    padding-top: 450px;
+    padding-top: 350px;
     width: 40%;
     margin: 0 auto;
+
+    .about {
+      background-color: rgba($primary, .2);
+      border-radius: 30px;
+      height: 100px;
+      width: 100%;
+    }
 
     .divider {
       height: 1px;
