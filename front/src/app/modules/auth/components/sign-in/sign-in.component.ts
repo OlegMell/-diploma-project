@@ -2,7 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { AuthFacadeService } from '../../../../shared/facades/auth-facade.service';
-import { ThemeService } from "../../../../services/theme.service";
+import { ThemeService } from '../../../../services/theme.service';
+import {SnackbarService} from '../../../../shared/services/toastr.service';
+import {WRONG_LOGIN} from '../../../../shared/constants/snack-messages.constants';
 
 @Component({
   selector: 'app-sign-in',
@@ -19,6 +21,7 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder,
               private authFacade: AuthFacadeService,
+              private snackService: SnackbarService,
               public theme: ThemeService) {
   }
 
@@ -38,9 +41,13 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   /** Сабмит листенер формы */
   signIn(): void {
-    this.authFacade
-      .signIn(this.signInForm.get('login')?.value,
-        this.signInForm.get('password')?.value);
+    if (!(this.signInForm.get('login')?.value as string).trim()) {
+      this.snackService.open(WRONG_LOGIN, 5000);
+    } else {
+      this.authFacade
+        .signIn(this.signInForm.get('login')?.value,
+          this.signInForm.get('password')?.value);
+    }
   }
 
   ngOnDestroy(): void {
